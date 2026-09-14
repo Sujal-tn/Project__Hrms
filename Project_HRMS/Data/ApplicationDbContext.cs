@@ -1,12 +1,20 @@
+<<<<<<< HEAD
 ﻿using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Models;
 
 namespace Project_Hrms.Data
+=======
+﻿using Project_Hrms.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace DemoHRMS.Data
+>>>>>>> 3baa521130e595309078a193c0fbb3edfd84e95a
 {
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+<<<<<<< HEAD
         }
 
         public DbSet<User> User { get; set; }
@@ -32,5 +40,10 @@ namespace Project_Hrms.Data
         public DbSet<EmployeeEarnings> EmployeeEarnings { get; set; }
         public DbSet<EmployeeSalaries> EmployeeSalaries { get; set; }
         public DbSet<Payslips> Payslips { get; set; }
+=======
+
+        }
+
+>>>>>>> 3baa521130e595309078a193c0fbb3edfd84e95a
     }
 }
