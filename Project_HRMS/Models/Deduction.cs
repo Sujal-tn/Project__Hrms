@@ -8,7 +8,7 @@ namespace Project_Hrms.Models
         [Key]
         public int DeductionId { get; set; }
 
-        [Column(TypeName = "decimal(9,2)")]
+        [Column(TypeName = "decimal(5,2)")]
         public decimal DeductionPercentage { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? CreatedBy { get; set; } 

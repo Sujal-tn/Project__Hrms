@@ -22,6 +22,6 @@ namespace Project_Hrms.Models
 
         public virtual EmployeeSalaries EmployeeSalaries { get; set; }
         public virtual Deduction Deduction { get; set; }
-
+        public virtual User User { get; set; }
     }
 }

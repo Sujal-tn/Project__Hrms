@@ -8,6 +8,8 @@ namespace Project_Hrms.Models
         [Key]
         public int EarningsId { get; set; }
         public EarningType EarningType { get; set; }
+
+        [Column(TypeName = "decimal(5,2)")]
         public decimal EarningsPercentage { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }

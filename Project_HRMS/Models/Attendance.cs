@@ -19,12 +19,16 @@ namespace Project_Hrms.Models
 
         public DateTime? LunchOut { get; set; }
 
+        [Column(TypeName = "decimal(5,2)")]
         public decimal WorkingHours { get; set; }
 
+        [Column(TypeName = "decimal(5,2)")]
         public decimal ProductionHours { get; set; }
 
+        [Column(TypeName = "decimal(5,2)")]
         public decimal OvertimeHours { get; set; }
 
+        [Column(TypeName = "decimal(5,2)")]
         public decimal BreakHours { get; set; }
 
         public int Late { get; set; }
