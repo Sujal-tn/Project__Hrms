@@ -1,0 +1,201 @@
+﻿
+@model List<Project_Hrms.Models.User>
+
+@{
+    ViewData["Title"] = "Employee Report";
+}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">Employee Report</h2>
+
+    <!-- Top Section -->
+    <div class="row">
+
+        <!-- Cards -->
+        <div class="col-md-6">
+
+            <div class="row">
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-circle text-danger"></i>
+                            Total Users
+                        </h5>
+                        <p>@ViewBag.TUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-check text-danger"></i>
+                            Active Users
+                        </h5>
+                        <p>@ViewBag.AUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-x text-danger"></i>
+                            Inactive Users
+                        </h5>
+                        <p>@ViewBag.InUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-briefcase text-danger"></i>
+                            Roles
+                        </h5>
+                        <p>@ViewBag.Rcount</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Chart -->
+        <div class="col-md-6">
+
+            <h5>
+                <i class="bi bi-bar-chart-fill text-danger"></i>
+                Employee
+            </h5>
+
+            <canvas id="employeeStatusChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- Employee Table -->
+    <div class="card mt-4">
+
+        <div class="card-body">
+
+            <h5 class="card-title mb-3">
+                Employees List
+            </h5>
+
+            <div class="table-responsive">
+
+                <table id="employeeTable" class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>UserId</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Phone Number</th>
+                            <th>Date of Joining</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+
+                                <td>@user.UserId</td>
+
+                                <td>
+                                    @user.FirstName @user.LastName
+                                </td>
+
+                                <td>@user.Email</td>
+
+                                <td>@user.DepartmentId</td>
+
+                                <td>@user.PhoneNumber</td>
+
+                                <td>@user.DateOfJoining</td>
+
+                                <td>
+
+                                    @if (user.Status == "Active")
+                                    {
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Inactive
+                                        </span>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <!-- DataTable -->
+    <script>
+        $(document).ready(function() {
+            $('#employeeTable').DataTable();
+        });
+    </script>
+
+
+    <!-- Chart -->
+    <script>
+
+        var data = @Html.Raw(
+                    System.Text.Json.JsonSerializer.Serialize(ViewBag.YearData)
+                    );
+
+        var labels = data.map(x => x.Year + '-' + x.Month);
+        var active = data.map(x => x.Active);
+        var inactive = data.map(x => x.Inactive);
+
+        new Chart(document.getElementById('employeeStatusChart'), {
+
+            type: 'bar',
+
+            data: {
+                labels: labels,
+
+                datasets: [
+                    {
+                        label: 'Active',
+                        data: active
+                    },
+                    {
+                        label: 'Inactive',
+                        data: inactive
+                    }
+                ]
+            }
+
+        });
+
+    </script>
+
+}
