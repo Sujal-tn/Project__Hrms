@@ -1,7 +1,7 @@
 ﻿using Project_Hrms.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoHRMS.Data
+namespace Project_Hrms.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -10,5 +10,6 @@ namespace DemoHRMS.Data
 
         }
 
+        public DbSet<Projects> Projects { get; set; }
     }
 }
