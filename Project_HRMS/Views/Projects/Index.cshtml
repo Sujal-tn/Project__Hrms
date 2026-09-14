@@ -1,0 +1,206 @@
+﻿@model List<Projects>
+
+@if (TempData["addmsg"] != null)
+{
+    <span class="text-success">@TempData["addmsg"]</span>
+}
+
+@if (TempData["updmsg"] != null)
+{
+    <span class="text-success">@TempData["updmsg"]</span>
+}
+
+@if (TempData["delmsg"] != null)
+{
+    <span class="text-success">@TempData["delmsg"]</span>
+}
+
+<div>
+    <div> 
+        <h2 class="mb-1">Projects</h2>
+        <div class="text-muted"> Home / Employee / Projects List </div> 
+    </div>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">Add Project</button>
+</div> 
+
+<table class="table table-bordered" id="projectTable">
+
+    <thead>
+        <tr>
+            <th>Project Id</th>
+            <th>Project Name</th>
+            <th>Team Members</th>
+            <th>Client</th>
+            <th>Deadline</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.ProjectId</td>
+                <td>@p.ProjectName</td>
+                <td>@p.ManagerName</td>
+                <td>@p.ClientName</td>
+                <td>@p.EndDate.ToString("dd MMM yyyy")</td>
+                <td>@p.Priority</td>
+                <td>@p.Status</td>
+                <td>
+                    <a asp-controller="Projects" asp-action="EditProject" asp-route-id="@p.ProjectId" class="btn btn-success">Edit</a>
+                    <a asp-controller="Projects" asp-action="DeleteProject" asp-route-id="@p.ProjectId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<!--  Modal for AddProject -->
+
+<div class="modal fade" id="addProjectModal" tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Add Project</h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <form method="post" asp-controller="Projects" asp-action="AddProject" enctype="multipart/form-data">
+
+                <div class="modal-body">
+
+                    <label>Project Name</label>
+                    <input type="text"
+                           name="ProjectName"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Client Name</label>
+                    <input type="text"
+                           name="ClientName"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Project Description</label>
+                    <textarea name="ProjectDescription"
+                              class="form-control"></textarea>
+
+                    <br />
+
+                    <label>Start Date</label>
+                    <input type="date"
+                           name="StartDate"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>End Date</label>
+                    <input type="date"
+                           name="EndDate"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Priority</label>
+                    <select name="Priority"
+                            class="form-control">
+
+                        <option value="">Select Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+
+                    </select>
+
+                    <br />
+
+                    <label>Project Value</label>
+                    <input type="number"
+                           name="ProjectValue"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Price Type</label>
+                    <input type="text"
+                           name="PriceType"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Status</label>
+                    <select name="Status"
+                            class="form-control">
+
+                        <option value="">Select Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+
+                    </select>
+
+                    <br />
+
+                    <label>Manager Name</label>
+                    <input type="text"
+                           name="ManagerName"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Project Logo</label>
+                    <input type="file"
+                           name="LogoPath"
+                           class="form-control" />
+
+                    <br />
+
+                    <label>Project File</label>
+                    <input type="file"
+                           name="FilePath"
+                           class="form-control" />
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {$('#projectTable').DataTable();});
+</script>
+}
