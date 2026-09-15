@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Data;
+using Project_Hrms.Interface;
+using Project_Hrms.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddControllersWithViews();
 // Add the ApplicationDbContext to the service container
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
 var app = builder.Build();
 
