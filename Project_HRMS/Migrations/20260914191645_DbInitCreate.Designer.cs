@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260914191645_DbInitCreate")]
+    partial class DbInitCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,6 @@ namespace Project_Hrms.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-<<<<<<< HEAD
             modelBuilder.Entity("Project_Hrms.Models.Attendance", b =>
                 {
                     b.Property<int>("AttendanceId")
@@ -560,8 +562,6 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Payslips");
                 });
 
-=======
->>>>>>> main
             modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
                 {
                     b.Property<int>("ProjectId")
@@ -572,7 +572,6 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("ClientName")
                         .IsRequired()
-<<<<<<< HEAD
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -580,15 +579,11 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-=======
-                        .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FilePath")
-<<<<<<< HEAD
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -597,12 +592,6 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-=======
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogoPath")
-                        .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.Property<string>("ManagerName")
                         .IsRequired()
@@ -610,7 +599,6 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("PriceType")
                         .IsRequired()
-<<<<<<< HEAD
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -623,21 +611,6 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-=======
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProjectDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProjectName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.Property<double>("ProjectValue")
                         .HasColumnType("float");
@@ -647,18 +620,13 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-<<<<<<< HEAD
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-=======
-                        .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.HasKey("ProjectId");
 
                     b.ToTable("Projects");
                 });
-<<<<<<< HEAD
 
             modelBuilder.Entity("Project_Hrms.Models.Role", b =>
                 {
@@ -1355,8 +1323,6 @@ namespace Project_Hrms.Migrations
 
                     b.Navigation("Timesheets");
                 });
-=======
->>>>>>> main
 #pragma warning restore 612, 618
         }
     }
