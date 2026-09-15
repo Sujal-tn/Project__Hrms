@@ -218,5 +218,8 @@ namespace Project_Hrms.Data
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
+        public DbSet<Projects> Projects { get; set; }
     }
 }

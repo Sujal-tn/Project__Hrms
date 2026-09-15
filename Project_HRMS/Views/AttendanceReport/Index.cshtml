@@ -1,0 +1,158 @@
+﻿@model List<Project_Hrms.Models.Attendance>
+
+
+<div class="container-fluid">
+
+    <h2 class="mb-4" style="font-size:large">Attendance Report</h2>
+
+    <div class="row">
+
+        <!-- Cards -->
+        <div class="col-md-6">
+
+            <div class="row">
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-circle text-danger"></i>
+                            Total Users
+                        </h5>
+                        <p>@ViewBag.TUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-check text-danger"></i>
+                            Active Users
+                        </h5>
+                        <p>@ViewBag.AUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-x text-danger"></i>
+                            Inactive Users
+                        </h5>
+                        <p>@ViewBag.InUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-briefcase text-danger"></i>
+                            Roles
+                        </h5>
+                        <p>@ViewBag.Rcount</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Chart -->
+        <div class="col-md-6">
+
+            <h5>
+                <i class="bi bi-bar-chart-fill text-danger"></i>
+                Employee
+            </h5>
+
+            <canvas id="employeeStatusChart"></canvas>
+
+        </div>
+
+    </div>
+
+<div class="card mt-4">
+
+    <div class="card-body">
+
+        <h5 class="card-title mb-3">
+            Attendance Report
+        </h5>
+
+        <div class="table-responsive">
+
+            <table id="employeeTable" class="table table-bordered table-hover">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>AttendanceId</th>
+                        <th>Employee</th>
+                        <th>Date</th>
+                        <th>Check-In</th>
+                        <th>Check-out</th>
+                        <th>Lunch-In</th>
+                        <th>Lunch-Out</th>
+                        <th>Status</th>
+                        <th>Working Hours</th>
+                        <th>Overtime Hours</th>
+                        <th>Break Hours</th>
+                        <th>Late</th>
+                        <th>Producation Hours</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var ar in Model)
+                    {
+                        <tr>
+
+                            <td>@ar.AttendanceId</td>
+
+                            <td>
+                                @* @user.FirstName @user.LastName *@
+                                @ar.UserId
+                            </td>
+
+                            <td>@ar.Date</td>
+
+                            <td>@ar.CheckIn</td>
+
+                            <td>@ar.CheckOut</td>
+
+                            <td>@ar.LunchIn</td>
+                            <td>@ar.LunchOut</td>
+                            
+                            <td>
+
+                                @if (ar.Status == "Present")
+                                {
+                                    <span class="badge bg-success">
+                                        Present
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Absent
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>@ar.WorkingHours</td>
+                            <td>@ar.OvertimeHours</td>
+                            <td>@ar.BreakHours</td>
+                            <td>@ar.Late</td>
+                            <td>@ar.ProductionHours</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    </div>
+</div>

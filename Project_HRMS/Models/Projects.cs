@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+<<<<<<< HEAD
 using System.ComponentModel.DataAnnotations.Schema;
+=======
+>>>>>>> main
 
 namespace Project_Hrms.Models
 {
@@ -8,6 +11,7 @@ namespace Project_Hrms.Models
         [Key]
         public int ProjectId { get; set; }
 
+<<<<<<< HEAD
         [Required(ErrorMessage = "Project Name is required.")] 
         [StringLength(255, ErrorMessage = "Project Name cannot exceed 255 characters.")] 
         public string ProjectName { get; set; }
@@ -59,6 +63,41 @@ namespace Project_Hrms.Models
         public virtual ICollection<User> Users { get; set; } = new List<User>();
 
         public List<Timesheet> Timesheets { get; set; }
+=======
+        [Required]
+        public string ProjectName { get; set; }
+
+        [Required]
+        public string ClientName { get; set; }
+
+        [Required]
+        public string ProjectDescription { get; set; }
+
+        [Required]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
+
+        [Required]
+        public string Priority { get; set; }
+
+        [Required]
+        public double ProjectValue { get; set; }
+
+        [Required]
+        public string PriceType { get; set; }
+
+        public string? FilePath { get; set; }
+
+        public string? LogoPath { get; set; }
+
+        [Required]
+        public string Status { get; set; }
+
+        [Required]
+        public string? ManagerName { get; set; }
+>>>>>>> main
 
     }
 }

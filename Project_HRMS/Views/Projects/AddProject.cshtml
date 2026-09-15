@@ -1,0 +1,45 @@
+﻿@model Projects
+
+<h2>Add Projects</h2>
+
+<form method="post" asp-action="AddProject">
+
+Project Name:<input type="text" asp-for="ProjectName" /> <br /><br />
+
+Client Name:<input type="text" asp-for="ClientName" /> <br /><br />
+
+Description:<textarea asp-for="ProjectDescription"></textarea> <br /><br />
+
+Start Date:<input asp-for="StartDate" type="date" /> <br /><br />
+
+End Date:<input asp-for="EndDate" type="date" /> <br /><br />
+
+Priority:
+<select asp-for="Priority">
+    <option value="">Select Priority</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+</select> <br /><br />
+
+Project Value:<input asp-for="ProjectValue" /> <br /><br />
+
+Price Type:<input asp-for="PriceType" /> <br /><br />
+
+Status:
+<select asp-for="Status">
+    <option value="">Select Status</option>
+    <option value="Active">Active</option>
+    <option value="Inactive">Inactive</option>
+</select> <br /><br />
+
+Manager Name:<input type="text" asp-for="ManagerName" /> <br /><br />
+
+
+Upload Project Logo:<input type="file"  asp-for="LogoPath" /> <br /><br />
+
+Upload File:<input type="file"  asp-for="FilePath" /> <br /><br />
+
+<input type="submit" value="Save" />
+
+</form>
