@@ -6,8 +6,8 @@ namespace Project_Hrms.Services.EmployeeService
 {
     public class DesignationService : IDesignationService
     {
-        private readonly AppDbContext db;
-        public DesignationService(AppDbContext db)
+        private readonly ApplicationDbContext db;
+        public DesignationService(ApplicationDbContext db)
         {
             this.db = db;
         }

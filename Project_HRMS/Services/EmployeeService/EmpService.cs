@@ -8,9 +8,9 @@ namespace Project_Hrms.Services.EmployeeService
     public class EmpService : IEmpService
     {
 
-        private readonly AppDbContext db;
+        private readonly ApplicationDbContext db;
 
-        public EmpService(AppDbContext db)
+        public EmpService(ApplicationDbContext db)
         {
             this.db=db;
         }
