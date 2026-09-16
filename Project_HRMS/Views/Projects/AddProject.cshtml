@@ -1,8 +1,8 @@
-﻿@model Projects
+﻿@model ProjectsView
 
 <h2>Add Projects</h2>
 
-<form method="post" asp-action="AddProject">
+<form method="post" asp-action="AddProject" enctype="multipart/form-data">
 
 Project Name:<input type="text" asp-for="ProjectName" /> <br /><br />
 

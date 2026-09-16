@@ -4,16 +4,14 @@ namespace Project_Hrms.Interface
 {
     public interface IProject
     {
-        void AddNewProject(Projects p);
+        Task AddNewProject(Projects p);
 
-        List<Projects> GetAllProjects();
+        Task<List<Projects>> GetAllProjects();
 
-        Projects FindProjectById(int id);
+        Task<Projects> FindProjectById(int id);
 
-        void UpdateProject(Projects p);
+        Task UpdateProject(Projects p);
 
-        void DeleteProject(int id);
-
-
+        Task DeleteProject(int id);
     }
 }

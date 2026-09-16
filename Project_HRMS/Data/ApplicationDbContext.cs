@@ -217,5 +217,15 @@ namespace Project_Hrms.Data
                 .HasForeignKey(bd => bd.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
+        public DbSet<Projects> Projects { get; set; }
+
+        public DbSet<Trainers> Trainers { get; set; }
+
+        public DbSet<Trainings> Trainings { get; set; }
+
+        public DbSet<TrainingType> TrainingTypes { get; set; }
     }
 }

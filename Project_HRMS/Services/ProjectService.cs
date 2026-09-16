@@ -1,6 +1,7 @@
 ﻿using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Project_Hrms.Services
 {
@@ -11,24 +12,23 @@ namespace Project_Hrms.Services
         {
             this.db = db;
         }
-        public void AddNewProject(Projects p)
+        public async Task AddNewProject(Projects p)
         {
-
-            db.Projects.Add(p);
-            db.SaveChanges();
+            await db.Projects.AddAsync(p);
+            await db.SaveChangesAsync();
         }
 
-        public List<Projects> GetAllProjects()
+        public async Task<List<Projects>> GetAllProjects()
         {
-            var data = db.Projects.ToList();
+            var data = await db.Projects.ToListAsync();
             return data;
-
         }
 
-        public Projects FindProjectById(int id)
+        public async Task<Projects> FindProjectById(int id)
         {
-            var data = db.Projects.Find(id);
-            if (data!= null)
+            var data = await db.Projects.FindAsync(id);
+
+            if (data != null)
             {
                 return data;
             }
@@ -37,20 +37,20 @@ namespace Project_Hrms.Services
                 return null;
             }
         }
-
-        public void UpdateProject(Projects p)
+        public async Task UpdateProject(Projects p)
         {
             db.Projects.Update(p);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public void DeleteProject(int id)
+        public async Task DeleteProject(int id)
         {
-            var data = db.Projects.Find(id);
+            var data = await db.Projects.FindAsync(id);
+
             if (data != null)
             {
                 db.Projects.Remove(data);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }
