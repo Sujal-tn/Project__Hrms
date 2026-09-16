@@ -7,13 +7,15 @@ namespace Project_Hrms.Controllers
     public class ProjectsController : Controller
     {
         IProject pro;
-        public ProjectsController(IProject pr)
+        private readonly IWebHostEnvironment environment;
+        public ProjectsController(IProject pr, IWebHostEnvironment env)
         {
             this.pro = pr;
+            this.environment = env;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var data = pro.GetAllProjects();
+            var data = await pro.GetAllProjects();
             return View(data);
         }
 
@@ -23,31 +25,61 @@ namespace Project_Hrms.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProject(Projects p)
+        public async Task<IActionResult> AddProject(ProjectsView p)
         {
-            pro.AddNewProject(p);
+
+            Projects project = new Projects()
+            {
+                ProjectName = p.ProjectName,
+                ClientName = p.ClientName,
+                ProjectDescription = p.ProjectDescription,
+                StartDate = p.StartDate,
+                EndDate = p.EndDate,
+                Priority = p.Priority,
+                ProjectValue = p.ProjectValue,
+                PriceType = p.PriceType,
+                Status = p.Status,
+                ManagerName = p.ManagerName
+            };
+
+            string path = environment.WebRootPath + "/Content/Logo";
+            string fileName = p.LogoPath.FileName;
+            string fullPath = Path.Combine(path, fileName);
+            FileStream stream = new FileStream(fullPath, FileMode.Create);
+            p.LogoPath.CopyTo(stream);
+            stream.Close();
+            project.LogoPath = "/Content/Logo/" + fileName;
+            string fileName2 = p.FilePath.FileName;
+            string path2 = environment.WebRootPath + "/Content/Files";
+            string fullPath2 = Path.Combine(path2, fileName2);
+            FileStream stream2 = new FileStream(fullPath2, FileMode.Create);
+            p.FilePath.CopyTo(stream2);
+            stream2.Close();
+            project.FilePath = "/Content/Files/" + fileName2;
+
+            await pro.AddNewProject(project);
             TempData["addmsg"] = "Project Added Successfully";
             return RedirectToAction("Index");
         }
 
-        public IActionResult EditProject(int id)
+        public async Task<IActionResult> EditProject(int id)
         {
-            var data = pro.FindProjectById(id);
+            var data = await pro.FindProjectById(id);
             return View(data);
         }
 
         [HttpPost]
-        public IActionResult EditProject(Projects p)
-        { 
-            pro.UpdateProject(p);
+        public async Task<IActionResult> EditProject(Projects p)
+        {
+            await pro.UpdateProject(p);
             TempData["updmsg"] = "Project Updated Successfully";
             return RedirectToAction("Index");
 
         }
 
-        public IActionResult DeleteProject(int id)
+        public async Task<IActionResult> DeleteProject(int id)
         {
-            pro.DeleteProject(id);
+            await pro.DeleteProject(id);
             TempData["delmsg"] = "Project Deleted Successfully";
             return RedirectToAction("Index");
         }
