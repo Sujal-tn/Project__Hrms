@@ -13,27 +13,49 @@ namespace Project_Hrms.Services.EmployeeService
         }
         public void AddDepartment(Department d)
         {
-            throw new NotImplementedException();
+            var emps= db.Employees.Count(x=>x.DepartmentId==d.DepartmentId);
+            var de = new Department()
+            {
+                DepartmentName=d.DepartmentName,  
+                NoOfEmployee=emps,
+                Status=d.Status,
+                CreatedAt= DateTime.Now.ToString(),
+                CreatedBy="Admin"
+            };
+
+            db.Departments.Add(de);
+            db.SaveChanges();
         }
 
         public void DeleteDepartment(int id)
         {
-            throw new NotImplementedException();
+            var del= db.Departments.Find(id);
+            if (del != null)
+            {
+                db.Departments.Remove(del);
+                db.SaveChanges();
+            }
         }
 
-        public List<Department> FetchRoles()
+        public List<Department> FetchDepartments()
         {
-            throw new NotImplementedException();
+           var data= db.Departments.ToList();
+            return data;
         }
 
-        public Department findRoleById(int id)
+        public Department findDepartmentById(int id)
         {
-            throw new NotImplementedException();
+           var dep=  db.Departments.Find(id);
+            return dep;      
         }
 
         public void UpdateDepartment(Department r)
         {
-            throw new NotImplementedException();
+            r.ModifiedBy = "Admin";
+            r.ModifiedAt = DateTime.Now.ToString();
+
+            db.Departments.Update(r);
+            db.SaveChanges();
         }
     }
 }

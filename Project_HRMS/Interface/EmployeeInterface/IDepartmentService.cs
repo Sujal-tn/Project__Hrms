@@ -5,11 +5,11 @@ namespace Project_Hrms.Interface.EmployeeInterface
     public interface IDepartmentService
     {
         void AddDepartment(Department d);
-        List<Department> FetchRoles();
+        List<Department> FetchDepartments();
 
         void DeleteDepartment(int id);
 
-        Department findRoleById(int id);
+        Department findDepartmentById(int id);
 
         void UpdateDepartment(Department r);
     }

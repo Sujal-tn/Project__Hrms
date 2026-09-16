@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDesignationService, DesignationService>();
+builder.Services.AddScoped<IEmpService, EmpService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 builder.Services.AddSession();
 
@@ -33,7 +36,7 @@ app.MapStaticAssets();
 app.UseSession();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Role}/{action=Index}/{id?}")
+    pattern: "{controller=Emp}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 
