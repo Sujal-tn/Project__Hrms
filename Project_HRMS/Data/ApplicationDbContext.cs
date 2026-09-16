@@ -27,6 +27,12 @@ namespace Project_Hrms.Data
 
         public DbSet<TrainingType> TrainingTypes { get; set; }
 
+        public DbSet<Attendance> Attendance { get; set; }
+
+        public DbSet<MasterLeaveType> MasterLeaveType { get; set; }
+
+        public DbSet<LeaveRequest> LeaveRequest { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
