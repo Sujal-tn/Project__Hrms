@@ -1,5 +1,6 @@
 ﻿using Project_Hrms.Data;
 using Project_Hrms.Interface;
+using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
 

@@ -1,3 +1,4 @@
+﻿using Project_Hrms.Data;
 ﻿using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Data;
 using Project_Hrms.Interface;
@@ -31,8 +32,8 @@ namespace Project_Hrms.Services.Training
 
         public async Task<List<Trainers>> FetchAll()
         {
-            var data = await db.Trainers.ToListAsync();
-            return data;
+            //var data = await db.Trainers.ToListAsync();
+            //return data;
         }
 
         public async Task<Trainers?> FindByID(int id)
