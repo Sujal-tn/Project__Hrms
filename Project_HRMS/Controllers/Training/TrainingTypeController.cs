@@ -10,11 +10,11 @@ namespace Project_Hrms.Controllers.Training
     {
         private readonly ITrainingType services;
 
-        public TrainingTypeController(ITrainingType services) 
-        { 
+        public TrainingTypeController(ITrainingType services)
+        {
             this.services = services;
         }
-       
+
         public async Task<IActionResult> Index()
         {
             var data = await services.FetchAll();
@@ -26,7 +26,7 @@ namespace Project_Hrms.Controllers.Training
             return View();
         }
 
-       
+
         [HttpPost]
         public async Task<IActionResult> AddType(TrainingType model)
         {
@@ -75,8 +75,8 @@ namespace Project_Hrms.Controllers.Training
             return RedirectToAction("Index");
         }
 
-    
-           
+
+
     }
 
 

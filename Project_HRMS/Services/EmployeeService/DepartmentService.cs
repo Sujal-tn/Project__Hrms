@@ -13,14 +13,14 @@ namespace Project_Hrms.Services.EmployeeService
         }
         public void AddDepartment(Department d)
         {
-            var emps= db.Employees.Count(x=>x.DepartmentId==d.DepartmentId);
+            var emps = db.Employees.Count(x => x.DepartmentId == d.DepartmentId);
             var de = new Department()
             {
-                DepartmentName=d.DepartmentName,  
-                NoOfEmployee=emps,
-                Status=d.Status,
-                CreatedAt= DateTime.Now.ToString(),
-                CreatedBy="Admin"
+                DepartmentName = d.DepartmentName,
+                NoOfEmployee = emps,
+                Status = d.Status,
+                CreatedAt = DateTime.Now.ToString(),
+                CreatedBy = "Admin"
             };
 
             db.Departments.Add(de);
@@ -29,7 +29,7 @@ namespace Project_Hrms.Services.EmployeeService
 
         public void DeleteDepartment(int id)
         {
-            var del= db.Departments.Find(id);
+            var del = db.Departments.Find(id);
             if (del != null)
             {
                 db.Departments.Remove(del);
@@ -39,14 +39,14 @@ namespace Project_Hrms.Services.EmployeeService
 
         public List<Department> FetchDepartments()
         {
-           var data= db.Departments.ToList();
+            var data = db.Departments.ToList();
             return data;
         }
 
         public Department findDepartmentById(int id)
         {
-           var dep=  db.Departments.Find(id);
-            return dep;      
+            var dep = db.Departments.Find(id);
+            return dep;
         }
 
         public void UpdateDepartment(Department r)

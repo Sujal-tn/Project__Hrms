@@ -14,7 +14,7 @@ namespace Project_Hrms.Controllers.EmployeeController
         }
         public IActionResult Index()
         {
-          var deps =  ds.FetchDepartments();
+            var deps = ds.FetchDepartments();
             return View(deps);
         }
 
@@ -41,7 +41,7 @@ namespace Project_Hrms.Controllers.EmployeeController
 
         public IActionResult EditDepartment(int id)
         {
-           var de= ds.findDepartmentById(id);
+            var de = ds.findDepartmentById(id);
             return View(de);
         }
 

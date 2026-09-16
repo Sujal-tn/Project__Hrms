@@ -18,9 +18,9 @@ namespace Project_Hrms.Services.LoginService
         {
 
             var u = db.Employees.Include(x => x.Role)
-                .FirstOrDefault(x => x.Email == email && x.Password == password && x.Status=="Active");
+                .FirstOrDefault(x => x.Email == email && x.Password == password && x.Status == "Active");
             return u;
-           
+
         }
     }
 }
