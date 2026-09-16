@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Data;
 using Project_Hrms.Interface;
+using Project_Hrms.Models;
 using Project_Hrms.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
+builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 
 
 var app = builder.Build();
@@ -36,7 +38,6 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Projects}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=TrainingType}/{action=Index}/{id?}");
 
 app.Run();

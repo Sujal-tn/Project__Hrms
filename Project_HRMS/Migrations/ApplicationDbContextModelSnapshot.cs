@@ -22,7 +22,6 @@ namespace Project_Hrms.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-<<<<<<< HEAD
             modelBuilder.Entity("Project_Hrms.Models.Attendance", b =>
                 {
                     b.Property<int>("AttendanceId")
@@ -32,6 +31,7 @@ namespace Project_Hrms.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendanceId"));
 
                     b.Property<decimal>("BreakHours")
+                        .HasColumnType("decimal(18,2)");
                         .HasColumnType("decimal(5,2)");
 
                     b.Property<DateTime?>("CheckIn")
@@ -53,6 +53,10 @@ namespace Project_Hrms.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("OvertimeHours")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ProductionHours")
+                        .HasColumnType("decimal(18,2)");
                         .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal>("ProductionHours")
@@ -66,6 +70,7 @@ namespace Project_Hrms.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WorkingHours")
+                        .HasColumnType("decimal(18,2)");
                         .HasColumnType("decimal(5,2)");
 
                     b.HasKey("AttendanceId");
@@ -560,8 +565,7 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Payslips");
                 });
 
-=======
->>>>>>> main
+
             modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
                 {
                     b.Property<int>("ProjectId")
@@ -572,7 +576,6 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("ClientName")
                         .IsRequired()
-<<<<<<< HEAD
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -580,15 +583,12 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-=======
                         .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FilePath")
-<<<<<<< HEAD
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -597,12 +597,10 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-=======
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LogoPath")
                         .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.Property<string>("ManagerName")
                         .IsRequired()
@@ -610,7 +608,6 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("PriceType")
                         .IsRequired()
-<<<<<<< HEAD
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -623,7 +620,6 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-=======
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Priority")
@@ -637,7 +633,6 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.Property<double>("ProjectValue")
                         .HasColumnType("float");
@@ -647,18 +642,14 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-<<<<<<< HEAD
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-=======
                         .HasColumnType("nvarchar(max)");
->>>>>>> main
 
                     b.HasKey("ProjectId");
 
                     b.ToTable("Projects");
                 });
-<<<<<<< HEAD
 
             modelBuilder.Entity("Project_Hrms.Models.Role", b =>
                 {
@@ -1355,9 +1346,249 @@ namespace Project_Hrms.Migrations
 
                     b.Navigation("Timesheets");
                 });
-=======
->>>>>>> main
-#pragma warning restore 612, 618
+
+            modelBuilder.Entity("Project_Hrms.Models.Trainers", b =>
+                {
+                    b.Property<int>("TrainerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrainerId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Phone")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TrainerId");
+
+                    b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TrainingType", b =>
+                {
+                    b.Property<int>("TrainingTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrainingTypeId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TrainingTypeId");
+
+                    b.ToTable("TrainingTypes");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Trainings", b =>
+                {
+                    b.Property<int>("TrainingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrainingId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TrainerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TrainingCost")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("TrainingTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TrainingId");
+
+                    b.HasIndex("TrainerId");
+
+                    b.HasIndex("TrainingTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Trainings");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("AboutEmployee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateOfJoining")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DesignationtId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportingManager")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoleId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Attendance", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Trainings", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Trainers", "Trainer")
+                        .WithMany()
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.TrainingType", "TrainingType")
+                        .WithMany()
+                        .HasForeignKey("TrainingTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trainer");
+
+                    b.Navigation("TrainingType");
+
+                    b.Navigation("User");
+                });
+
+
         }
     }
 }
