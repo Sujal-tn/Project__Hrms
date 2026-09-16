@@ -6,11 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project_Hrms.Migrations
 {
     /// <inheritdoc />
-    public partial class DbInitCreate : Migration
+    public partial class DBInitCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "LogoPath",
+                table: "Projects",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "FilePath",
+                table: "Projects",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
             migrationBuilder.CreateTable(
                 name: "DeductionType",
                 columns: table => new
@@ -70,30 +86,6 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ClientName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ProjectValue = table.Column<double>(type: "float", nullable: false),
-                    PriceType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LogoPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ManagerName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.ProjectId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -109,6 +101,31 @@ namespace Project_Hrms.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.RoleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    TaskId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,28 +183,37 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tasks",
+                name: "TaskBoards",
                 columns: table => new
                 {
-                    TaskId = table.Column<int>(type: "int", nullable: false)
+                    TaskBoardId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                    Percentage = table.Column<int>(type: "int", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    TaskId = table.Column<int>(type: "int", nullable: false),
+                    TasksTaskId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
+                    table.PrimaryKey("PK_TaskBoards", x => x.TaskBoardId);
                     table.ForeignKey(
-                        name: "FK_Tasks_Projects_ProjectId",
+                        name: "FK_TaskBoards_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskBoards_Tasks_TaskId",
+                        column: x => x.TaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "TaskId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskBoards_Tasks_TasksTaskId",
+                        column: x => x.TasksTaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "TaskId");
                 });
 
             migrationBuilder.CreateTable(
@@ -272,26 +298,28 @@ namespace Project_Hrms.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfJoining = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AboutEmployee = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    DesignationtId = table.Column<int>(type: "int", nullable: true),
+                    DateOfJoining = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AboutEmployee = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId1 = table.Column<int>(type: "int", nullable: true),
                     ReportingManager = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
-                    DesignationtId = table.Column<int>(type: "int", nullable: true)
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectsProjectId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -309,6 +337,11 @@ namespace Project_Hrms.Migrations
                         principalColumn: "DesignationId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_User_Projects_ProjectsProjectId",
+                        column: x => x.ProjectsProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId");
+                    table.ForeignKey(
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
@@ -317,45 +350,12 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskBoards",
-                columns: table => new
-                {
-                    TaskBoardId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Percentage = table.Column<int>(type: "int", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    TaskId = table.Column<int>(type: "int", nullable: false),
-                    TasksTaskId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskBoards", x => x.TaskBoardId);
-                    table.ForeignKey(
-                        name: "FK_TaskBoards_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TaskBoards_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "TaskId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TaskBoards_Tasks_TasksTaskId",
-                        column: x => x.TasksTaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "TaskId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Attendance",
                 columns: table => new
                 {
                     AttendanceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CheckIn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CheckOut = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -366,8 +366,7 @@ namespace Project_Hrms.Migrations
                     OvertimeHours = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     BreakHours = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     Late = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -515,30 +514,6 @@ namespace Project_Hrms.Migrations
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectsUser",
-                columns: table => new
-                {
-                    ProjectsProjectId = table.Column<int>(type: "int", nullable: false),
-                    UsersUserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectsUser", x => new { x.ProjectsProjectId, x.UsersUserId });
-                    table.ForeignKey(
-                        name: "FK_ProjectsUser_Projects_ProjectsProjectId",
-                        column: x => x.ProjectsProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectsUser_User_UsersUserId",
-                        column: x => x.UsersUserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -788,11 +763,6 @@ namespace Project_Hrms.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectsUser_UsersUserId",
-                table: "ProjectsUser",
-                column: "UsersUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TaskBoards_ProjectId",
                 table: "TaskBoards",
                 column: "ProjectId");
@@ -843,6 +813,11 @@ namespace Project_Hrms.Migrations
                 column: "DesignationtId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_User_ProjectsProjectId",
+                table: "User",
+                column: "ProjectsProjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_RoleId",
                 table: "User",
                 column: "RoleId");
@@ -871,9 +846,6 @@ namespace Project_Hrms.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payslips");
-
-            migrationBuilder.DropTable(
-                name: "ProjectsUser");
 
             migrationBuilder.DropTable(
                 name: "TaskBoards");
@@ -912,9 +884,6 @@ namespace Project_Hrms.Migrations
                 name: "MasterLeaveType");
 
             migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
                 name: "Designation");
 
             migrationBuilder.DropTable(
@@ -922,6 +891,26 @@ namespace Project_Hrms.Migrations
 
             migrationBuilder.DropTable(
                 name: "Department");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "LogoPath",
+                table: "Projects",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "FilePath",
+                table: "Projects",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
     }
 }

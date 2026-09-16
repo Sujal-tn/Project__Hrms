@@ -12,6 +12,14 @@
 //        { 
 //            this.db = db;
 //        }
+//        public async Task<List<User>> FetchUsers()
+//        {
+//            return await db.User.ToListAsync();
+//        }
+//        public async Task<List<Designation>> FetchDesignations()
+//        { 
+//            return await db.Designation.ToListAsync();
+//        }
 //    //    public async Task<List<User>> FetchUsers()
 //    //    {
 //    //        return await db.User.ToListAsync();

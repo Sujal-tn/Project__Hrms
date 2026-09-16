@@ -9,7 +9,7 @@ namespace Project_Hrms.Data
         {
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Designation> Designation { get; set; }

@@ -1,24 +1,23 @@
-﻿using ClosedXML.Excel;
+﻿using System.Security.Claims;
+using ClosedXML.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
-using System.Reflection.Metadata;
-using System.Security.Claims;
-using Document = iTextSharp.text.Document;
 
 namespace Project_Hrms.Controllers
 {
     public class AdminAttendanceController : Controller
     {
         private readonly IAttendanceService attendanceService;
+
         public AdminAttendanceController(IAttendanceService attendanceService)
         {
             this.attendanceService = attendanceService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AdminAttendanceList()
         {
             var list = await attendanceService.GetAllAttendanceAsync();
             var todayRecords = await attendanceService.GetTodayAttendanceAsync();
@@ -46,18 +45,18 @@ namespace Project_Hrms.Controllers
             return View(list);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> EditAttendance(int id)
         {
             var data = await attendanceService.GetAttendanceByIdAsync(id);
             return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Attendance model)
+        public async Task<IActionResult> EditAttendance(Attendance model)
         {
             await attendanceService.UpdateAttendanceAsync(model);
             TempData["msg"] = "Attendance Updated Successfully";
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminAttendanceList");
         }
 
         public async Task<IActionResult> ExportToPDF()
