@@ -26,9 +26,10 @@ namespace Project_Hrms.Services
         public async Task<List<Attendance>> GetTodayAttendanceAsync()
         {
             var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
             var data = await db.Attendance
                 .Include(a => a.User)
-                .Where(a => a.Date == today).ToListAsync();
+                .Where(a => a.Date >= today && a.Date < tomorrow).ToListAsync();
             return data;
         }
 
@@ -64,7 +65,7 @@ namespace Project_Hrms.Services
 
         public async Task<List<User>> GetAllEmployeesAsync()
         {
-            var data = await db.User
+            var data = await db.Users
                 .Include(u => u.Department)
                 .Where(u => u.Role.RoleName == "Employee")
                 .ToListAsync();

@@ -12,8 +12,8 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260914191645_DbInitCreate")]
-    partial class DbInitCreate
+    [Migration("20260916083026_DBInitCreate")]
+    partial class DBInitCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -572,26 +572,16 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("ClientName")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LogoPath")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ManagerName")
                         .IsRequired()
@@ -599,18 +589,19 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("PriceType")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Priority")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("ProjectValue")
                         .HasColumnType("float");
@@ -620,8 +611,7 @@ namespace Project_Hrms.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProjectId");
 
@@ -818,11 +808,9 @@ namespace Project_Hrms.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("AboutEmployee")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -831,10 +819,10 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfJoining")
+                    b.Property<DateTime?>("DateOfJoining")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DepartmentId")
@@ -844,19 +832,15 @@ namespace Project_Hrms.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedAt")
@@ -866,25 +850,27 @@ namespace Project_Hrms.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePicture")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProjectsProjectId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReportingManager")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoleId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
@@ -893,24 +879,11 @@ namespace Project_Hrms.Migrations
 
                     b.HasIndex("DesignationtId");
 
+                    b.HasIndex("ProjectsProjectId");
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("ProjectsUser", b =>
-                {
-                    b.Property<int>("ProjectsProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectsProjectId", "UsersUserId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("ProjectsUser");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Attendance", b =>
@@ -1200,7 +1173,7 @@ namespace Project_Hrms.Migrations
                         .IsRequired();
 
                     b.HasOne("Project_Hrms.Models.User", "User")
-                        .WithMany("Timesheets")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1222,32 +1195,20 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("DesignationtId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Project_Hrms.Models.Projects", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ProjectsProjectId");
+
                     b.HasOne("Project_Hrms.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Department");
 
                     b.Navigation("Designation");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ProjectsUser", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.Projects", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Project_Hrms.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.DeductionType", b =>
@@ -1301,6 +1262,8 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Tasks");
 
                     b.Navigation("Timesheets");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Role", b =>
@@ -1320,8 +1283,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("LeaveBalances");
 
                     b.Navigation("LeaveRequests");
-
-                    b.Navigation("Timesheets");
                 });
 #pragma warning restore 612, 618
         }

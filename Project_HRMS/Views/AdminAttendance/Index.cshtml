@@ -40,7 +40,8 @@
             </div>
             <div class="col-md-7">
                 <div class="d-flex align-items-center justify-content-md-end">
-                    <h6>Total Absentees Today</h6>
+                    <h6 class="me-2 mb-0">Total Absentees Today</h6>
+                    <h5 class="mb-0">@ViewBag.Absent</h5>
                 </div>
             </div>
         </div>
@@ -158,7 +159,7 @@
 
         <div class="card-body p-0">
             <div class="custom-datatable-filter table-responsive">
-                <table class="table" id="attendanceTable">
+                <table class="table no-datatable" id="attendanceTable">
                     <thead class="thead-light">
                         <tr>
                             <th>AId</th>
@@ -204,7 +205,7 @@
                                 <td>@record.CheckOut?.ToString("hh:mm tt")</td>
                                 <td>@record.BreakHours hrs</td>
                                 <td>@record.Late min</td>
-                               <td>
+                                <td>
                                     @if (record.ProductionHours < 4)
                                     {
                                         <span class="badge text-bg-danger">@record.ProductionHours</span>

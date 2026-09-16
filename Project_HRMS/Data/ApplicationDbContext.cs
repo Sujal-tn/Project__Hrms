@@ -9,7 +9,7 @@ namespace Project_Hrms.Data
         {
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Designation> Designation { get; set; }
@@ -217,9 +217,5 @@ namespace Project_Hrms.Data
                 .HasForeignKey(bd => bd.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Attendance> Attendance { get; set; }
-        public DbSet<Projects> Projects { get; set; }
     }
 }
