@@ -83,5 +83,5 @@ namespace Project_Hrms.Controllers
             TempData["delmsg"] = "Project Deleted Successfully";
             return RedirectToAction("Index");
         }
-    } 
+    }
 }

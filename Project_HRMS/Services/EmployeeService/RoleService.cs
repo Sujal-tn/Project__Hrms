@@ -19,29 +19,29 @@ namespace Project_Hrms.Services.EmployeeService
                 Status = r.Status,
                 CreatedAt = DateTime.Now.ToString(),
                 CreatedBy = "Admin",
-              
+
             };
 
-          db.Roles.Add(ro);
+            db.Roles.Add(ro);
             db.SaveChanges();
         }
 
         public void DeleteRole(int id)
         {
 
-            var data= db.Roles.Find(id);
-            if(data!=null)
+            var data = db.Roles.Find(id);
+            if (data != null)
             {
                 db.Roles.Remove(data);
                 db.SaveChanges();
             }
-          
+
         }
 
         public List<Role> FetchRoles()
         {
 
-            var roles= db.Roles.ToList();
+            var roles = db.Roles.ToList();
             return roles;
         }
 
@@ -49,7 +49,7 @@ namespace Project_Hrms.Services.EmployeeService
         {
 
             var d = db.Roles.Find(id);
-            if(d!=null)
+            if (d != null)
             {
                 return d;
             }
@@ -61,7 +61,7 @@ namespace Project_Hrms.Services.EmployeeService
 
         public void UpdateRole(Role r)
         {
-            
+
             db.Roles.Update(r);
             db.SaveChanges();
 

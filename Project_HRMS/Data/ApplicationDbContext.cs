@@ -12,7 +12,7 @@ namespace Project_Hrms.Data
 
         }
 
-       
+
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<Department> Departments { get; set; }
@@ -29,7 +29,7 @@ namespace Project_Hrms.Data
         public DbSet<Promotion> Promotion { get; set; }
         
 
-
+        public DbSet<Projects> Projects { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -41,25 +41,25 @@ namespace Project_Hrms.Data
             );
 
 
-            
+
             modelBuilder.Entity<User>(
                 e =>
                 {
-                   
+
                     e.HasOne(x => x.Role)
                      .WithMany(x => x.Employes)
                      .HasForeignKey(x => x.RoleId)
                      .OnDelete(DeleteBehavior.Restrict);
 
 
-                   
+
                     e.HasOne(x => x.Department)
                      .WithMany(x => x.Employes)
                      .HasForeignKey(x => x.DepartmentId)
                      .OnDelete(DeleteBehavior.Restrict);
 
 
-                    
+
                     e.HasOne(x => x.Designation)
                      .WithMany(x => x.Employes)
                      .HasForeignKey(x => x.DesignationtId)
