@@ -34,6 +34,7 @@ namespace Project_Hrms.Services
             return data;
         }
 
+
         public async Task<TrainingType?> FindByID(int id)
         {
             var data = await db.TrainingTypes.FindAsync(id);
