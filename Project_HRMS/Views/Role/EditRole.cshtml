@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Project_Hrms.Models.EmployeeModel.Role
+<form method="post">
+    
+    <input type="text" readonly hidden class="form-control" asp-for="RoleId" /><br>
+    RoleName
+    <input type="text" class="form-control" asp-for="RoleName" placeholder="Enter Role" /><br>
+    Status
+    <select asp-for="Status" class="form-control">
+        <option>
+            Active
+        </option>
+        <option>
+            InActive
+        </option>
+    </select>
+    <br>
+    <input type="submit" value="Save" class="btn btn-primary" />
+
+</form>

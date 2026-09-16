@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Project_Hrms.Models.EmployeeModel.User>
+@if (TempData["msg"]!= null)
+{
+    <span> TempData["msg"]</span>
+}
+@if (TempData["Delmsg"] != null)
+{
+    <span> TempData["msg"]</span>
+}
+@if (TempData["updmsg"] != null)
+{
+    <span> TempData["msg"]</span>
+}
+<a asp-controller="Emp" asp-action="AddEmp" class="btn btn-primary">Add Employee</a>
+
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Number</th>
+            <th scope="col">Designation</th>
+            <th scope="col">ReportingManager</th>
+            <th scope="col">DOJ</th>
+            <th scope="col">Status</th>
+            <th scope="col">CreatedBy</th>
+            <th scope="col">ModifiedBy</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.FirstName + '' + @r.LastName</td>
+                <td>@r.Email</td>
+                <td>@r.PhoneNumber</td>
+                <td>@r.Designation.DesignationName</td>
+                <td>@r.FirstName</td>
+                <td>@r.DateOfJoining</td>
+                <td>
+                    @if (r.Status == "Active")
+                    {
+                        <span class="badge bg-success">
+                            Active
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">
+                            InActive
+                        </span>
+                    }
+                </td>
+                <td>@r.CreatedBy</td>
+                <td>@r.ModifiedBy</td>
+                <td>
+                    <a asp-controller="Designation" asp-action="EditEmp" asp-route-id="@r.UserId" class="btn btn-primary">Edit</a>
+                    <a asp-controller="Designation" asp-action="DeleteEmp" asp-route-id="@r.UserId" class="btn btn-Delete" onclick="return confirm('Are you Sure Want to Delete this Role?')">Delete</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
