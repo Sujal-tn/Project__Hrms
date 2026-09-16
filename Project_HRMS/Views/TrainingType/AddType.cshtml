@@ -1,0 +1,46 @@
+﻿
+@model TrainingType
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="mb-4">Add Training Type</h4>
+
+        <form asp-controller="TrainingType" asp-action="AddType" method="post">
+
+            <div class="mb-3">
+                <label asp-for="TrainingTypeName" class="form-label"> Training Type</label>
+                <input asp-for="TrainingTypeName"class="form-control" />
+                <span asp-validation-for="TrainingTypeName"class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"> Description </label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label">Status </label>
+
+                <select asp-for="Status" class="form-select">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+             <span asp-validation-for="Status"class="text-danger"> </span>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Add Type"> </input>
+
+            <a asp-controller="TrainingType" asp-action="Index" class="btn btn-secondary"> Cancel </a>
+
+        </form>
+        
+    </div>
+</div>
+
+@section Scripts {
+    {
+        <partial name ="_ValidationScriptsPartial"/>
+    }
+}
