@@ -9,7 +9,7 @@ namespace Project_Hrms.Services
     {
         private readonly ApplicationDbContext db;
         public TrainingTypeServices(ApplicationDbContext db)
-        { 
+        {
             this.db = db;
         }
         public async Task AddTrainingType(TrainingType ttype)
@@ -20,8 +20,8 @@ namespace Project_Hrms.Services
 
         public async Task DeleteTrainingType(int id)
         {
-            var data= await db.TrainingTypes.FindAsync(id);
-            if(data !=null)
+            var data = await db.TrainingTypes.FindAsync(id);
+            if (data != null)
             {
                 db.TrainingTypes.Remove(data);
                 await db.SaveChangesAsync();
