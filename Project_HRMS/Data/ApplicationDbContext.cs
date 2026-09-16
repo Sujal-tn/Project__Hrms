@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project_Hrms.Models.EmployeeModel;
 using Project_Hrms.Models;
+using Project_Hrms.Models.EmployeeModel;
+
 
 namespace Project_Hrms.Data
 {

@@ -1,5 +1,6 @@
 ﻿
-@model List<Project_Hrms.Models.User>
+
+@model List<Project_Hrms.Models.EmployeeModel.User>
 
 @{
     ViewData["Title"] = "Employee Report";
@@ -161,10 +162,10 @@
         $(document).ready(function() {
             $('#employeeTable').DataTable();
         });
-    </script> *@
+    </script>
 
 
-<!-- Chart -->
+    <!-- Chart -->
     <script>
 
         var data = @Html.Raw(
@@ -197,5 +198,4 @@
         });
 
     </script>
-
 }
