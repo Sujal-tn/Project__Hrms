@@ -10,7 +10,7 @@ using Project_Hrms.Data;
 
 namespace Project_Hrms.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260913080849_dbinit")]
     partial class dbinit
     {

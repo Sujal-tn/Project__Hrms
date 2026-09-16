@@ -6,8 +6,8 @@ namespace Project_Hrms.Services.EmployeeService
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly AppDbContext db;
-        public DepartmentService(AppDbContext db)
+        private readonly ApplicationDbContext db;
+        public DepartmentService(ApplicationDbContext db)
         {
             this.db = db;
         }

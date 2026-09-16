@@ -7,9 +7,9 @@ namespace Project_Hrms.Services.LoginService
 {
     public class AuthService : IAuthService
     {
-        private readonly AppDbContext db;
+        private readonly ApplicationDbContext db;
 
-        public AuthService(AppDbContext db)
+        public AuthService(ApplicationDbContext db)
         {
             this.db = db;
         }

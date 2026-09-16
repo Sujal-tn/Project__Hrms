@@ -6,8 +6,8 @@ namespace Project_Hrms.Services.EmployeeService
 {
     public class RoleService : IRoleService
     {
-        private readonly AppDbContext db;
-        public RoleService(AppDbContext db)
+        private readonly ApplicationDbContext db;
+        public RoleService(ApplicationDbContext db)
         {
             this.db = db;
         }
