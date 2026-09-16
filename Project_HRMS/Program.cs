@@ -29,6 +29,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
+builder.Services.AddScoped<IPromotion, PromotionService>();
 
 
 var app = builder.Build();

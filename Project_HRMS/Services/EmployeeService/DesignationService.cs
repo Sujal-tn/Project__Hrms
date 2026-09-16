@@ -16,11 +16,11 @@ namespace Project_Hrms.Services.EmployeeService
 
             var Des = new Designation()
             {
-                DesignationName=d.DesignationName,
-                DepartmentId=d.DepartmentId,
-                Status=d.Status,
-                CreatedAt=DateTime.Now.ToString(),
-                CreatedBy="Admin"
+                DesignationName = d.DesignationName,
+                DepartmentId = d.DepartmentId,
+                Status = d.Status,
+                CreatedAt = DateTime.Now.ToString(),
+                CreatedBy = "Admin"
             };
             db.Designations.Add(Des);
             db.SaveChanges();
@@ -28,8 +28,8 @@ namespace Project_Hrms.Services.EmployeeService
 
         public void DeleteDesignation(int id)
         {
-            var data= db.Designations.Find(id);
-            if(data!=null)
+            var data = db.Designations.Find(id);
+            if (data != null)
             {
                 db.Designations.Remove(data);
                 db.SaveChanges();
@@ -54,7 +54,7 @@ namespace Project_Hrms.Services.EmployeeService
 
         public Designation findDesignationById(int id)
         {
-           var di= db.Designations.Find(id);
+            var di = db.Designations.Find(id);
             return di;
 
         }

@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Project_Hrms.Services.Training;
+using Project_Hrms.Models;
 
 namespace Project_Hrms.Controllers.Training
 {
@@ -69,7 +70,7 @@ namespace Project_Hrms.Controllers.Training
             return RedirectToAction("Index");
         }
 
-     
+
 
     }
 }

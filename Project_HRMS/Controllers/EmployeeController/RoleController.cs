@@ -9,11 +9,11 @@ namespace Project_Hrms.Controllers.EmployeeController
         IRoleService rs;
         public RoleController(IRoleService rs)
         {
-            this.rs= rs;
+            this.rs = rs;
         }
         public IActionResult Index()
         {
-            var allroles= rs.FetchRoles();
+            var allroles = rs.FetchRoles();
             return View(allroles);
         }
 
@@ -45,7 +45,7 @@ namespace Project_Hrms.Controllers.EmployeeController
         public IActionResult EditRole(Role r)
         {
             rs.UpdateRole(r);
-            TempData["UpdMsg"]="Updated Successfully";
+            TempData["UpdMsg"] = "Updated Successfully";
             return RedirectToAction("Index");
         }
     }
