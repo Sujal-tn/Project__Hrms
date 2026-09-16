@@ -2,6 +2,8 @@
 using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
+using Project_Hrms.Models.EmployeeModel;
+
 
 namespace Project_Hrms.Services
 {
@@ -59,13 +61,13 @@ namespace Project_Hrms.Services
 
         public async Task<List<Department>> GetAllDepartmentsAsync()
         {
-            var data = await db.Department.ToListAsync();
+            var data = await db.Departments.ToListAsync();
             return data;
         }
 
         public async Task<List<User>> GetAllEmployeesAsync()
         {
-            var data = await db.Users
+            var data = await db.Employees
                 .Include(u => u.Department)
                 .Where(u => u.Role.RoleName == "Employee")
                 .ToListAsync();

@@ -29,6 +29,13 @@ namespace Project_Hrms.Data
         public DbSet<Promotion> Promotion { get; set; }
         
 
+        public DbSet<Attendance> Attendance { get; set; }
+
+        public DbSet<MasterLeaveType> MasterLeaveType { get; set; }
+
+        public DbSet<LeaveRequest> LeaveRequest { get; set; }
+
+
         public DbSet<Projects> Projects { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

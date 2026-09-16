@@ -1,6 +1,7 @@
 ﻿using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
+using Project_Hrms.Models.EmployeeModel;
 
 namespace Project_Hrms.Services
 {
@@ -13,7 +14,7 @@ namespace Project_Hrms.Services
         }
         public List<User> FeatchUser()
         {
-            var data = db.Users.ToList();
+            var data = db.Employees.ToList();
             return data;
         }
     }
