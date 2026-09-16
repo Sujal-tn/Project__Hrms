@@ -70,7 +70,7 @@ namespace Project_Hrms.Controllers.Training
             return RedirectToAction("Index");
         }
 
-     
+
 
     }
 }

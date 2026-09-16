@@ -9,11 +9,11 @@ namespace Project_Hrms.Controllers.EmployeeController
         private readonly IDesignationService ds;
         public DesignationController(IDesignationService ds)
         {
-            this.ds= ds;
+            this.ds = ds;
         }
         public IActionResult Index()
         {
-          var de=   ds.FetchDesignation();
+            var de = ds.FetchDesignation();
             var dept = ds.fetchDepartments();
             ViewBag.Departments = dept;
             return View(de);
@@ -21,14 +21,14 @@ namespace Project_Hrms.Controllers.EmployeeController
 
         public IActionResult AddDesignation()
         {
-          
+
             return View();
         }
 
         [HttpPost]
         public IActionResult AddDesignation(Designation d)
         {
-           ds.AddDesignation(d);
+            ds.AddDesignation(d);
             TempData["msg"] = "Designation Added Successfully";
             return RedirectToAction("Index");
         }
@@ -44,7 +44,7 @@ namespace Project_Hrms.Controllers.EmployeeController
         {
             var dept = ds.fetchDepartments();
             ViewBag.Departments = dept;
-            var d= ds.findDesignationById(id);
+            var d = ds.findDesignationById(id);
             return View(d);
         }
 

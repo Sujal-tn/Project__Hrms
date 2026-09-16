@@ -13,7 +13,7 @@ namespace Project_Hrms.Controllers.EmployeeController
         }
         public IActionResult Index()
         {
-            var allemps= es.FetchEmp();
+            var allemps = es.FetchEmp();
             return View(allemps);
         }
 
@@ -45,7 +45,7 @@ namespace Project_Hrms.Controllers.EmployeeController
             return RedirectToAction("Index");
 
         }
-        
+
         public IActionResult EditEmp()
         {
             return View();
