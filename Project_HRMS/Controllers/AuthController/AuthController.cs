@@ -24,24 +24,24 @@ namespace Project_Hrms.Controllers.AuthController
         }
 
         [HttpPost]
-        public IActionResult Login(string email , string password)
+        public IActionResult Login(string email, string password)
         {
             var us = auth.LoginUser(email, password);
             if (us != null)
             {
-                HttpContext.Session.SetInt32("UserId",us.UserId);
+                HttpContext.Session.SetInt32("UserId", us.UserId);
                 HttpContext.Session.SetString("UserName", us.FirstName + ' ' + us.LastName);
                 HttpContext.Session.SetInt32("RoleId", us.RoleId);
                 HttpContext.Session.SetString("RoleName", us.Role.RoleName);
-                if(us.Role.RoleName=="Admin")
+                if (us.Role.RoleName == "Admin")
                 {
                     return RedirectToAction("Auth", "AdminDashboard");
                 }
-                else if(us.Role.RoleName == "Manager")
+                else if (us.Role.RoleName == "Manager")
                 {
-                    
-                        return RedirectToAction("Auth", "ManagerDashboard");
-                    
+
+                    return RedirectToAction("Auth", "ManagerDashboard");
+
                 }
                 else if (us.Role.RoleName == "Employee")
                 {
@@ -54,7 +54,7 @@ namespace Project_Hrms.Controllers.AuthController
             {
                 return RedirectToAction("Auth", "Login");
             }
-            ModelState.AddModelError("","Invalid email or password");
+            ModelState.AddModelError("", "Invalid email or password");
             return View();
 
         }
