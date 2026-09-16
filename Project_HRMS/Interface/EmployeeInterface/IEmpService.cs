@@ -18,5 +18,7 @@ namespace Project_Hrms.Interface.EmployeeInterface
         List<Designation> fetchDesignation();
 
         List<Role> fetchRole();
+
+       
     }
 }
