@@ -26,6 +26,8 @@ namespace Project_Hrms.Data
         public DbSet<Trainings> Trainings { get; set; }
 
         public DbSet<TrainingType> TrainingTypes { get; set; }
+        public DbSet<Promotion> Promotion { get; set; }
+        
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
