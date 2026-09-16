@@ -187,7 +187,7 @@
                                              alt="Profile" class="rounded-circle" width="40" height="40">
                                         <div class="ms-2">
                                             <strong>@(user != null ? user.FirstName + " " + user.LastName : "N/A")</strong>
-                                            <div class="text-muted">@(user != null && user.Department != null ? user.Department.Name : "No Department")</div>
+                                            <div class="text-muted">@(user != null && user.Department != null ? user.Department.DepartmentName : "No Department")</div>
                                         </div>
                                     </div>
                                 </td>

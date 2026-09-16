@@ -22,8 +22,8 @@ public class EmployeeReportController : Controller
 
         var monthData = users.GroupBy(x => new
         {
-            Year = x.DateOfJoining.Value.Year,
-            Month = x.DateOfJoining.Value.Month
+            Year = DateTime.Parse(x.DateOfJoining).Year,
+            Month = DateTime.Parse(x.DateOfJoining).Month
         })
     .Select(x => new YearData
     {

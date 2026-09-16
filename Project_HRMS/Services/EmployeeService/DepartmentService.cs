@@ -13,7 +13,7 @@ namespace Project_Hrms.Services.EmployeeService
         }
         public void AddDepartment(Department d)
         {
-            var emps = db.Employees.Count(x => x.DepartmentId == d.DepartmentId);
+            var emps = db.Users.Count(x => x.DepartmentId == d.DepartmentId);
             var de = new Department()
             {
                 DepartmentName = d.DepartmentName,

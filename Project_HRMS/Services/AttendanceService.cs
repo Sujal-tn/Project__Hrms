@@ -67,7 +67,7 @@ namespace Project_Hrms.Services
 
         public async Task<List<User>> GetAllEmployeesAsync()
         {
-            var data = await db.Employees
+            var data = await db.Users
                 .Include(u => u.Department)
                 .Where(u => u.Role.RoleName == "Employee")
                 .ToListAsync();

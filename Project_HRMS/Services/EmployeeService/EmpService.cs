@@ -16,16 +16,16 @@ namespace Project_Hrms.Services.EmployeeService
         }
         public void AddEmp(User d)
         {
-            db.Employees.Add(d);
+            db.Users.Add(d);
             db.SaveChanges();
         }
 
         public void DeleteEmp(int id)
         {
-            var data = db.Employees.Find(id);
+            var data = db.Users.Find(id);
             if (data != null)
             {
-                db.Employees.Remove(data);
+                db.Users.Remove(data);
                 db.SaveChanges();
             }
         }
@@ -45,7 +45,7 @@ namespace Project_Hrms.Services.EmployeeService
 
         public List<User> FetchEmp()
         {
-            var emps = db.Employees.Include(x => x.Designation)
+            var emps = db.Users.Include(x => x.Designation)
              .Include(x => x.Department)
              .Include(x => x.Role).ToList();
             return emps;
@@ -61,7 +61,7 @@ namespace Project_Hrms.Services.EmployeeService
 
         public User findEmpById(int id)
         {
-            var e = db.Employees.Find(id);
+            var e = db.Users.Find(id);
             return e;
 
 
@@ -70,7 +70,7 @@ namespace Project_Hrms.Services.EmployeeService
         public void UpdateEmp(User r)
         {
 
-            db.Employees.Update(r);
+            db.Users.Update(r);
             db.SaveChanges();
         }
     }

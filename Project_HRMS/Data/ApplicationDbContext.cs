@@ -20,7 +20,7 @@ namespace Project_Hrms.Data
 
         public DbSet<Designation> Designations { get; set; }
 
-        public DbSet<User> Employees { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Trainers> Trainers { get; set; }
 

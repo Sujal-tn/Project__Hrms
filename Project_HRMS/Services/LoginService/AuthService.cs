@@ -17,7 +17,7 @@ namespace Project_Hrms.Services.LoginService
         public User LoginUser(string email, string password)
         {
 
-            var u = db.Employees.Include(x => x.Role)
+            var u = db.Users.Include(x => x.Role)
                 .FirstOrDefault(x => x.Email == email && x.Password == password && x.Status == "Active");
             return u;
 

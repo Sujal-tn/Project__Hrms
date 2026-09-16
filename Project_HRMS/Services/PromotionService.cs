@@ -17,7 +17,7 @@ namespace Project_Hrms.Services
         public async Task<List<PromotionViewModels>> GetAllPromotions()
         {
             var data = await (from p in db.Promotion
-                              join u in db.Employees on p.UserId equals u.UserId
+                              join u in db.Users on p.UserId equals u.UserId
                               select new PromotionViewModels
                               {
                                   PromotionId = p.PromotionId,
@@ -56,7 +56,7 @@ namespace Project_Hrms.Services
         }
         public async Task<List<User>> FetchUsers()
         {
-            return await db.Employees.ToListAsync();
+            return await db.Users.ToListAsync();
         }
         public async Task<List<Designation>> FetchDesignations()
         {

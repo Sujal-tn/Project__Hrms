@@ -1,6 +1,6 @@
 ﻿using Project_Hrms.Data;
 ﻿using Microsoft.EntityFrameworkCore;
-using Project_Hrms.Data;
+
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 
@@ -30,11 +30,16 @@ namespace Project_Hrms.Services.Training
             }
         }
 
-        public async Task<List<Trainers>> FetchAll()
+        public Task<List<Trainers>> FetchAll()
         {
-            //var data = await db.Trainers.ToListAsync();
-            //return data;
+            throw new NotImplementedException();
         }
+
+        //public async Task<List<Trainers>> FetchAll()
+        //{
+        //    //var data = await db.Trainers.ToListAsync();
+        //    //return data;
+        //}
 
         public async Task<Trainers?> FindByID(int id)
         {

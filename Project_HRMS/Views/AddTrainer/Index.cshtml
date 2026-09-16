@@ -165,72 +165,69 @@
 
                         <!-- First Name -->
                         <div class="col-md-6 mb-3">
-                            <label asp-for="FirstName" class="form-label">
+                            <label name="FirstName" class="form-label">
                                 First Name
                             </label>
 
-                            <input asp-for="FirstName"
+                            <input name="FirstName"
                                    class="form-control" />
 
-                            <span asp-validation-for="FirstName"
-                                  class="text-danger">
+                            <span class="text-danger">
+                                @Html.ValidationMessage("FirstName")
                             </span>
                         </div>
 
 
                         <!-- Last Name -->
                         <div class="col-md-6 mb-3">
-                            <label asp-for="LastName" class="form-label">
+                            <label name ="LastName" class="form-label">
                                 Last Name
                             </label>
 
-                            <input asp-for="LastName"
+                            <input name="LastName"
                                    class="form-control" />
 
-                            <span asp-validation-for="LastName"
-                                  class="text-danger">
+                            <span class="text-danger">
+                                @Html.ValidationMessage("LastName")
                             </span>
                         </div>
 
 
                         <!-- Phone -->
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Phone" class="form-label">
+                            <label name="Phone" class="form-label">
                                 Phone no
                             </label>
 
-                            <input asp-for="Phone"
+                            <input name="Phone"
                                    class="form-control" />
-
-                            <span asp-validation-for="Phone"
-                                  class="text-danger">
-                            </span>
+<span class="text-danger">
+    @Html.ValidationMessage("Phone")
+</span>
                         </div>
 
 
                         <!-- Image -->
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Image" class="form-label">
+                            <label name="Image" class="form-label">
                                 Upload image
                             </label>
 
-                            <input asp-for="Image"
+                            <input name="Image"
                                    type="file"
                                    class="form-control" />
 
-                            <span asp-validation-for="Image"
-                                  class="text-danger">
-                            </span>
+                          
                         </div>
 
 
                         <!-- Role -->
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Role" class="form-label">
+                            <label name="Role" class="form-label">
                                 Role
                             </label>
 
-                            <select asp-for="Role"
+                            <select name="Role"
                                     class="form-select">
 
                                 <option value="">
@@ -246,51 +243,50 @@
                                 </option>
 
                             </select>
-
-                            <span asp-validation-for="Role"
-                                  class="text-danger">
-                            </span>
+<span class="text-danger">
+    @Html.ValidationMessage("Role")
+</span>
                         </div>
 
 
                         <!-- Email -->
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Email" class="form-label">
+                            <label name="Email" class="form-label">
                                 Email
                             </label>
 
-                            <input asp-for="Email"
+                            <input name="Email"
                                    class="form-control" />
 
-                            <span asp-validation-for="Email"
-                                  class="text-danger">
+                            <span class="text-danger">
+                                @Html.ValidationMessage("Email")
                             </span>
                         </div>
 
 
                         <!-- Description -->
                         <div class="col-12 mb-3">
-                            <label asp-for="Description" class="form-label">
+                            <label name="Description" class="form-label">
                                 Description
                             </label>
 
-                            <textarea asp-for="Description"
+                            <textarea name="Description"
                                       class="form-control"
                                       rows="4"></textarea>
 
-                            <span asp-validation-for="Description"
-                                  class="text-danger">
+                            <span class="text-danger">
+                                @Html.ValidationMessage("Description")
                             </span>
                         </div>
 
 
                         <!-- Status -->
                         <div class="col-12 mb-3">
-                            <label asp-for="Status" class="form-label">
+                            <label name="Status" class="form-label">
                                 Status
                             </label>
 
-                            <select asp-for="Status"
+                            <select name="Status"
                                     class="form-select">
 
                                 <option value="">
@@ -307,8 +303,8 @@
 
                             </select>
 
-                            <span asp-validation-for="Status"
-                                  class="text-danger">
+                            <span class="text-danger">
+                                @Html.ValidationMessage("Status")
                             </span>
                         </div>
 

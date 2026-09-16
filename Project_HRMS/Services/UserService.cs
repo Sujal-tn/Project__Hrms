@@ -15,7 +15,7 @@ namespace Project_Hrms.Services
         }
         public List<User> FeatchUser()
         {
-            var data = db.Employees.ToList();
+            var data = db.Users.ToList();
             return data;
         }
     }

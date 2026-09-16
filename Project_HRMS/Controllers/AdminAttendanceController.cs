@@ -86,7 +86,7 @@ namespace Project_Hrms.Controllers
                 {
                     table.AddCell(item.Date.ToString("dd-MM-yyyy"));
                     table.AddCell(item.User.FirstName + " " + item.User.LastName);
-                    table.AddCell(item.User.Department != null ? item.User.Department.Name : "");
+                    table.AddCell(item.User.Department != null ? item.User.Department.DepartmentName : "");
                     table.AddCell(item.Status);
                     table.AddCell(item.CheckIn?.ToString("hh:mm tt"));
                     table.AddCell(item.CheckOut?.ToString("hh:mm tt"));
@@ -123,7 +123,7 @@ namespace Project_Hrms.Controllers
                 {
                     sheet.Cell(row, 1).Value = item.Date.ToString("dd-MM-yyyy");
                     sheet.Cell(row, 2).Value = item.User.FirstName + " " + item.User.LastName;
-                    sheet.Cell(row, 3).Value = item.User.Department != null ? item.User.Department.Name : "";
+                    sheet.Cell(row, 3).Value = item.User.Department != null ? item.User.Department.DepartmentName : "";
                     sheet.Cell(row, 4).Value = item.Status;
                     sheet.Cell(row, 5).Value = item.CheckIn?.ToString("hh:mm tt");
                     sheet.Cell(row, 6).Value = item.CheckOut?.ToString("hh:mm tt");
