@@ -1,4 +1,5 @@
-﻿using Project_Hrms.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 
@@ -12,9 +13,9 @@ namespace Project_Hrms.Services
         {
             this.db = db;
         }
-        public List<Attendance> FeatchAttendanceReport()
+        public async Task<List<Attendance>> FeatchAttendanceReport()
         {
-            var data = db.Attendance.ToList();
+            var data = await db.Attendance.ToListAsync();
             return data;
         }
     }

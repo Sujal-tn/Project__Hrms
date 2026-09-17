@@ -1,0 +1,40 @@
+﻿@model List<Project_Hrms.Models.Payslips>
+
+<div class="container-fluid">
+    <h2 class="mb-4">Payslips</h2>
+
+    <table id="payslipTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Payslip ID</th>
+                <th>Name</th>
+                <th>Paid Amount</th>
+                <th>Paid Month</th>
+                <th>Paid Year</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var pay in Model)
+            {
+                <tr>
+                    <td>@pay.PayslipId</td>
+                    <td>@pay.UserId</td>
+@* <td>@pay.PaidAmount</td> *@
+                    <td><!-- Paid Amount --></td>
+                    <td>@pay.Month</td>
+                    <td>@pay.Year</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#payslipTable').DataTable();
+        });
+    </script>
+}
+```

@@ -1,0 +1,192 @@
+﻿@model List<Project_Hrms.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "Leave Requests";
+}
+
+<div class="container-fluid mt-4">
+
+    <h2 class="mb-4">Leave Report</h2>
+
+    <!-- Top Section -->
+    <div class="row">
+
+        <!-- Cards -->
+        <div class="col-md-6">
+
+            <div class="row">
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-circle text-danger"></i>
+                            Total Users
+                        </h5>
+                        <p>@ViewBag.TUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-check text-danger"></i>
+                            Active Users
+                        </h5>
+                        <p>@ViewBag.AUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-person-x text-danger"></i>
+                            Inactive Users
+                        </h5>
+                        <p>@ViewBag.InUser</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mb-3">
+                    <div class="card text-center p-3">
+                        <h5>
+                            <i class="bi bi-briefcase text-danger"></i>
+                            Roles
+                        </h5>
+                        <p>@ViewBag.Rcount</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Chart -->
+        <div class="col-md-6">
+
+            <h5>
+                <i class="bi bi-bar-chart-fill text-danger"></i>
+                Leaves
+            </h5>
+
+            <canvas id="LeaveChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h4 class="mb-0">Leave Requests</h4>
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table id="leaveTable"
+                       class="table table-striped table-hover table-bordered align-middle">
+
+                    <thead class="table">
+                        <tr>
+                            <th>ID</th>
+                            <th>User ID</th>
+                            <th>Leave Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Days</th>
+                            <th>Reason</th>
+                            <th>Approved By</th>
+                            <th>Status</th>
+                            <th>Status History</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var leave in Model)
+                        {
+                            <tr>
+                                <td>@leave.LeaveRequestId</td>
+                                <td>@leave.UserId</td>
+                                <td>@leave.LeaveTypeId</td>
+                                <td>@leave.StartDate</td>
+                                <td>@leave.EndDate</td>
+                                <td>@leave.NumberOfDays</td>
+                                <td>@leave.Reason</td>
+                                <td>@leave.ApprovedBy</td>
+
+                                <td>
+                                    @if (leave.Status == "Approved")
+                                    {
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+                                    }
+                                    else if (leave.Status == "Rejected")
+                                    {
+                                        <span class="badge bg-danger">
+                                            Rejected
+                                        </span>
+                                    }
+                                    else if (leave.Status == "Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Pending
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            @leave.Status
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @leave.StatusHistory
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+  @section Scripts {
+
+
+     @* Chart  *@
+    <script>
+
+    var data = @Html.Raw(
+        System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthlyPaidLeave)
+    );
+
+    var labels = data.map(x => x.Month);
+    var paidLeave = data.map(x => x.Days);
+
+    new Chart(document.getElementById('LeaveChart'), {
+
+        type: 'bar',
+
+        data: {
+            labels: labels,
+
+            datasets: [
+                {
+                    label: 'Paid Leave',
+                    data: paidLeave
+                }
+            ]
+        },
+
+        options: {
+            responsive: true
+        }
+
+    });
+
+</script>
+
+}

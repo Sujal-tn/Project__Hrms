@@ -7,6 +7,7 @@ using Project_Hrms.Services.LoginService;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 using Project_Hrms.Services;
+using Project_Hrms.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,6 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDesignationService, DesignationService>();
 builder.Services.AddScoped<IEmpService, EmpService>();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 builder.Services.AddSession();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -30,6 +30,8 @@ builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
+builder.Services.AddScoped<IPaySlipsReportService, PaySlipsReportService>();
+builder.Services.AddScoped<ILeaveReportService, LeaveReportService>();
 
 
 var app = builder.Build();
@@ -50,7 +52,7 @@ app.MapStaticAssets();
 app.UseSession();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=PaySlipsReport}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();
