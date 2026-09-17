@@ -17,7 +17,7 @@ namespace Project_Hrms.Controllers
             this.attendanceService = attendanceService;
         }
 
-        public async Task<IActionResult> AdminAttendanceList()
+        public async Task<IActionResult> Index()
         {
             var list = await attendanceService.GetAllAttendanceAsync();
             var todayRecords = await attendanceService.GetTodayAttendanceAsync();
@@ -45,18 +45,18 @@ namespace Project_Hrms.Controllers
             return View(list);
         }
 
-        public async Task<IActionResult> EditAttendance(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var data = await attendanceService.GetAttendanceByIdAsync(id);
             return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAttendance(Attendance model)
+        public async Task<IActionResult> Edit(Attendance model)
         {
             await attendanceService.UpdateAttendanceAsync(model);
             TempData["msg"] = "Attendance Updated Successfully";
-            return RedirectToAction("AdminAttendanceList");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ExportToPDF()

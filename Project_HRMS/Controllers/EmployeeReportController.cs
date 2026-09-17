@@ -11,9 +11,9 @@ public class EmployeeReportController : Controller
         this.userService = userService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var users = userService.FeatchUser();
+        var users = await userService.FeatchUser();
 
         var TotalUsers = users.Count();
         var ActiveUsers = users.Count(u => u.Status == "Active");
