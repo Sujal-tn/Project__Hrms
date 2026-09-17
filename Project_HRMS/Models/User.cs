@@ -22,11 +22,11 @@ namespace Project_Hrms.Models.EmployeeModel
         public Role? Role { get; set; }
 
         [ForeignKey("DepartmentId")]
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
 
         [ForeignKey("DesignationtId")]
-        public int DesignationtId { get; set; }
+        public int? DesignationtId { get; set; }
         public Designation? Designation { get; set; }
 
         public string? DateOfJoining { get; set; }
@@ -38,7 +38,10 @@ namespace Project_Hrms.Models.EmployeeModel
         public string? AboutEmployee { get; set; }
         public string? ProfilePicture { get; set; }
 
-        public string? ReportingManager { get; set; }
+        public int? ReportingManager { get; set; }
+
+        [ForeignKey("ReportingManager")]
+        public User? Manager { get; set; }
         public string? CreatedAt { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
