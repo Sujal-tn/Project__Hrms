@@ -37,6 +37,12 @@ namespace Project_Hrms.Data
         public DbSet<LeaveRequest> LeaveRequest { get; set; }
 
         public DbSet<Projects> Projects { get; set; }
+
+        public DbSet<Tasks> Tasks { get; set; }
+
+        public DbSet<TaskBoards> TaskBoards { get; set; }
+
+        public DbSet<TaskMembers> TaskMembers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -75,6 +81,18 @@ namespace Project_Hrms.Data
             );
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TaskBoards>()
+                .HasOne(x => x.Project)
+                .WithMany()
+                .HasForeignKey(x => x.ProjectId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TaskBoards>()
+                .HasOne(x => x.Task)
+                .WithMany(x => x.TaskBoards)
+                .HasForeignKey(x => x.TaskId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -532,6 +532,98 @@ namespace Project_Hrms.Migrations
                 b.ToTable("Timesheets");
             });
 
+            modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
+                {
+                    b.Property<int>("TaskBoardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskBoardId"));
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TaskBoardId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskBoards");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
+                {
+                    b.Property<int>("AssignedId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssignedId"));
+
+                    b.Property<int?>("TaskId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssignedId");
+
+                    b.HasIndex("TaskId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TaskMembers");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"));
+
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaskId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Tasks");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.Trainers", b =>
             {
                 b.Property<int>("TrainerId")
@@ -787,6 +879,53 @@ namespace Project_Hrms.Migrations
                 b.Navigation("User");
             });
 
+            modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Projects", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
+                        .WithMany("TaskBoards")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
+                        .WithMany("Taskmember")
+                        .HasForeignKey("TaskId");
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Projects", "Projects")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projects");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.Trainings", b =>
             {
                 b.HasOne("Project_Hrms.Models.Trainers", "Trainer")
@@ -839,6 +978,16 @@ namespace Project_Hrms.Migrations
             });
 
             modelBuilder.Entity("Project_Hrms.Models.MasterLeaveType", b =>
+                {
+                    b.Navigation("LeaveRequests");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+                {
+                    b.Navigation("TaskBoards");
+
+                    b.Navigation("Taskmember");
+                });
             {
                 b.Navigation("LeaveRequests");
             });
