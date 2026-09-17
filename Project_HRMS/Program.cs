@@ -7,6 +7,7 @@ using Project_Hrms.Services.LoginService;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 using Project_Hrms.Services;
+using Project_Hrms.Services.Training;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITimesheetService, TimesheetService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
+builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
 
 

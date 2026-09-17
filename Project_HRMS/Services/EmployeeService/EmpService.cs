@@ -47,8 +47,17 @@ namespace Project_Hrms.Services.EmployeeService
         {
             var emps = db.Users.Include(x => x.Designation)
              .Include(x => x.Department)
-             .Include(x => x.Role).ToList();
+             .Include(x => x.Role)
+             .Include(x => x.Manager).ToList();
             return emps;
+        }
+
+        public async Task<List<User>> FetchManagersAsync()
+        {
+
+            return await db.Users
+                .Include(x => x.Role)
+                .Where(x => x.Role != null && x.Role.RoleName == "Manager").ToListAsync();
         }
 
         public List<Role> fetchRole()
@@ -61,10 +70,25 @@ namespace Project_Hrms.Services.EmployeeService
 
         public User findEmpById(int id)
         {
-            var e = db.Users.Find(id);
+            var e = db.Users
+                .Include(x => x.Role)
+        .Include(x => x.Department)
+        .Include(x => x.Designation)
+        .Include(x => x.Manager)
+        .FirstOrDefault(x => x.UserId == id); 
             return e;
 
 
+        }
+
+        public string GetRoleName(int roleId)
+        {
+
+            var rname = db.Roles
+               .Where(x => x.RoleId == roleId)
+               .Select(x => x.RoleName)
+               .FirstOrDefault();
+            return rname;
         }
 
         public void UpdateEmp(User r)
