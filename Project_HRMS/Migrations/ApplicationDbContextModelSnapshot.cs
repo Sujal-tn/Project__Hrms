@@ -682,32 +682,20 @@ namespace Project_Hrms.Migrations
             });
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.User", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
-                        .WithMany("Employes")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.Designation", "Designation")
-                        .WithMany("Employes")
-                        .HasForeignKey("DesignationtId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ReportingManager");
             {
                 b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
                     .WithMany("Employes")
                     .HasForeignKey("DepartmentId")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 b.HasOne("Project_Hrms.Models.EmployeeModel.Designation", "Designation")
                     .WithMany("Employes")
                     .HasForeignKey("DesignationtId")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne("Project_Hrms.Models.EmployeeModel.User", "Manager")
+                    .WithMany()
+                    .HasForeignKey("ReportingManager");
 
                 b.HasOne("Project_Hrms.Models.EmployeeModel.Role", "Role")
                     .WithMany("Employes")
@@ -719,10 +707,8 @@ namespace Project_Hrms.Migrations
 
                 b.Navigation("Designation");
 
-                    b.Navigation("Manager");
+                b.Navigation("Manager");
 
-                    b.Navigation("Role");
-                });
                 b.Navigation("Role");
             });
 
