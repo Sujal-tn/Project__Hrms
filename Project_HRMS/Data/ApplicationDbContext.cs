@@ -35,6 +35,8 @@ namespace Project_Hrms.Data
         public DbSet<Payslips> Payslips { get; set; }
         public DbSet<MasterLeaveType> MasterLeaveType { get; set; }
         public DbSet<LeaveRequest> LeaveRequest { get; set; }
+        public DbSet<LeaveBalance> LeaveBalance { get; set; }
+        public DbSet<DepartmentLeaves> DepartmentLeaves { get; set; }
 
         public DbSet<Projects> Projects { get; set; }
 
@@ -45,6 +47,7 @@ namespace Project_Hrms.Data
         public DbSet<TaskMembers> TaskMembers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Designation>(
                 d => d.HasOne(x => x.Department)
@@ -80,7 +83,12 @@ namespace Project_Hrms.Data
                 }
             );
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<DepartmentLeaves>()
+                .HasOne(dl => dl.MasterLeaveType)
+                .WithMany(mlt => mlt.DepartmentLeaves)
+                .HasForeignKey(dl => dl.LeaveTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<TaskBoards>()
                 .HasOne(x => x.Project)
