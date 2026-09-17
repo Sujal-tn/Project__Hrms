@@ -480,86 +480,54 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
                 {
-                    b.Property<int>("TaskBoardId")
+                    b.Property<int>("PromotionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskBoardId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PromotionId"));
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
+                    b.Property<string>("DesignationFrom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TaskBoardId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("TaskBoards");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
-                {
-                    b.Property<int>("AssignedId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssignedId"));
-
-                    b.Property<int?>("TaskId")
-                        .HasColumnType("int");
+                    b.Property<string>("DesignationTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("AssignedId");
-
-                    b.HasIndex("TaskId");
+                    b.HasKey("PromotionId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TaskMembers");
+                    b.ToTable("Promotion", (string)null);
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+            modelBuilder.Entity("Project_Hrms.Models.Trainers", b =>
                 {
-                    b.Property<int>("TaskId")
+                    b.Property<int>("TrainerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"));
-
-                    b.Property<DateTime>("Deadline")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrainerId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Priority")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -858,45 +826,39 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
                 {
-                    b.HasOne("Project_Hrms.Models.Projects", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Project_Hrms.Models.MasterLeaveType", "MasterLeaveType")
+                        .WithMany("LeaveRequests")
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
-                        .WithMany("TaskBoards")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany("LeaveRequests")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("MasterLeaveType");
 
-                    b.Navigation("Task");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
+            modelBuilder.Entity("Project_Hrms.Models.Promotion", b =>
                 {
-                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
-                        .WithMany("Taskmember")
-                        .HasForeignKey("TaskId");
-
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Task");
-
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+            modelBuilder.Entity("Project_Hrms.Models.Trainings", b =>
                 {
-                    b.HasOne("Project_Hrms.Models.Projects", "Projects")
+                    b.HasOne("Project_Hrms.Models.Trainers", "Trainer")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -985,9 +947,7 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
                 {
-                    b.Navigation("TaskBoards");
-
-                    b.Navigation("Taskmember");
+                    b.Navigation("LeaveRequests");
                 });
 #pragma warning restore 612, 618
         }
