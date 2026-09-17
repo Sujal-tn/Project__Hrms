@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917081217_MakeEmployeeFieldsNullable")]
+    partial class MakeEmployeeFieldsNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,8 +243,8 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("RememberMe")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReportingManager")
-                        .HasColumnType("int");
+                    b.Property<string>("ReportingManager")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -254,8 +257,6 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("DesignationtId");
-
-                    b.HasIndex("ReportingManager");
 
                     b.HasIndex("RoleId");
 
@@ -573,10 +574,6 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("DesignationtId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ReportingManager");
-
                     b.HasOne("Project_Hrms.Models.EmployeeModel.Role", "Role")
                         .WithMany("Employes")
                         .HasForeignKey("RoleId")
@@ -586,8 +583,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Designation");
-
-                    b.Navigation("Manager");
 
                     b.Navigation("Role");
                 });

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Models.EmployeeModel;
 
@@ -17,16 +18,27 @@ namespace Project_Hrms.Controllers.EmployeeController
             return View(allemps);
         }
 
-        public IActionResult AddEmp()
+        public async Task<IActionResult> AddEmp(int? roleId)
         {
             var rs = es.fetchRole();
-            ViewBag.Roles = rs;
+            ViewBag.Role = rs;
 
             var ds = es.fetchDepartments();
-            ViewBag.Departments = ds;
+            ViewBag.Depart = ds;
 
             var des = es.fetchDesignation();
-            ViewBag.Designations = des;
+            ViewBag.Desig = des;
+
+            var ma = await es.FetchManagersAsync();
+            ViewBag.Man = ma;
+
+
+            if (roleId != null)
+            {
+                ViewBag.rid = roleId.Value;
+
+                ViewBag.rname= es.GetRoleName(roleId.Value);
+            }
             return View();
         }
 
@@ -46,11 +58,29 @@ namespace Project_Hrms.Controllers.EmployeeController
 
         }
 
-        public IActionResult EditEmp()
+        public async Task<IActionResult> EditEmp(int id)
         {
-            return View();
-        }
+            var emp = es.findEmpById(id);
 
+            if (emp == null)
+            {
+                return NotFound();
+            }
+
+            var rs = es.fetchRole();
+            ViewBag.Role = rs;
+
+            var ds = es.fetchDepartments();
+            ViewBag.Depart = ds;
+
+            var des = es.fetchDesignation();
+            ViewBag.Desig = des;
+
+            var ma = await es.FetchManagersAsync();
+            ViewBag.Man = ma;
+            return View(emp);
+        }
+        [HttpPost]
         public IActionResult EditEmp(User u)
         {
             es.UpdateEmp(u);
