@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917080858_TimesheetModelCreated")]
+    partial class TimesheetModelCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,38 +445,6 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Promotion");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.Resignation", b =>
-                {
-                    b.Property<int>("ResignationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResignationId"));
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("NoticeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<DateTime>("ResignDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ResignationId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Resignation");
             modelBuilder.Entity("Project_Hrms.Models.Timesheet", b =>
                 {
                     b.Property<int>("TimesheetId")
@@ -737,11 +708,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.Resignation", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
             modelBuilder.Entity("Project_Hrms.Models.Timesheet", b =>
                 {
                     b.HasOne("Project_Hrms.Models.Projects", "Projects")
@@ -751,13 +717,11 @@ namespace Project_Hrms.Migrations
                         .IsRequired();
 
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
-                        .WithMany()
                         .WithMany("Timesheets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
                     b.Navigation("Projects");
 
                     b.Navigation("User");
