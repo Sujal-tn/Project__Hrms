@@ -29,3 +29,19 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+.badge.badge-success {
+    background: #03C95A;
+    color: #FFF;
+}
+
+.badge.badge-danger {
+    background: #E70D0D;
+    color: #FFF;
+}
+
+.badge.badge-xs {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 0px 5px;
+    line-height: 18px;
+}

@@ -1,45 +1,100 @@
-﻿@model ProjectsView
+﻿@model Project_Hrms.Models.ProjectsView
 
-<h2>Add Projects</h2>
+<div class="card p-4">
+    <form asp-action="AddProject" method="post" enctype="multipart/form-data">
 
-<form method="post" asp-action="AddProject" enctype="multipart/form-data">
+        <h3 class="text-start mb-4">Add Project</h3>
 
-Project Name:<input type="text" asp-for="ProjectName" /> <br /><br />
+        <div class="row">
 
-Client Name:<input type="text" asp-for="ClientName" /> <br /><br />
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label asp-for="ProjectName" class="form-label">Project Name</label>
+                    <input asp-for="ProjectName" class="form-control" placeholder="Enter project name" />
+                </div>
+            </div>
 
-Description:<textarea asp-for="ProjectDescription"></textarea> <br /><br />
+            <div class="mb-3">
+                <label asp-for="ClientName" class="form-label">Client Name</label>
+                <input asp-for="ClientName" class="form-control" placeholder="Enter client name" />
+            </div>
 
-Start Date:<input asp-for="StartDate" type="date" /> <br /><br />
+            <div class="mb-3">
+                <label asp-for="ProjectDescription" class="form-label">Project Description</label>
+                <textarea asp-for="ProjectDescription" class="form-control" rows="4" placeholder="Enter project description"></textarea>
+            </div>
 
-End Date:<input asp-for="EndDate" type="date" /> <br /><br />
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label">Start Date</label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+            </div>
 
-Priority:
-<select asp-for="Priority">
-    <option value="">Select Priority</option>
-    <option value="High">High</option>
-    <option value="Medium">Medium</option>
-    <option value="Low">Low</option>
-</select> <br /><br />
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label">End Date</label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+            </div>
 
-Project Value:<input asp-for="ProjectValue" /> <br /><br />
+            <div class="mb-3">
+                <label asp-for="Priority" class="form-label">Priority</label>
 
-Price Type:<input asp-for="PriceType" /> <br /><br />
+                <select asp-for="Priority" class="form-select">
+                    <option value="">Select Priority</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
 
-Status:
-<select asp-for="Status">
-    <option value="">Select Status</option>
-    <option value="Active">Active</option>
-    <option value="Inactive">Inactive</option>
-</select> <br /><br />
+            <div class="mb-3">
+                <label asp-for="ProjectValue" class="form-label">Project Value</label>
+                <input asp-for="ProjectValue" class="form-control" step="0.01" />
+            </div>
 
-Manager Name:<input type="text" asp-for="ManagerName" /> <br /><br />
+            <div class="mb-3">
+                <label asp-for="PriceType" class="form-label">Price Type</label>
 
+                <select asp-for="PriceType" class="form-select">
+                    <option value="">Select Currency Type</option>
+                    <option value="USD">USD</option>
+                    <option value="INR">INR</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </div>
 
-Upload Project Logo:<input type="file"  asp-for="LogoPath" /> <br /><br />
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label">Status</label>
 
-Upload File:<input type="file"  asp-for="FilePath" /> <br /><br />
+                <select asp-for="Status" class="form-select">
+                    <option value="">Select Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
 
-<input type="submit" value="Save" />
+            <div class="mb-3">
+                <label asp-for="ManagerName" class="form-label">Manager Name</label>
+                <input asp-for="ManagerName" class="form-control" placeholder="Enter manager name" />
+            </div>
 
-</form>
+            <div class="mb-3">
+                <label class="form-label">Upload Project Logo</label>
+                <input type="file" asp-for="LogoPath" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Upload File</label>
+                <input type="file" asp-for="FilePath" class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+
+                <button type="submit" class="btn btn-primary">
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>

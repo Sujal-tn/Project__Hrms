@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917081707_AddTasks")]
+    partial class AddTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,58 +413,6 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Promotion");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
-                {
-                    b.Property<int>("TaskBoardId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskBoardId"));
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TaskBoardId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("TaskBoards");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
-                {
-                    b.Property<int>("AssignedId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssignedId"));
-
-                    b.Property<int?>("TaskId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssignedId");
-
-                    b.HasIndex("TaskId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TaskMembers");
-                });
-
             modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
                 {
                     b.Property<int>("TaskId")
@@ -708,42 +659,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.Projects", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
-                        .WithMany("TaskBoards")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
-                        .WithMany("Taskmember")
-                        .HasForeignKey("TaskId");
-
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
                 {
                     b.HasOne("Project_Hrms.Models.Projects", "Projects")
@@ -807,13 +722,6 @@ namespace Project_Hrms.Migrations
             modelBuilder.Entity("Project_Hrms.Models.MasterLeaveType", b =>
                 {
                     b.Navigation("LeaveRequests");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
-                {
-                    b.Navigation("TaskBoards");
-
-                    b.Navigation("Taskmember");
                 });
 #pragma warning restore 612, 618
         }
