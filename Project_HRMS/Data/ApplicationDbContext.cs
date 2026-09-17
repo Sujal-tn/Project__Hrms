@@ -28,6 +28,7 @@ namespace Project_Hrms.Data
 
         public DbSet<TrainingType> TrainingTypes { get; set; }
         public DbSet<Promotion> Promotion { get; set; }
+        public DbSet<Resignation> Resignation { get; set; }
         
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Timesheet> Timesheets { get; set; }

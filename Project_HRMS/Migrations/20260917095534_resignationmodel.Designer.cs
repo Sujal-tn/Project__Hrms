@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917095534_resignationmodel")]
+    partial class resignationmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -325,38 +328,6 @@ namespace Project_Hrms.Migrations
                     b.ToTable("MasterLeaveType");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.Payslips", b =>
-                {
-                    b.Property<int>("PayslipId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayslipId"));
-
-                    b.Property<DateTime>("GeneratedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Month")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PayslipPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("PayslipId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Payslips");
-                });
-
             modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
                 {
                     b.Property<int>("ProjectId")
@@ -474,50 +445,6 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Resignation");
-            modelBuilder.Entity("Project_Hrms.Models.Timesheet", b =>
-                {
-                    b.Property<int>("TimesheetId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TimesheetId"));
-
-                    b.Property<DateTime?>("ApprovedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorkHours")
-                        .HasColumnType("int");
-
-                    b.HasKey("TimesheetId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Timesheets");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Trainers", b =>
@@ -715,17 +642,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project_Hrms.Models.Payslips", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Project_Hrms.Models.Promotion", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
@@ -742,23 +658,16 @@ namespace Project_Hrms.Migrations
                     b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
-            modelBuilder.Entity("Project_Hrms.Models.Timesheet", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.Projects", "Projects")
-                        .WithMany("Timesheets")
-                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
                         .WithMany()
-                        .WithMany("Timesheets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Department");
-                    b.Navigation("Projects");
 
                     b.Navigation("User");
                 });
@@ -810,18 +719,11 @@ namespace Project_Hrms.Migrations
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.User", b =>
                 {
                     b.Navigation("LeaveRequests");
-
-                    b.Navigation("Timesheets");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.MasterLeaveType", b =>
                 {
                     b.Navigation("LeaveRequests");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
-                {
-                    b.Navigation("Timesheets");
                 });
 #pragma warning restore 612, 618
         }
