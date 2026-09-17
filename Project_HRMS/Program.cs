@@ -29,9 +29,12 @@ builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
+builder.Services.AddScoped<ITimesheetService, TimesheetService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
 builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
+builder.Services.AddScoped<IResignation, ResignationService>();
+
 
 var app = builder.Build();
 
@@ -51,7 +54,7 @@ app.MapStaticAssets();
 app.UseSession();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Emp}/{action=Index}/{id?}")
+    pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();

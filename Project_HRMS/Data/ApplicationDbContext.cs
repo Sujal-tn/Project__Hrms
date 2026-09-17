@@ -28,14 +28,13 @@ namespace Project_Hrms.Data
 
         public DbSet<TrainingType> TrainingTypes { get; set; }
         public DbSet<Promotion> Promotion { get; set; }
+        public DbSet<Resignation> Resignation { get; set; }
         
-
         public DbSet<Attendance> Attendance { get; set; }
-
+        public DbSet<Timesheet> Timesheets { get; set; }
+        public DbSet<Payslips> Payslips { get; set; }
         public DbSet<MasterLeaveType> MasterLeaveType { get; set; }
-
         public DbSet<LeaveRequest> LeaveRequest { get; set; }
-
 
         public DbSet<Projects> Projects { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

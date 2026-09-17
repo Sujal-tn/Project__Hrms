@@ -50,6 +50,8 @@ namespace Project_Hrms.Models.EmployeeModel
 
         public string? RememberMe { get; set; }
 
+        public List<Timesheet> Timesheets { get; set; }
+
         public List<LeaveRequest>? LeaveRequests { get; set; }
 
     }
