@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917181420_addDocumentsTables")]
+    partial class addDocumentsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,32 +320,6 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.FileUploads", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.LeaveRequest", b =>
@@ -745,17 +722,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Designation");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.FileUploads", b =>
-                {
-                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.LeaveRequest", b =>

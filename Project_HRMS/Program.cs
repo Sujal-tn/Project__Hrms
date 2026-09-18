@@ -7,6 +7,15 @@ using Project_Hrms.Services.LoginService;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 using Project_Hrms.Services;
+using Project_Hrms.Services.MasterDocuments;
+using Project_Hrms.Interface.TrainingInterface;
+using Project_Hrms.Interface.MasterDocuments;
+using Project_Hrms.Interface.MasterDocuments.Documents;
+using Project_Hrms.Services.Documents;
+
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +39,14 @@ builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
+builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
+builder.Services.AddScoped<ITrainingList, AddTrainingListServices>();
+builder.Services.AddScoped<IAdminDocumentsServices, AdminDocumentsAddServices>();
+builder.Services.AddScoped<IEmployeeDocumentsServices, EmployeeDocumentsAddServices>();
+builder.Services.AddScoped<IAdminFileUpload, AdminFileUploadServices>();
+
+
+
 
 
 var app = builder.Build();
@@ -41,7 +58,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection();                  
 app.UseRouting();
 
 app.UseAuthorization();

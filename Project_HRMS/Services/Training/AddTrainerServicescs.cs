@@ -4,7 +4,7 @@
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 
-namespace Project_Hrms.Services.Training
+namespace Project_Hrms.Services.MasterDocuments
 {
     public class AddTrainerServicescs : IAddTrainers
     {
@@ -30,16 +30,13 @@ namespace Project_Hrms.Services.Training
             }
         }
 
-        public Task<List<Trainers>> FetchAll()
-        {
-            throw new NotImplementedException();
-        }
 
-        //public async Task<List<Trainers>> FetchAll()
-        //{
-        //    //var data = await db.Trainers.ToListAsync();
-        //    //return data;
-        //}
+
+        public async Task<List<Trainers>> FetchAll()
+        {
+            var data = await db.Trainers.ToListAsync();
+            return data;
+        }
 
         public async Task<Trainers?> FindByID(int id)
         {
