@@ -1,0 +1,166 @@
+﻿@model List<Project_Hrms.Models.Attendance>
+@{
+    var today = (Project_Hrms.Models.Attendance?)ViewBag.TodayAttendance;
+}
+
+<div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <div class="my-auto mb-2">
+        <h2 class="mb-1">Employee Attendance</h2>
+        <nav>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="index.html"><i class="ti ti-smart-home"></i></a></li>
+                <li class="breadcrumb-item">Employee</li>
+                <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                @if (today?.CheckIn != null)
+                {
+                    <p class="mb-1">Punch In at: @today.CheckIn.Value.ToString("hh:mm tt")</p>
+                }
+                else
+                {
+                    <p class="mb-1">Punch In at: Not Checked In</p>
+                }
+
+                <form method="post" asp-action="MarkAttendance">
+                    <button type="submit" class="btn btn-primary mt-2">@ViewBag.AttendanceStatus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4>@ViewBag.TotalToday</h4>
+                <p class="mb-0">Total Hours Today</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4>@ViewBag.TotalWeek</h4>
+                <p class="mb-0">Total Hours Week</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4>@ViewBag.OvertimeMonth</h4>
+                <p class="mb-0">Overtime This Month</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Employee Attendance</h5>
+    </div>
+    <div class="card-body">
+        <form method="get" asp-action="FilterAttendance" class="row g-2 mb-3">
+            <div class="col-md-3">
+                <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
+            </div>
+            <div class="col-md-3">
+                <select name="status" class="form-control">
+                    <option value="All">Select Status</option>
+                    <option value="Present">Present</option>
+                    <option value="Half Day">Half Day</option>
+                    <option value="Absent">Absent</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="sortBy" class="form-control">
+                    <option value="recent">Recently Added</option>
+                    <option value="asc">Oldest First</option>
+                    <option value="last7Days">Last 7 Days</option>
+                    <option value="lastMonth">Last Month</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary w-100">Go</button>
+            </div>
+        </form>
+
+        <table class="table" id="attendanceTable">
+            <thead class="thead-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Working Hours</th>
+                    <th>Break Hours</th>
+                    <th>Overtime</th>
+                    <th>Late (min)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td>@a.Date.ToString("dd-MM-yyyy")</td>
+                            <td>@(a.CheckIn?.ToString("hh:mm tt") ?? "-")</td>
+                            <td>@(a.CheckOut?.ToString("hh:mm tt") ?? "-")</td>
+                            <td>@a.WorkingHours</td>
+                            <td>@a.BreakHours</td>
+                            <td>@a.OvertimeHours</td>
+                            <td>@a.Late</td>
+                            <td>
+                                @if (a.Status == "Present")
+                                {
+                                    <span class="badge bg-success">@a.Status</span>
+                                }
+                                else if (a.Status == "Absent")
+                                {
+                                    <span class="badge bg-danger">@a.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">@a.Status</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">No attendance records found for the selected filters.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#attendanceTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]]
+            });
+        });
+    </script>
+}
