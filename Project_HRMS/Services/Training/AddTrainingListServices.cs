@@ -4,7 +4,7 @@ using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
 using Microsoft.EntityFrameworkCore;
 
-namespace Project_Hrms.Services.Training
+namespace Project_Hrms.Services.MasterDocuments
 {
     public class AddTrainingListServices : ITrainingList
     {
@@ -32,7 +32,12 @@ namespace Project_Hrms.Services.Training
 
         public async Task<List<Trainings>> FetchAll()
         {
-            var data = await db.Trainings.ToListAsync();
+            var data = await db.Trainings
+                .Include(x => x.Trainer)
+                .Include(x => x.TrainingType)
+                .Include(x => x.User)
+                .ToListAsync();
+
             return data;
         }
 
