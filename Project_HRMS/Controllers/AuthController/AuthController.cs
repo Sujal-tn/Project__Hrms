@@ -18,7 +18,7 @@ namespace Project_Hrms.Controllers.AuthController
             return View();
         }
 
-        public IActionResult Login()
+         public IActionResult Login()
         {
             return View();
         }

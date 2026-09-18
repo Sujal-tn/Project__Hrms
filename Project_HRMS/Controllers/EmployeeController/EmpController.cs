@@ -1,38 +1,47 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
+using Project_Hrms.Interface;
 using Project_Hrms.Interface.EmployeeInterface;
+using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
 
 namespace Project_Hrms.Controllers.EmployeeController
 {
     public class EmpController : Controller
     {
+       
         IEmpService es;
-        public EmpController(IEmpService es)
+        public EmpController(IEmpService es )
         {
-            this.es = es;
+       this.es = es;
         }
         public IActionResult Index()
         {
-            var allemps = es.FetchEmp();
-            return View(allemps);
+
+            var users = es.FetchEmp();
+            var TotalUsers = users.Count();
+            var ActiveUsers = users.Count(u => u.Status == "Active");
+            var InActiveUsers = users.Count(u => u.Status != "Active");
+            var NewJoiner = users.Count(u => DateTime.Parse(u.DateOfJoining).Month == DateTime.Now.Month &&
+                  DateTime.Parse(u.DateOfJoining).Year == DateTime.Now.Year
+            );
+            ViewBag.TUser = TotalUsers;
+            ViewBag.Auser = ActiveUsers;
+            ViewBag.InUser = InActiveUsers;
+            ViewBag.NewJ = NewJoiner;
+            return View(users);
         }
 
         public async Task<IActionResult> AddEmp(int? roleId)
         {
             var rs = es.fetchRole();
             ViewBag.Role = rs;
-
             var ds = es.fetchDepartments();
             ViewBag.Depart = ds;
-
             var des = es.fetchDesignation();
             ViewBag.Desig = des;
-
             var ma = await es.FetchManagersAsync();
             ViewBag.Man = ma;
-
-
             if (roleId != null)
             {
                 ViewBag.rid = roleId.Value;
@@ -43,7 +52,7 @@ namespace Project_Hrms.Controllers.EmployeeController
         }
 
         [HttpPost]
-        public IActionResult AddEmp(User u)
+        public IActionResult AddEmp(UserView u)
         {
             es.AddEmp(u);
             TempData["msg"] = "Added Successfully";

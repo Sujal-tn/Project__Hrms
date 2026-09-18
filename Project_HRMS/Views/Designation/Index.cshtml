@@ -6,12 +6,28 @@
 @model List<Project_Hrms.Models.EmployeeModel.Designation>
 @if (TempData["msg"]!=null)
 {
-    <alert class="text-bg-success">@TempData["msg"]</alert>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle"></i>
+        @TempData["msg"]
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
 }
 
 @if (TempData["DelMsg"] != null)
 {
-    <alert class="text-bg-danger"> @TempData["DelMsg"]</alert>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle"></i>
+        @TempData["DelMsg"]
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
 }
 <a asp-controller="Designation" asp-action="AddDesignation" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoleModal"> <i class="fa fa-plus"></i>Add Designation</a>
 

@@ -88,17 +88,17 @@
                             Add Designation
                         </a>
 
-                        <a asp-controller="EmployeeList"
+                        <a asp-controller="Emp"
                            asp-action="Index">
                             Employee List
                         </a>
 
-                        <a asp-controller="EmployeeList"
+                        <a asp-controller="Emp"
                            asp-action="Grid">
                             Employee Grid
                         </a>
 
-                        <a asp-controller="EmployeeDetails"
+                        <a asp-controller="Emp"
                            asp-action="Index">
                             Employee Details
                         </a>
@@ -375,12 +375,7 @@
     <script src="~/js/site.js"
             asp-append-version="true"></script>
 
-
-    <!-- Page-specific scripts -->
     @await RenderSectionAsync("Scripts", required: false)
-
-
-    <!-- DataTables initialization -->
     <script>
 
         $(document).ready(function () {
