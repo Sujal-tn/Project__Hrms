@@ -19,6 +19,8 @@ namespace Project_Hrms.Interface.EmployeeInterface
 
         List<Role> fetchRole();
 
-       
+        Task<List<User>> FetchManagersAsync();
+
+        string GetRoleName(int roleId);
     }
 }

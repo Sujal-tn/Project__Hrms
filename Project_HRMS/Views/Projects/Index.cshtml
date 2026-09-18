@@ -1,62 +1,265 @@
-﻿@model List<Projects>
+﻿@model IEnumerable<Project_Hrms.Models.Projects>
 
-@if (TempData["addmsg"] != null)
-{
-    <span class="text-success">@TempData["addmsg"]</span>
-}
-
-@if (TempData["updmsg"] != null)
-{
-    <span class="text-success">@TempData["updmsg"]</span>
-}
-
-@if (TempData["delmsg"] != null)
-{
-    <span class="text-success">@TempData["delmsg"]</span>
-}
-
-<div>
-    <div>
+<div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <div class="my-auto mb-2">
         <h2 class="mb-1">Projects</h2>
-        <div class="text-muted"> Home / Employee / Projects List </div>
+        <nav>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="ti ti-smart-home"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">Employee</li>
+                <li class="breadcrumb-item active" aria-current="page">Projects List</li>
+            </ol>
+        </nav>
     </div>
 
-    <a asp-controller="Projects" asp-action="AddProject" class="btn btn-primary"> Add Project</a>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+        <div class="me-2 mb-2">
+            <div class="d-flex right-content align-items-center border bg-white rounded p-1 me-2 icon-list">
+                <a asp-action="Index" asp-controller="Projects" class="btn btn-icon btn-sm active me-1">
+                    <i class="ti ti-list-tree"></i>
+                </a>
+
+                <a href="javascript:void(0);" class="btn btn-icon btn-sm">
+                    <i class="ti ti-layout-grid"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="dropdown me-2 mb-2">
+            <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                <i class="ti ti-file-export me-1"></i>Export
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end p-3">
+                <li>
+                    <a class="dropdown-item rounded-1 exportPdf" href="#">
+                        <i class="ti ti-file-type-pdf me-1"></i>Export as PDF
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item rounded-1 exportExcel" href="#">
+                        <i class="ti ti-file-type-xls me-1"></i>Export as Excel
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mb-2">
+            <a asp-controller="Projects" asp-action="AddProject" class="btn btn-primary d-flex align-items-center">
+                <i class="ti ti-circle-plus me-2"></i>Add Project
+            </a>
+        </div>
+
+        <div class="head-icons ms-2">
+            <a href="javascript:void(0);" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
+                <i class="ti ti-chevrons-up"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
-<table class="table table-bordered" id="projectTable">
 
-    <thead>
-        <tr>
-            <th>Project Id</th>
-            <th>Project Name</th>
-            <th>Team Members</th>
-            <th>Client</th>
-            <th>Deadline</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+        <h5>Project List</h5>
 
-    <tbody>
+        <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
 
-        @foreach (var p in Model)
-        {
-            <tr>
-                <td>@p.ProjectId</td>
-                <td>@p.ProjectName</td>
-                <td>@p.ManagerName</td>
-                <td>@p.ClientName</td>
-                <td>@p.EndDate.ToString("dd MMM yyyy")</td>
-                <td>@p.Priority</td>
-                <td>@p.Status</td>
-                <td>
-                    <a asp-controller="Projects" asp-action="EditProject" asp-route-id="@p.ProjectId" class="btn btn-success">Edit</a>
-                    <a asp-controller="Projects" asp-action="DeleteProject" asp-route-id="@p.ProjectId" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+            <!-- Status Filter -->
+            <div class="dropdown me-3">
+                <select id="statusFilter" class="form-select">
+                    <option value="all">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
 
-</table>
+            <!-- Sort By Filter -->
+            <div class="dropdown">
+                <div class="d-flex align-items-center">
+                    <label class="me-2 mb-0">Sort By:</label>
+                    <select id="sortBy" class="form-select">
+                        <option value="ascending">Ascending</option>
+                        <option value="descending">Descending</option>
+                        <option value="recent7">Last 7 Days</option>
+                        <option value="recentlyAdded">Recently Added</option>
+                        <option value="lastMonth">Last Month</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table" id="projectTable">
+            <thead class="thead-light">
+                <tr>
+                    <th>Project Id</th>
+                    <th>Project Name</th>
+                    <th>Manager Name</th>
+                    <th>Deadline</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in Model)
+                {
+                    <tr>
+                        <td>
+                            @project.ProjectId
+                        </td>
+                        <td>
+                            <h6 class="fw-medium">@project.ProjectName
+                            </h6>
+                        </td>
+                        <td>
+                            @project.ManagerName
+                        </td>
+                        <td>
+                            @project.EndDate.ToString("yyyy-MM-dd")
+                        </td>
+                        @* <td>@project.Priority</td> *@
+
+                        <td>
+                            <div class="d-inline-flex align-items-center">
+                                <span class="rounded-circle d-flex justify-content-center align-items-center me-2
+                @(project.Priority == "High" ? "bg-transparent-danger" : project.Priority == "Medium" ? "bg-transparent-warning" : "bg-transparent-success")">
+
+                                    <i class="ti ti-point-filled
+                @(project.Priority == "High" ? "text-danger" : project.Priority == "Medium" ? "text-warning" : "text-success")">
+                                    </i>
+                                </span>
+                                @project.Priority
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="badge @(project.Status == "Active" ? "badge-success" : "badge-danger") d-inline-flex align-items-center badge-xs">
+                                <i class="ti ti-point-filled me-1"></i>@project.Status
+                            </span>
+                        </td>
+
+                        <td>
+                            <a asp-action="EditProject" asp-controller="Projects" asp-route-id="@project.ProjectId">
+                                <i class="ti ti-edit"></i>
+                            </a>
+                            &nbsp;
+                            <a asp-controller="Projects" asp-action="DeleteProject" asp-route-id="@project.ProjectId" onclick="return confirm('Are you sure to delete this record?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+
+    <!-- DataTables Buttons Extension -->
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet"href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#projectTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                dom: 'lfrtip',
+                language: {
+                    search: "Search:",
+                    lengthMenu: "Show _MENU_ entries per page",
+                    paginate: {
+                        first: "First",
+                        last: "Last",
+                        next: "Next",
+                        previous: "Previous"
+                    }
+                },  // For DataTables buttons (we manually trigger them)
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Project List',
+                        exportOptions: { columns: ':visible' }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Project List',
+                        exportOptions: { columns: ':visible' }
+                    }
+                ]
+            });
+
+            // Bind Dropdown Clicks to DataTable Buttons (manual export)
+            $('.exportPdf').on('click', function (e) {
+                e.preventDefault();
+                table.button(0).trigger();
+            });
+            $('.exportExcel').on('click', function (e) {
+                e.preventDefault();
+                table.button(1).trigger();
+            });
+
+             // Status Filter (change event)
+             $('#statusFilter').on('change', function () {
+               var status = $(this).val();
+               console.log("Selected Status:", status);
+
+               if (status === 'all') {
+               table.column(5).search('').draw();  // Reset search for 'All'
+               } else {
+               table.column(5).search('^' + status + '$', true, true).draw();  // Exact match search
+                 }
+              });
+
+            // Sort By Filter
+            $('#sortBy').on('change', function () {
+                var sortType = $(this).val();
+
+                if (sortType === 'ascending' || sortType === 'descending') {
+                    table.order([3, sortType === 'ascending' ? 'asc' : 'desc']).draw();  // Sort by Deadline (column 3)
+                } else if (sortType === 'recentlyAdded') {
+                    table.order([0, 'desc']).draw();  // Sort by Project ID (descending)
+                } else if (sortType === 'recent7') {
+                    filterByDateRange(7);   // Last 7 Days
+                } else if (sortType === 'lastMonth') {
+                    filterByDateRange(30);  // Last 30 Days
+                }
+            });
+
+            // Date Range Filter Function (for recent 7 days, last month, etc.)
+            function filterByDateRange(days) {
+                var currentDate = new Date();
+                var pastDate = new Date();
+                pastDate.setDate(currentDate.getDate() - days);
+
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var date = new Date(data[3]);  // Deadline (column 3)
+                    return date >= pastDate && date <= currentDate;
+                });
+
+
+                table.draw();
+                $.fn.dataTable.ext.search.pop();  // Clear filter after drawing
+            }
+        });
+    </script>
+}

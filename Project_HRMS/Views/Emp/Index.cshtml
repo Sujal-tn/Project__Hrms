@@ -16,7 +16,7 @@
 {
     <span> TempData["msg"]</span>
 }
-<a asp-controller="Emp" asp-action="AddEmp" class="btn btn-primary">Add Employee</a>
+<a asp-controller="Emp" asp-action="AddEmp"  class="btn btn-primary">Add Employee</a>
 
 <br>
 <table class="table">
@@ -39,11 +39,12 @@
         @foreach (var r in Model)
         {
             <tr>
-                <td>@r.FirstName + '' + @r.LastName</td>
+                <td>@r.UserId</td>
+                <td>@r.FirstName @r.LastName</td>
                 <td>@r.Email</td>
                 <td>@r.PhoneNumber</td>
                 <td>@r.Designation.DesignationName</td>
-                <td>@r.FirstName</td>
+                <td>@r.Manager?.FirstName @r.Manager?.LastName</td>
                 <td>@r.DateOfJoining</td>
                 <td>
                     @if (r.Status == "Active")
@@ -62,8 +63,8 @@
                 <td>@r.CreatedBy</td>
                 <td>@r.ModifiedBy</td>
                 <td>
-                    <a asp-controller="Designation" asp-action="EditEmp" asp-route-id="@r.UserId" class="btn btn-primary">Edit</a>
-                    <a asp-controller="Designation" asp-action="DeleteEmp" asp-route-id="@r.UserId" class="btn btn-Delete" onclick="return confirm('Are you Sure Want to Delete this Role?')">Delete</a>
+                    <a asp-controller="Emp" asp-action="EditEmp" asp-route-id="@r.UserId" class="btn btn-primary">Edit</a>
+                    <a asp-controller="Emp" asp-action="DeleteEmp" asp-route-id="@r.UserId" class="btn btn-Delete" onclick="return confirm('Are you Sure Want to Delete this Role?')">Delete</a>
 
                 </td>
 
@@ -71,4 +72,25 @@
         }
     </tbody>
 </table>
+
+@* //AddModal
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+
 

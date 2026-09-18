@@ -5,6 +5,6 @@ namespace Project_Hrms.Interface
 {
     public interface IUserService
     {
-        List<User> FeatchUser();
+        Task<List<User>> FeatchUser();
     }
 }
