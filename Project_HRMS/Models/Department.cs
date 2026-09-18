@@ -24,7 +24,7 @@ namespace Project_Hrms.Models.EmployeeModel
 
         public List<Designation>? Designations { get; set; }
 
-        public List<DepartmentLeaves> DepartmentLeaves { get; set; }
+        public List<DepartmentLeaves>? DepartmentLeaves { get; set; }
 
     }
 }

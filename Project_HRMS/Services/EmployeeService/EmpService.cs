@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Data;
 using Project_Hrms.Interface.EmployeeInterface;
+using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace Project_Hrms.Services.EmployeeService
 {
@@ -9,17 +12,53 @@ namespace Project_Hrms.Services.EmployeeService
     {
 
         private readonly ApplicationDbContext db;
+        private readonly IWebHostEnvironment env;
 
-        public EmpService(ApplicationDbContext db)
+        public EmpService(ApplicationDbContext db, IWebHostEnvironment env)
         {
             this.db = db;
+            this.env = env;
         }
-        public void AddEmp(User d)
+        public void AddEmp(UserView d)
         {
-            db.Users.Add(d);
+            string path = env.WebRootPath;
+            string filepath = "Content/Images" + d.ProfilePicture.FileName;
+            string fullpath =Path.Combine(path, filepath);
+            UploadFile(d.ProfilePicture, fullpath);
+
+            var user = new User()
+            {
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                Email = d.Email,
+                Password = d.Password,
+                RoleId = d.RoleId,
+                DepartmentId = d.DepartmentId,
+                DesignationtId = d.DesignationtId,
+                ReportingManager = d.ReportingManager,
+                ProfilePicture = filepath,
+                PhoneNumber = d.PhoneNumber,
+                Gender = d.Gender,
+                Status = d.Status,
+                Address = d.Address,
+                DateOfBirth = d.DateOfBirth,
+                DateOfJoining = d.DateOfJoining,
+                AboutEmployee = d.AboutEmployee,
+                CreatedAt = DateTime.Now.ToString(),
+                CreatedBy = "Admin",
+
+            };
+
+            db.Users.Add(user);
             db.SaveChanges();
         }
 
+        public void UploadFile(IFormFile file, string path)
+        {
+            FileStream stream = new FileStream(path, FileMode.Create);
+            file.CopyTo(stream);
+            stream.Close();
+        }
         public void DeleteEmp(int id)
         {
             var data = db.Users.Find(id);

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project_Hrms.Migrations
 {
     /// <inheritdoc />
-    public partial class Hrms : Migration
+    public partial class dbinit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -147,6 +147,34 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DepartmentLeaves",
+                columns: table => new
+                {
+                    DepartmentLeavesId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    LeaveTypeId = table.Column<int>(type: "int", nullable: false),
+                    LeavesCount = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartmentLeaves", x => x.DepartmentLeavesId);
+                    table.ForeignKey(
+                        name: "FK_DepartmentLeaves_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DepartmentLeaves_MasterLeaveType_LeaveTypeId",
+                        column: x => x.LeaveTypeId,
+                        principalTable: "MasterLeaveType",
+                        principalColumn: "LeaveTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tasks",
                 columns: table => new
                 {
@@ -193,8 +221,8 @@ namespace Project_Hrms.Migrations
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReportingManager = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RememberMe = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -279,6 +307,41 @@ namespace Project_Hrms.Migrations
                     table.PrimaryKey("PK_Attendance", x => x.AttendanceId);
                     table.ForeignKey(
                         name: "FK_Attendance_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LeaveBalance",
+                columns: table => new
+                {
+                    LeaveBalanceId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentLeavesId = table.Column<int>(type: "int", nullable: false),
+                    LeaveTypeId = table.Column<int>(type: "int", nullable: false),
+                    TotalLeaves = table.Column<int>(type: "int", nullable: false),
+                    UsedLeaves = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeaveBalance", x => x.LeaveBalanceId);
+                    table.ForeignKey(
+                        name: "FK_LeaveBalance_DepartmentLeaves_DepartmentLeavesId",
+                        column: x => x.DepartmentLeavesId,
+                        principalTable: "DepartmentLeaves",
+                        principalColumn: "DepartmentLeavesId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LeaveBalance_MasterLeaveType_LeaveTypeId",
+                        column: x => x.LeaveTypeId,
+                        principalTable: "MasterLeaveType",
+                        principalColumn: "LeaveTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LeaveBalance_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -498,9 +561,34 @@ namespace Project_Hrms.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DepartmentLeaves_DepartmentId",
+                table: "DepartmentLeaves",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentLeaves_LeaveTypeId",
+                table: "DepartmentLeaves",
+                column: "LeaveTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Designations_DepartmentId",
                 table: "Designations",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveBalance_DepartmentLeavesId",
+                table: "LeaveBalance",
+                column: "DepartmentLeavesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveBalance_LeaveTypeId",
+                table: "LeaveBalance",
+                column: "LeaveTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveBalance_UserId",
+                table: "LeaveBalance",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_LeaveTypeId",
@@ -610,6 +698,9 @@ namespace Project_Hrms.Migrations
                 name: "Attendance");
 
             migrationBuilder.DropTable(
+                name: "LeaveBalance");
+
+            migrationBuilder.DropTable(
                 name: "LeaveRequest");
 
             migrationBuilder.DropTable(
@@ -634,7 +725,7 @@ namespace Project_Hrms.Migrations
                 name: "Trainings");
 
             migrationBuilder.DropTable(
-                name: "MasterLeaveType");
+                name: "DepartmentLeaves");
 
             migrationBuilder.DropTable(
                 name: "Tasks");
@@ -647,6 +738,9 @@ namespace Project_Hrms.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "MasterLeaveType");
 
             migrationBuilder.DropTable(
                 name: "Projects");

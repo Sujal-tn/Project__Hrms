@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Project_Hrms.Models.EmployeeModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Project_Hrms.Models.EmployeeModel
+namespace Project_Hrms.Models
 {
-    public class User
+    public class UserView
     {
-        [Key]
         public int UserId { get; set; }
         public string? FirstName { get; set; }
 
@@ -17,15 +16,12 @@ namespace Project_Hrms.Models.EmployeeModel
 
         public string? PhoneNumber { get; set; }
 
-        [ForeignKey("RoleId")]
         public int RoleId { get; set; }
         public Role? Role { get; set; }
 
-        [ForeignKey("DepartmentId")]
         public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
 
-        [ForeignKey("DesignationtId")]
         public int? DesignationtId { get; set; }
         public Designation? Designation { get; set; }
 
@@ -36,23 +32,15 @@ namespace Project_Hrms.Models.EmployeeModel
         public string? Address { get; set; }
 
         public string? AboutEmployee { get; set; }
-        public string? ProfilePicture { get; set; }
+        public IFormFile? ProfilePicture { get; set; }
 
         public int? ReportingManager { get; set; }
 
-        [ForeignKey("ReportingManager")]
         public User? Manager { get; set; }
         public string? CreatedAt { get; set; }
         public string? CreatedBy { get; set; }
         public string? ModifiedBy { get; set; }
         public string? ModifiedAt { get; set; }
         public string? Status { get; set; }
-
-        public string? RememberMe { get; set; }
-
-        public List<Timesheet> Timesheets { get; set; }
-        public List<LeaveBalance> LeaveBalances { get; set; }
-        public List<LeaveRequest> LeaveRequests { get; set; }
-
     }
 }
