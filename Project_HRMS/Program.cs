@@ -43,6 +43,8 @@ builder.Services.AddScoped<IProjectReportService, ProjectReportService>();
 builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
 builder.Services.AddScoped<ITaskReportService, TaskReportService>();
+builder.Services.AddScoped<ITermination, TerminationService>();
+
 
 var app = builder.Build();
 

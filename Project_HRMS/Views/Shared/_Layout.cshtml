@@ -3,68 +3,399 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - Project_Hrms</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Project_Hrms.styles.css" asp-append-version="true" />
-    <link href="https://cdn.datatables.net/v/dt/dt-3.0.4/datatables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdn.datatables.net/v/dt/dt-3.0.4/datatables.min.js"></script>
-        <link rel="stylesheet"
-          href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css">    
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Tabler Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- DataTables CSS - ONE VERSION ONLY -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/Project_Hrms.styles.css"
+          asp-append-version="true" />
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Project_Hrms</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AdminAttendance" asp-action="Index">Admin Attendance</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AdminTimesheet" asp-action="Index">Admin Timesheet</a>
-                        </li>
-                    </ul>
-                </div>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+
+            <div class="sidebar-logo">
+                <h2>HRMS</h2>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+            <p class="sidebar-title">MAIN MENU</p>
+
+            <nav class="sidebar-menu">
+
+                <!-- Dashboard -->
+                <a asp-controller="Auth"
+                   asp-action="Admin"
+                   class="sidebar-link active">
+
+                    <span>⌂</span>
+                    Dashboard
+
+                    <span class="hot-badge">Hot</span>
+                </a>
+
+
+                <!-- Employees -->
+                <details open>
+
+                    <summary class="sidebar-link">
+
+                        <span>♙</span>
+                        Employees
+
+                        <span class="menu-arrow">⌃</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a asp-controller="Department"
+                           asp-action="Index">
+                            Add Department
+                        </a>
+
+                        <a asp-controller="Role"
+                           asp-action="Index">
+                            Add Role
+                        </a>
+
+                        <a asp-controller="Designation"
+                           asp-action="Index">
+                            Add Designation
+                        </a>
+
+                        <a asp-controller="EmployeeList"
+                           asp-action="Index">
+                            Employee List
+                        </a>
+
+                        <a asp-controller="EmployeeList"
+                           asp-action="Grid">
+                            Employee Grid
+                        </a>
+
+                        <a asp-controller="EmployeeDetails"
+                           asp-action="Index">
+                            Employee Details
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Events -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>♧</span>
+                        Events
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a asp-controller="Event"
+                           asp-action="index11">
+                            Add event
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Training -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>✎</span>
+                        Training
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a href="#">
+                            Training List
+                        </a>
+
+                        <a href="#">
+                            Add Training
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Performance -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>▱</span>
+                        Performance &amp; Goal
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a href="#">
+                            Performance List
+                        </a>
+
+                        <a href="#">
+                            Add Goal
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Reports -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>▱</span>
+                        Reports
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a asp-controller="Reports"
+                           asp-action="Index">
+                            Employee Report
+                        </a>
+
+                        <a asp-controller="Reports"
+                           asp-action="Attendance">
+                            Attendance Report
+                        </a>
+
+                        <a asp-controller="Reports"
+                           asp-action="LeaveReport">
+                            Leave Report
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Master Documents -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>▱</span>
+                        Master Documents
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a href="#">
+                            Document Categories
+                        </a>
+
+                        <a href="#">
+                            Document Types
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Documents -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>▱</span>
+                        Documents
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a href="#">
+                            All Documents
+                        </a>
+
+                        <a href="#">
+                            Upload Document
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Promotion -->
+                <a asp-controller="Promotion"
+                   asp-action="Index"
+                   class="sidebar-link">
+
+                    <span>⬆</span>
+                    Promotion
+
+                </a>
+
+
+                <!-- Resignation -->
+                <a asp-controller="Resignation"
+                   asp-action="Index"
+                   class="sidebar-link">
+
+                    <span>✉</span>
+                    Resignation
+
+                </a>
+
+
+                <!-- Termination -->
+                <a asp-controller="Termination"
+                   asp-action="Index"
+                   class="sidebar-link">
+
+                    <span>✖</span>
+                    Termination
+
+                </a>
+
+
+                <!-- Logout -->
+                <a asp-controller="Auth"
+                   asp-action="Logout"
+                   class="sidebar-link logout-link">
+
+                    <span>⇥</span>
+                    Logout
+
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <div class="admin-content">
+
+            <header class="admin-header">
+
+                <h2>HRMS - Admin Panel</h2>
+
+            </header>
+
+            <main>
+
+                @RenderBody()
+
+            </main>
+
+        </div>
+
     </div>
 
+
+    <!-- FOOTER -->
     <footer class="border-top footer text-muted">
+
         <div class="container">
-            &copy; 2026 - Project_Hrms - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            &copy; 2026 - Project_Hrms -
+
+            <a asp-area=""
+               asp-controller="Home"
+               asp-action="Privacy">
+                Privacy
+            </a>
+
         </div>
+
     </footer>
-    <script src="https://cdn.datatables.net/v/dt/dt-3.0.4/datatables.min.js"></script>
+
+    <!-- jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+
+    <!-- Bootstrap -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Custom JS -->
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
+
+
+    <!-- Page-specific scripts -->
     @await RenderSectionAsync("Scripts", required: false)
+
+
+    <!-- DataTables initialization -->
     <script>
-            $(document).ready(function() {
-                $('table').not('.no-datatable').DataTable();
-            });
+
+        $(document).ready(function () {
+
+            $('table')
+                .not('.no-datatable')
+                .each(function () {
+
+                    new DataTable(this);
+
+                });
+
+        });
+
     </script>
+
 </body>
 </html>
