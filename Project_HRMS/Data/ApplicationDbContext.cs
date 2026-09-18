@@ -39,6 +39,10 @@ namespace Project_Hrms.Data
         public DbSet<TaskBoards> TaskBoards { get; set; }
 
         public DbSet<TaskMembers> TaskMembers { get; set; }
+
+        public DbSet<Events> Events { get; set; }
+
+        public DbSet<MasterEvents> MasterEvents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -35,7 +35,11 @@ builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITimesheetService, TimesheetService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
+
 builder.Services.AddScoped<ITask, TaskService>();
+builder.Services.AddScoped<IEvent, EventService>();
+builder.Services.AddScoped<IMasterEvent, MasterEventService>();
+
 builder.Services.AddScoped<IDailyReportService, DailyReportService>();
 builder.Services.AddScoped<IPaySlipsReportService, PaySlipsReportService>();
 builder.Services.AddScoped<ILeaveReportService, LeaveReportService>();
