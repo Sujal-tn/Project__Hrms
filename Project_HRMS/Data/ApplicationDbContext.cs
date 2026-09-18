@@ -15,21 +15,15 @@ namespace Project_Hrms.Data
 
 
         public DbSet<Role> Roles { get; set; }
-
         public DbSet<Department> Departments { get; set; }
-
         public DbSet<Designation> Designations { get; set; }
-
         public DbSet<User> Users { get; set; }
-
         public DbSet<Trainers> Trainers { get; set; }
-
         public DbSet<Trainings> Trainings { get; set; }
-
         public DbSet<TrainingType> TrainingTypes { get; set; }
         public DbSet<Promotion> Promotion { get; set; }
         public DbSet<Resignation> Resignation { get; set; }
-        
+        public DbSet<Termination> Termination { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Timesheet> Timesheets { get; set; }
         public DbSet<Payslips> Payslips { get; set; }

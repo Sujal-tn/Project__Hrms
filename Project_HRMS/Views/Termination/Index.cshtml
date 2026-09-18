@@ -3,10 +3,15 @@
 *@
 @{
 }
-@model List<Project_Hrms.Models.ResignationViewModels>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Project_Hrms.Models.TerminationViewModels>
 
 @{
-    ViewData["Title"] = "Resignation";
+    ViewData["Title"] = "Termination";
 }
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -15,50 +20,44 @@
 
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Resignations</h2>
+        <h2>Terminations</h2>
 
         <button type="button"
                 class="btn"
                 style="background-color: #F26522; color: white;"
                 data-bs-toggle="modal"
-                data-bs-target="#addResignationModal">
-            Add Resignation
+                data-bs-target="#addTerminationModal">
+            Add Termination
         </button>
     </div>
 
-    <!-- Resignation Card -->
+    <!-- Notifications -->
+    @if (TempData["addmssg"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["addmssg"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Termination Card -->
     <div class="card">
 
         <!-- Card Header -->
         <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
 
-            <h5 class="mb-0">Resignation List</h5>
+            <h5 class="mb-0">Termination List</h5>
 
             <div class="d-flex align-items-center gap-2 flex-wrap">
-
-                <!-- Department Filter -->
-                <select id="departmentFilter"
-                        class="form-select"
-                        style="width: 160px;">
-
-                    <option value="">All Departments</option>
-                    @if (ViewBag.Departments != null)
-                    {
-                        foreach (var dept in ViewBag.Departments)
-                        {
-                            <option value="@dept.DepartmentName">@dept.DepartmentName</option>
-                        }
-                    }
-                </select>
 
                 <!-- Sorting Filter -->
                 <select id="sortFilter"
                         class="form-select"
-                        style="width: 130px;">
+                        style="width: 150px;">
 
                     <option value="">Sort By</option>
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                    <option value="asc">Employee A-Z</option>
+                    <option value="desc">Employee Z-A</option>
                 </select>
 
                 <!-- Export Dropdown -->
@@ -90,6 +89,7 @@
                         </li>
 
                     </ul>
+
                 </div>
 
             </div>
@@ -100,90 +100,98 @@
 
             <div class="table-responsive">
 
-                <table id="resignationTable"
+                <table id="terminationTable"
                        class="table table-bordered table-hover align-middle w-100">
 
                     <thead class="table-light">
                         <tr>
                             <th>Id</th>
-                            <th>Employee</th>
-                            <th>Department</th>
+                            <th>Employee Name</th>
+                            <th>Termination Type</th>
                             <th>Notice Date</th>
-                            <th>Resignation Date</th>
+                            <th>Termination Date</th>
                             <th>Reason</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach (var item in Model)
+
+                        @if (Model != null)
                         {
-                            <tr>
-                                <td>@item.ResignationId</td>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
 
-                                <td>@item.EmployeeName</td>
+                                    <td>@item.TerminationId</td>
 
-                                <td>@item.DepartmentName</td>
+                                    <td>@item.EmployeeName</td>
 
-                                <td>@item.NoticeDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@item.TerminationType</td>
 
-                                <td>@item.ResignDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@item.NoticeDate.ToString("yyyy-MM-dd")</td>
 
-                                <td>@item.Reason</td>
+                                    <td>@item.ResignDate.ToString("yyyy-MM-dd")</td>
 
-                                <td>
-                                    <!-- Edit Button -->
-                                    <button type="button"
-                                            class="btn btn-sm editResignationButton me-1"
-                                            data-id="@item.ResignationId"
-                                            data-userid="@item.UserId"
-                                            data-departmentid="@item.DepartmentId"
-                                            data-noticedate="@item.NoticeDate.ToString("yyyy-MM-dd")"
-                                            data-resigndate="@item.ResignDate.ToString("yyyy-MM-dd")"
-                                            data-reason="@item.Reason"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#editResignationModal"
-                                            title="Edit"
-                                            style="background-color: #0d6efd !important; color: #ffffff !important; border: 1px solid #0d6efd !important; padding: 4px 8px; border-radius: 4px;">
+                                    <td>@item.Reason</td>
 
-                                        <i class="bi bi-pencil-square" style="color: #ffffff !important;"></i>
-                                    </button>
+                                    <td style ="white-space: nowrap;">
+                                        <div class="d-inline-flex align-items-center gap-1">
+                                        <!-- Edit Button -->
+                                        <button type="button"
+                                                class="btn btn-sm editTerminationButton me-1"
+                                                data-id="@item.TerminationId"
+                                                data-userid="@item.UserId"
+                                                data-terminationtype="@item.TerminationType"
+                                                data-noticedate="@item.NoticeDate.ToString("yyyy-MM-dd")"
+                                                data-resigndate="@item.ResignDate.ToString("yyyy-MM-dd")"
+                                                data-reason="@item.Reason"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editTerminationModal"
+                                                title="Edit"
+                                                style="background-color: #0d6efd !important; color: #ffffff !important; border: 1px solid #0d6efd !important; padding: 4px 8px; border-radius: 4px;">
 
-                                    <!-- Delete Button -->
-                                    <form asp-controller="Resignation"
-                                          asp-action="DeleteResignation"
-                                          asp-route-id="@item.ResignationId"
-                                          method="post"
-                                          style="display: inline;">
+                                            <i class="bi bi-pencil-square" style="color: #ffffff !important;"></i>
 
-
-                                        <button type="submit"
-                                                class="btn btn-sm"
-                                                onclick="return confirm('You want to delete this resignation?');"
-                                                title="Delete"
-                                            style="background-color: #dc3545 !important; color: #ffffff !important; border: 1px solid #dc3545 !important; padding: 4px 8px; border-radius: 4px; display: inline-block;">
-
-                                            <i class="bi bi-trash"></i>
                                         </button>
-                                    </form>
-                                </td>
-                            </tr>
+
+                                        <!-- Delete Button -->
+                                        <a asp-controller="Termination"
+                                           asp-action="DeleteTermination"
+                                           asp-route-id="@item.TerminationId"
+                                           class="btn btn-sm"
+                                           onclick="return confirm('Are you sure you want to delete this termination?');"
+                                           title="Delete"
+                                           style="background-color: #dc3545 !important; color: #ffffff !important; border: 1px solid #dc3545 !important; padding: 4px 8px; border-radius: 4px; display: inline-block;">
+
+                                            <i class="bi bi-trash" style="color: #ffffff !important;"></i>
+
+                                        </a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
                         }
+
                     </tbody>
 
                 </table>
 
             </div>
+
         </div>
+
     </div>
+
 </div>
 
 
-<!-- Add Resignation Modal -->
+<!-- Add Termination Modal -->
 <div class="modal fade"
-     id="addResignationModal"
+     id="addTerminationModal"
      tabindex="-1"
-     aria-labelledby="addResignationModalLabel"
+     aria-labelledby="addTerminationModalLabel"
      aria-hidden="true">
 
     <div class="modal-dialog">
@@ -191,8 +199,9 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="addResignationModalLabel">
-                    Add Resignation
+
+                <h5 class="modal-title" id="addTerminationModalLabel">
+                    Add Termination
                 </h5>
 
                 <button type="button"
@@ -200,16 +209,20 @@
                         data-bs-dismiss="modal"
                         aria-label="Close">
                 </button>
+
             </div>
 
-            <form asp-controller="Resignation"
-                  asp-action="AddResignation"
+            <form asp-controller="Termination"
+                  asp-action="AddTermination"
                   method="post">
 
                 <div class="modal-body">
 
+                    <!-- Employee -->
                     <div class="mb-3">
-                        <label for="UserId" class="form-label">
+
+                        <label for="UserId"
+                               class="form-label">
                             Employee
                         </label>
 
@@ -219,43 +232,51 @@
                                 required>
 
                             <option value="">Select Employee</option>
+
                             @if (ViewBag.Users != null)
                             {
-                                foreach (var user in ViewBag.Users)
+                                @foreach (var user in ViewBag.Users)
                                 {
                                     <option value="@user.UserId">
                                         @user.FirstName @user.LastName
                                     </option>
                                 }
                             }
+
                         </select>
+
                     </div>
 
+                    <!-- Termination Type -->
                     <div class="mb-3">
-                        <label for="DepartmentId" class="form-label">
-                            Department
+
+                        <label for="TerminationType"
+                               class="form-label">
+                            Termination Type
                         </label>
 
-                        <select id="DepartmentId"
-                                name="DepartmentId"
+                        <select id="TerminationType"
+                                name="TerminationType"
                                 class="form-select"
                                 required>
 
-                            <option value="">Select Department</option>
-                            @if (ViewBag.Departments != null)
-                            {
-                                foreach (var dept in ViewBag.Departments)
-                                {
-                                    <option value="@dept.DepartmentId">
-                                        @dept.DepartmentName
-                                    </option>
-                                }
-                            }
+                            <option value="">Select Termination Type</option>
+                            <option value="Retirement">Retirement</option>
+                            <option value="Lack of Skills">Lack of Skills</option>
+                            <option value="Insubordination">Insubordination</option>
+                            <option value="Dismissal">Dismissal</option>
+                            <option value="Layoff">Layoff</option>
+                            <option value="End of Contract">End of Contract</option>
+
                         </select>
+
                     </div>
 
+                    <!-- Notice Date -->
                     <div class="mb-3">
-                        <label for="NoticeDate" class="form-label">
+
+                        <label for="NoticeDate"
+                               class="form-label">
                             Notice Date
                         </label>
 
@@ -264,11 +285,15 @@
                                name="NoticeDate"
                                class="form-control"
                                required />
+
                     </div>
 
+                    <!-- Termination Date -->
                     <div class="mb-3">
-                        <label for="ResignDate" class="form-label">
-                            Resignation Date
+
+                        <label for="ResignDate"
+                               class="form-label">
+                            Termination Date
                         </label>
 
                         <input type="date"
@@ -276,19 +301,24 @@
                                name="ResignDate"
                                class="form-control"
                                required />
+
                     </div>
 
+                    <!-- Reason -->
                     <div class="mb-3">
-                        <label for="Reason" class="form-label">
+
+                        <label for="Reason"
+                               class="form-label">
                             Reason
                         </label>
 
-                        <input type="text"
-                               id="Reason"
-                               name="Reason"
-                               class="form-control"
-                               placeholder="Enter reason"
-                               required />
+                        <textarea id="Reason"
+                                  name="Reason"
+                                  class="form-control"
+                                  rows="3"
+                                  required
+                                  maxlength="500"></textarea>
+
                     </div>
 
                 </div>
@@ -304,22 +334,25 @@
                     <button type="submit"
                             class="btn"
                             style="background-color: #F26522; color: white;">
-                        Add Resignation
+                        Add Termination
                     </button>
 
                 </div>
+
             </form>
 
         </div>
+
     </div>
+
 </div>
 
 
-@* Edit Resignation Modal *@
+<!-- Edit Termination Modal -->
 <div class="modal fade"
-     id="editResignationModal"
+     id="editTerminationModal"
      tabindex="-1"
-     aria-labelledby="editResignationModalLabel"
+     aria-labelledby="editTerminationModalLabel"
      aria-hidden="true">
 
     <div class="modal-dialog">
@@ -327,8 +360,9 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="editResignationModalLabel">
-                    Edit Resignation
+
+                <h5 class="modal-title" id="editTerminationModalLabel">
+                    Edit Termination
                 </h5>
 
                 <button type="button"
@@ -336,74 +370,78 @@
                         data-bs-dismiss="modal"
                         aria-label="Close">
                 </button>
+
             </div>
 
-            <form asp-controller="Resignation"
-                  asp-action="EditResignation"
+            <form asp-controller="Termination"
+                  asp-action="EditTermination"
                   method="post"
                   novalidate>
 
                 <div class="modal-body">
 
+                    <!-- Termination Id -->
                     <input type="hidden"
-                           id="editResignationId"
-                           name="ResignationId" />
+                           id="editTerminationId"
+                           name="TerminationId" />
 
+                    <!-- Employee -->
                     <div class="mb-3">
-                        <label for="editUserId"
+
+                        <label for="editTerminationUserId"
                                class="form-label">
                             Employee
                         </label>
 
-                        <select id="editUserId"
+                        <select id="editTerminationUserId"
                                 name="UserId"
-                                class="form-select">
+                                class="form-select"
+                                required>
 
                             <option value="">Select Employee</option>
+
                             @if (ViewBag.Users != null)
                             {
-                                foreach (var user in ViewBag.Users)
+                                @foreach (var user in ViewBag.Users)
                                 {
                                     <option value="@user.UserId">
                                         @user.FirstName @user.LastName
                                     </option>
                                 }
                             }
+
                         </select>
 
-                        <span class="text-danger">
-                            @Html.ValidationMessage("UserId")
-                        </span>
                     </div>
 
+                    <!-- Termination Type -->
                     <div class="mb-3">
-                        <label for="editDepartmentId"
+
+                        <label for="editTerminationType"
                                class="form-label">
-                            Department
+                            Termination Type
                         </label>
 
-                        <select id="editDepartmentId"
-                                name="DepartmentId"
-                                class="form-select">
+                        <select id="editTerminationType"
+                                name="TerminationType"
+                                class="form-select"
+                                required>
 
-                            <option value="">Select Department</option>
-                            @if (ViewBag.Departments != null)
-                            {
-                                foreach (var dept in ViewBag.Departments)
-                                {
-                                    <option value="@dept.DepartmentId">
-                                        @dept.DepartmentName
-                                    </option>
-                                }
-                            }
+                            <option value="">Select Termination Type</option>
+                            <option value="Retirement">Retirement</option>
+                            <option value="Lack of Skills">Lack of Skills</option>
+                            <option value="Insubordination">Insubordination</option>
+                            <option value="Dismissal">Dismissal</option>
+                            <option value="Layoff">Layoff</option>
+                            <option value="End of Contract">End of Contract</option>
+
                         </select>
 
-                        <span class="text-danger">
-                            @Html.ValidationMessage("DepartmentId")
-                        </span>
                     </div>
 
+                    <!-- Notice Date -->
                     <div class="mb-3">
+
                         <label for="editNoticeDate"
                                class="form-label">
                             Notice Date
@@ -412,44 +450,42 @@
                         <input type="date"
                                id="editNoticeDate"
                                name="NoticeDate"
-                               class="form-control" />
+                               class="form-control"
+                               required />
 
-                        <span class="text-danger">
-                            @Html.ValidationMessage("NoticeDate")
-                        </span>
                     </div>
 
+                    <!-- Termination Date -->
                     <div class="mb-3">
+
                         <label for="editResignDate"
                                class="form-label">
-                            Resignation Date
+                            Termination Date
                         </label>
 
                         <input type="date"
                                id="editResignDate"
                                name="ResignDate"
-                               class="form-control" />
+                               class="form-control"
+                               required />
 
-                        <span class="text-danger">
-                            @Html.ValidationMessage("ResignDate")
-                        </span>
                     </div>
 
+                    <!-- Reason -->
                     <div class="mb-3">
+
                         <label for="editReason"
                                class="form-label">
                             Reason
                         </label>
 
-                        <input type="text"
-                               id="editReason"
-                               name="Reason"
-                               class="form-control"
-                               placeholder="Enter reason" />
+                        <textarea id="editReason"
+                                  name="Reason"
+                                  class="form-control"
+                                  rows="3"
+                                  required
+                                  maxlength="500"></textarea>
 
-                        <span class="text-danger">
-                            @Html.ValidationMessage("Reason")
-                        </span>
                     </div>
 
                 </div>
@@ -465,14 +501,17 @@
                     <button type="submit"
                             class="btn"
                             style="background-color: #F26522; color: white;">
-                        Update Resignation
+                        Update Termination
                     </button>
 
                 </div>
+
             </form>
 
         </div>
+
     </div>
+
 </div>
 
 
@@ -499,26 +538,22 @@
     <script>
         $(document).ready(function() {
 
-            var table = $('#resignationTable').DataTable({
-
+            var table = $('#terminationTable').DataTable({
                 pageLength: 5,
-
                 order: [[1, 'asc']],
-
                 dom:
                     '<"row mb-3"<"col-md-6"l><"col-md-6"f>>' +
                     'rt' +
                     '<"row mt-3"<"col-md-6"i><"col-md-6"p>>',
-
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Resignation List',
+                        title: 'Termination List',
                         className: 'export-excel'
                     },
                     {
                         extend: 'pdfHtml5',
-                        title: 'Resignation List',
+                        title: 'Termination List',
                         orientation: 'landscape',
                         pageSize: 'A4',
                         className: 'export-pdf'
@@ -529,61 +564,36 @@
             // Hide original DataTables export buttons
             $('.dt-buttons').hide();
 
-
-            // Department Filter
-            $('#departmentFilter').on('change', function () {
-
-                var dept = $(this).val();
-
-                if (dept === '') {
-                    table.column(2).search('').draw();
-                }
-                else {
-                    table
-                        .column(2)
-                        .search('\\b' + dept + '\\b', true, false)
-                        .draw();
-                }
-
-            });
-
-
             // Sort by Employee Name
             $('#sortFilter').on('change', function() {
-
                 var sortValue = $(this).val();
-
                 if (sortValue !== '') {
                     table.order([1, sortValue]).draw();
                 }
             });
-
 
             // Export as Excel
             $('#exportExcel').on('click', function() {
                 table.button('.export-excel').trigger();
             });
 
-
             // Export as PDF
             $('#exportPdf').on('click', function() {
                 table.button('.export-pdf').trigger();
             });
 
-
             // Fill Edit Modal
-            $('.editResignationButton').on('click', function() {
-
+            $(document).on('click', '.editTerminationButton', function() {
                 var id = $(this).data('id');
                 var userId = $(this).data('userid');
-                var departmentId = $(this).data('departmentid');
+                var terminationType = $(this).data('terminationtype');
                 var noticeDate = $(this).data('noticedate');
                 var resignDate = $(this).data('resigndate');
                 var reason = $(this).data('reason');
 
-                $('#editResignationId').val(id);
-                $('#editUserId').val(userId);
-                $('#editDepartmentId').val(departmentId);
+                $('#editTerminationId').val(id);
+                $('#editTerminationUserId').val(userId);
+                $('#editTerminationType').val(terminationType);
                 $('#editNoticeDate').val(noticeDate);
                 $('#editResignDate').val(resignDate);
                 $('#editReason').val(reason);

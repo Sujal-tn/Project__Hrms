@@ -7,12 +7,10 @@ namespace Project_Hrms.Controllers
     public class ResignationController : Controller
     {
         IResignation res;
-
         public ResignationController(IResignation re)
         {
             this.res = re;
         }
-
         public async Task<IActionResult> Index()
         {
             ViewBag.Users = await res.FetchUsers();
