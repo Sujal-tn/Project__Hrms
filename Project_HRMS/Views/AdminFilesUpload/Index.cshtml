@@ -1,0 +1,227 @@
+﻿@model AdminFileUploadViewModel
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+
+        <h2>Admin FileUpload</h2>
+
+        <div>
+            <span>⌂</span>
+            <span class="mx-2">/</span>
+            <span>Admin</span>
+            <span class="mx-2">/</span>
+            <span>Admin FileUpload</span>
+        </div>
+
+    </div>
+
+
+    <!-- Main Card -->
+    <div class="card">
+
+        <div class="card-header">
+            <h5>Admin FileUpload</h5>
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <!-- Success Message -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+
+            <!-- Form -->
+            <form asp-controller="AdminFilesUpload"
+                  asp-action="Index"
+                  method="post"
+                  enctype="multipart/form-data">
+
+
+                <!-- User Dropdown -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        User
+                    </label>
+
+                    <select name="UserId"
+                            class="form-select">
+
+                        <option value="">
+                            Select User
+                        </option>
+
+                        @if (ViewBag.Users != null)
+                        {
+                            foreach (var user in ViewBag.Users)
+                            {
+                                <option value="@user.UserId">
+                                    @user.Email
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+
+                <!-- Document Rows -->
+                <div id="documentContainer">
+
+                    <!-- First Row -->
+                    <div class="document-row row g-3 mb-3">
+
+                        <!-- Document Name -->
+                        <div class="col-md-5">
+
+                            <select name="Documents[0].DocumentId"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select Document
+                                </option>
+
+                                @if (ViewBag.DocumentNames != null)
+                                {
+                                    foreach (var document in ViewBag.DocumentNames)
+                                    {
+                                        <option value="@document.id">
+                                            @document.ADocumentName
+                                        </option>
+                                    }
+                                }
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- File -->
+                        <div class="col-md-5">
+
+                            <input type="file"
+                                   name="Documents[0].File"
+                                   class="form-control" />
+
+                        </div>
+
+
+                        <!-- Buttons -->
+                        <div class="col-md-2 d-flex align-items-center gap-2">
+
+                            <button type="button"
+                                    class="btn btn-primary add-row">
+                                +
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-link text-dark delete-row">
+                                🗑
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Save Button -->
+                <div class="mt-3">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            // Add new document row
+            $(document).on('click', '.add-row', function () {
+
+                var row = $('.document-row:first').clone();
+
+                // Clear selected document
+                row.find('select').val('');
+
+                // Clear selected file
+                row.find('input[type="file"]').val('');
+
+                // Add new row
+                $('#documentContainer').append(row);
+
+                // Update indexes
+                updateIndexes();
+
+            });
+
+
+            // Delete document row
+            $(document).on('click', '.delete-row', function () {
+
+                // Keep at least one row
+                if ($('.document-row').length > 1) {
+
+                    $(this).closest('.document-row').remove();
+
+                    // Update indexes
+                    updateIndexes();
+
+                }
+
+            });
+
+
+            // Update document indexes
+            function updateIndexes() {
+
+                $('.document-row').each(function (index) {
+
+                    // Document dropdown name
+                    $(this)
+                        .find('select')
+                        .attr(
+                            'name',
+                            'Documents[' + index + '].DocumentId'
+                        );
+
+
+                    // File input name
+                    $(this)
+                        .find('input[type="file"]')
+                        .attr(
+                            'name',
+                            'Documents[' + index + '].File'
+                        );
+
+                });
+
+            }
+
+        });
+
+    </script>
+}

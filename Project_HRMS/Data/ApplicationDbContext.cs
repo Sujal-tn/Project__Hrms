@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
 
@@ -33,6 +34,14 @@ namespace Project_Hrms.Data
         public DbSet<DepartmentLeaves> DepartmentLeaves { get; set; }
 
         public DbSet<Projects> Projects { get; set; }
+
+        public DbSet<AdminAddDocumentsName> AdminAddDocumentsNames { get; set; }
+
+        public DbSet<EmployeeAddDocumentsName> EmployeeAddDocumentsNames { get; set; }
+        public DbSet<AdminDocuments> AdminAddDocuments { get; set; }
+
+        public DbSet<FileUploads> Files { get; set; }
+
 
         public DbSet<Tasks> Tasks { get; set; }
 
