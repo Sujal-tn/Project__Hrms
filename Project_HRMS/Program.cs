@@ -31,6 +31,7 @@ builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
 builder.Services.AddScoped<IResignation, ResignationService>();
+builder.Services.AddScoped<ITermination, TerminationService>();
 
 
 var app = builder.Build();
