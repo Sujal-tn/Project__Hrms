@@ -13,6 +13,7 @@ namespace Project_Hrms.Controllers
             this.pro = pr;
             this.environment = env;
         }
+
         public async Task<IActionResult> Index()
         {
             var data = await pro.GetAllProjects();

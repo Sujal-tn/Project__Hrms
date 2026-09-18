@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
 
@@ -15,21 +16,15 @@ namespace Project_Hrms.Data
 
 
         public DbSet<Role> Roles { get; set; }
-
         public DbSet<Department> Departments { get; set; }
-
         public DbSet<Designation> Designations { get; set; }
-
         public DbSet<User> Users { get; set; }
-
         public DbSet<Trainers> Trainers { get; set; }
-
         public DbSet<Trainings> Trainings { get; set; }
-
         public DbSet<TrainingType> TrainingTypes { get; set; }
         public DbSet<Promotion> Promotion { get; set; }
         public DbSet<Resignation> Resignation { get; set; }
-        
+        public DbSet<Termination> Termination { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Timesheet> Timesheets { get; set; }
         public DbSet<Payslips> Payslips { get; set; }
@@ -40,11 +35,23 @@ namespace Project_Hrms.Data
 
         public DbSet<Projects> Projects { get; set; }
 
+        public DbSet<AdminAddDocumentsName> AdminAddDocumentsNames { get; set; }
+
+        public DbSet<EmployeeAddDocumentsName> EmployeeAddDocumentsNames { get; set; }
+        public DbSet<AdminDocuments> AdminAddDocuments { get; set; }
+
+        public DbSet<FileUploads> Files { get; set; }
+
+
         public DbSet<Tasks> Tasks { get; set; }
 
         public DbSet<TaskBoards> TaskBoards { get; set; }
 
         public DbSet<TaskMembers> TaskMembers { get; set; }
+
+        public DbSet<Events> Events { get; set; }
+
+        public DbSet<MasterEvents> MasterEvents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -1,41 +1,39 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
-using Microsoft.AspNetCore.Mvc;
-using Project_Hrms.Services.Training;
+﻿using Microsoft.AspNetCore.Mvc;
+using Project_Hrms.Interface.MasterDocuments;
 using Project_Hrms.Models;
 
-namespace Project_Hrms.Controllers.Training
+namespace Project_Hrms.Controllers.MasterDocumentsController
 {
-    public class AddTrainerController : Controller
+    public class AdminAddDocumentsController : Controller
     {
-        private readonly AddTrainerServicescs services;
-        public AddTrainerController(AddTrainerServicescs services)
+        public readonly IAdminDocumentsServices services;
+        public AdminAddDocumentsController(IAdminDocumentsServices services)
         {
             this.services = services;
         }
-
         public async Task<IActionResult> Index()
         {
             var data = await services.FetchAll();
             return View(data);
         }
 
-        public IActionResult AddTrainer()
+        public IActionResult AddAdminDocuments()
         {
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTrainer(Trainers t)
+        public async Task<IActionResult> AddAdminDocuments(AdminAddDocumentsName t)
         {
             if (ModelState.IsValid)
             {
-                await services.AddTrainer(t);
+                await services.AddAdminDocuments(t);
                 return RedirectToAction("Index");
             }
-            return View(t);
+            return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> EditTrainer(int id)
+        public async Task<IActionResult> EditAdminDocuments(int id)
         {
             var data = await services.FindByID(id);
             if (data == null)
@@ -46,18 +44,20 @@ namespace Project_Hrms.Controllers.Training
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTrainer(Trainers t)
+        public async Task<IActionResult> EditAdminDocuments(AdminAddDocumentsName t)
         {
             if (ModelState.IsValid)
             {
-                await services.UpdateTrainer(t);
+                await services.UpdateAdminDocuments(t);
                 return RedirectToAction("Index");
             }
             return View(t);
         }
 
+       
+
         [HttpPost]
-        public async Task<IActionResult> DeleteTrainer(int id)
+        public async Task<IActionResult> DeleteAdminDocuments(int id)
         {
             var data = await services.FindByID(id);
 
@@ -65,11 +65,9 @@ namespace Project_Hrms.Controllers.Training
             {
                 return NotFound();
             }
-
-            await services.DeleteTrainer(id);
+            await services.DeleteAdminDocuments(id);
             return RedirectToAction("Index");
         }
-
 
 
     }

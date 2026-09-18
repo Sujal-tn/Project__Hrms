@@ -7,6 +7,15 @@ using Project_Hrms.Services.LoginService;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
 using Project_Hrms.Services;
+using Project_Hrms.Services.MasterDocuments;
+using Project_Hrms.Interface.TrainingInterface;
+using Project_Hrms.Interface.MasterDocuments;
+using Project_Hrms.Interface.MasterDocuments.Documents;
+using Project_Hrms.Services.Documents;
+
+
+
+
 using Project_Hrms.Service;
 using Project_Hrms.Services.Training;
 
@@ -36,13 +45,27 @@ builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITimesheetService, TimesheetService>();
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
 builder.Services.AddScoped<IPromotion, PromotionService>();
-builder.Services.AddScoped<ITask, TaskService>();
+builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
+builder.Services.AddScoped<ITrainingList, AddTrainingListServices>();
+builder.Services.AddScoped<IAdminDocumentsServices, AdminDocumentsAddServices>();
+builder.Services.AddScoped<IEmployeeDocumentsServices, EmployeeDocumentsAddServices>();
+builder.Services.AddScoped<IAdminFileUpload, AdminFileUploadServices>();
 
+
+
+
+builder.Services.AddScoped<ITask, TaskService>();
+builder.Services.AddScoped<IEvent, EventService>();
+builder.Services.AddScoped<IMasterEvent, MasterEventService>();
+
+builder.Services.AddScoped<IDailyReportService, DailyReportService>();
 builder.Services.AddScoped<IPaySlipsReportService, PaySlipsReportService>();
 builder.Services.AddScoped<ILeaveReportService, LeaveReportService>();
-
+builder.Services.AddScoped<IProjectReportService, ProjectReportService>();
 builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
+builder.Services.AddScoped<ITaskReportService, TaskReportService>();
+builder.Services.AddScoped<ITermination, TerminationService>();
 
 
 var app = builder.Build();
@@ -54,7 +77,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection();                  
 app.UseRouting();
 
 app.UseAuthorization();
@@ -65,7 +88,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=PaySlipsReport}/{action=Index}/{id?}")
+    pattern: "{controller=TaskReport}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();

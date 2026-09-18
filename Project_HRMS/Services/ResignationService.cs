@@ -16,8 +16,7 @@ namespace Project_Hrms.Services
         }
         public async Task<List<ResignationViewModels>> GetAllResignations()
         {
-            var data = await (from r in db.Resignation
-                              join u in db.Users on r.UserId equals u.UserId
+            var data = await (from r in db.Resignation join u in db.Users on r.UserId equals u.UserId
                               join d in db.Departments on r.DepartmentId equals d.DepartmentId into deptGroup
                               from d in deptGroup.DefaultIfEmpty()
                               select new ResignationViewModels

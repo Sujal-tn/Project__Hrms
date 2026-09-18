@@ -9,6 +9,8 @@
     ViewData["Title"] = "Resignation";
 }
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <div class="container-fluid">
 
     <!-- Page Header -->
@@ -132,7 +134,7 @@
                                 <td>
                                     <!-- Edit Button -->
                                     <button type="button"
-                                            class="btn btn-sm editResignationButton"
+                                            class="btn btn-sm editResignationButton me-1"
                                             data-id="@item.ResignationId"
                                             data-userid="@item.UserId"
                                             data-departmentid="@item.DepartmentId"
@@ -141,9 +143,10 @@
                                             data-reason="@item.Reason"
                                             data-bs-toggle="modal"
                                             data-bs-target="#editResignationModal"
-                                            title="Edit">
+                                            title="Edit"
+                                            style="background-color: #0d6efd !important; color: #ffffff !important; border: 1px solid #0d6efd !important; padding: 4px 8px; border-radius: 4px;">
 
-                                        <i class="bi bi-pencil-square"></i>
+                                        <i class="bi bi-pencil-square" style="color: #ffffff !important;"></i>
                                     </button>
 
                                     <!-- Delete Button -->
@@ -153,10 +156,12 @@
                                           method="post"
                                           style="display: inline;">
 
+
                                         <button type="submit"
                                                 class="btn btn-sm"
-                                                onclick="return confirm('Are you sure you want to delete this resignation?');"
-                                                title="Delete">
+                                                onclick="return confirm('You want to delete this resignation?');"
+                                                title="Delete"
+                                            style="background-color: #dc3545 !important; color: #ffffff !important; border: 1px solid #dc3545 !important; padding: 4px 8px; border-radius: 4px; display: inline-block;">
 
                                             <i class="bi bi-trash"></i>
                                         </button>
