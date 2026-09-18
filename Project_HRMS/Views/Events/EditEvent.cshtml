@@ -1,0 +1,33 @@
+﻿@model Project_Hrms.Models.Events
+
+<h2>Edit Event</h2>
+
+<form asp-action="EditEvent" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <div class="mb-3">
+        <label>Event Title</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Event Date</label>
+        <input asp-for="Date" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Event Type</label>
+        <input asp-for="EventTypeId" type="number" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Status</label>
+        <input asp-for="Status" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Update Event
+    </button>
+
+</form>

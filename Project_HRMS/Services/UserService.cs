@@ -1,4 +1,5 @@
-﻿using Project_Hrms.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Models;
@@ -13,9 +14,9 @@ namespace Project_Hrms.Services
         {
             this.db = db;
         }
-        public List<User> FeatchUser()
+        public async Task<List<User>> FeatchUser()
         {
-            var data = db.Users.ToList();
+            var data = await db.Users.ToListAsync();
             return data;
         }
     }

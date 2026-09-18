@@ -1,0 +1,228 @@
+﻿@model Project_Hrms.Models.Tasks
+
+@{
+    ViewData["Title"] = "Add New Task";
+}
+
+@if (TempData["msg"] != null)
+{
+    <span class="text-danger">@TempData["msg"]</span>
+}
+
+
+<div class="card p-4">
+
+    @* <span class="text-danger">@TempData["msg"]</span> *@
+
+    <form asp-action="AddTask" method="post" enctype="multipart/form-data">
+
+        <div class="modal-body">
+
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Add New Task</h4>
+
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-12">
+
+                                <div class="mb-3">
+
+                                    <label asp-for="Title" class="form-label">
+                                        Title
+                                    </label>
+
+                                    <input type="text"
+                                           asp-for="Title"
+                                           class="form-control"
+                                           required>
+
+                                    <span asp-validation-for="Title"
+                                          class="text-danger"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label asp-for="Deadline"
+                                           class="form-label">
+                                        Due Date
+                                    </label>
+
+                                    <input asp-for="Deadline"
+                                           type="date"
+                                           class="form-control"
+                                           required>
+
+                                    <span asp-validation-for="Deadline"
+                                          class="text-danger"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label for="ProjectId"
+                                           class="form-label">
+                                        Select Project
+                                    </label>
+
+                                    <select id="projectDropdown"
+                                            name="ProjectId"
+                                            asp-for="ProjectId"
+                                            class="form-control">
+
+                                        <option value="">
+                                            Select a Project
+                                        </option>
+
+                                        @foreach (var project in ViewBag.Projects)
+                                        {
+                                            <option value="@project.ProjectId">
+                                                @project.ProjectName
+                                            </option>
+                                        }
+
+                                    </select>
+
+                                    <span asp-validation-for="ProjectId"
+                                          class="text-danger"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            @* Team Members section from Pulse360.
+                               We will connect this after the basic Task Add is working. *@
+
+                            @* <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+                                        Team Members
+                                    </label>
+
+                                    <div class="dropdown">
+
+                                        <button class="btn btn-outline-secondary dropdown-toggle"
+                                                type="button"
+                                                id="dropdownMenuButton"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+
+                                            Select Team Members
+
+                                        </button>
+
+                                        <ul class="dropdown-menu"
+                                            id="teamMembersDropdown"
+                                            aria-labelledby="dropdownMenuButton">
+
+                                            <!-- Members will be populated dynamically -->
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+                            </div> *@
+
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label asp-for="Status"
+                                           class="form-label">
+                                        Status
+                                    </label>
+
+                                    <select asp-for="Status"
+                                            class="form-select">
+
+                                        <option value="">
+                                            Select
+                                        </option>
+
+                                        <option value="Inprogress">Inprogress</option>
+
+                                        <option value="Completed">Completed</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Onhold"> Onhold </option>
+                                    </select>
+
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Priority" class="form-label">Priority</label>
+                                    <select asp-for="Priority" class="form-select">
+
+                                        <option value="">Select</option>
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+
+                                    </select>
+                                    <span asp-validation-for="Priority" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label asp-for="Description" class="form-label">Description</label>
+                                    <textarea asp-for="Description" class="form-control" required></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="file" class="form-label">Upload Attachment</label>
+
+                                <input type="file" name="file" class="form-control">
+                                <span asp-validation-for="FilePath" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="modal-footer">
+                        <br />
+                        @if (TempData["Smsg"] != null)
+                        {
+                            <span class="text-success"> @TempData["Smsg"]</span>
+                        }
+
+                        <button type="submit" class="btn btn-primary">Add New Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
