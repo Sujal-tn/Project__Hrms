@@ -11,7 +11,7 @@ namespace Project_Hrms.Models
         [Key]
         public int TrainingId { get; set; }
 
-        [ForeignKey("Trainers")]
+        [ForeignKey("Trainer")]
         public int TrainerId { get; set; }
         public Trainers Trainer { get; set; }
 

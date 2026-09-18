@@ -30,6 +30,56 @@
     <link rel="stylesheet"
           href="~/Project_Hrms.styles.css"
           asp-append-version="true" />
+
+    <style>
+        /* Keep the admin page and footer inside one normal document flow. */
+        html, body {
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .admin-sidebar {
+            flex: 0 0 300px;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .admin-content {
+            min-width: 0;
+            min-height: 100vh;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-content main {
+            flex: 1 0 auto;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .admin-content > .admin-footer {
+            position: static !important;
+            width: 100%;
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        .admin-footer .container {
+            max-width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -186,6 +236,90 @@
                 </details>
 
 
+                <!-- Attendance -->
+                <details>
+                    <summary class="sidebar-link">
+                        <span>♧</span>
+                        Attendance
+                        <span class="menu-arrow">⌃</span>
+                    </summary>
+
+                    <div class="submenu">
+                        <details>
+                            <summary class="sidebar-link">
+                                <span></span>
+                                Leaves
+                                <span class="menu-arrow">⌃</span>
+                            </summary>
+
+                            <div class="submenu">
+                            <a asp-controller="Leave"
+                               asp-action="AddLeaveType">
+                                Add Leave Type
+                            </a>
+
+                            <a asp-controller="Leave"
+                               asp-action="AddLeaveDeptwise">
+                                Add Leave
+                            </a>
+
+                            <a asp-controller="Leave"
+                               asp-action="DepartmentLeaveDetails">
+                                Department Leave Details
+                            </a>
+
+                            <a asp-controller="Leave"
+                               asp-action="ManageLeaveSettings">
+                                Leave Setting
+                            </a>
+                        </div>
+                        </details>
+
+                        <a asp-controller="AdminAttendance"
+                           asp-action="Index">
+                            Attendance (Admin)
+                        </a>
+
+                        <a asp-controller="AdminTimesheet"
+                           asp-action="Index">
+                            Timesheet
+                        </a>
+                    </div>
+                </details>
+
+
+                <!-- Payroll -->
+                <details>
+                    <summary class="sidebar-link">
+                        <span>▣</span>
+                        Payroll
+                        <span class="menu-arrow">⌃</span>
+                    </summary>
+
+                    <div class="submenu">
+                        <a href="#">
+                            Add Employee Salary
+                        </a>
+
+                        <a href="#">
+                            Master Payroll
+                        </a>
+
+                        <a href="#">
+                            Employee Salary List
+                        </a>
+
+                        <a href="#">
+                            Generate Payslip Monthly
+                        </a>
+
+                        <a href="#">
+                            Transaction History
+                        </a>
+                    </div>
+                </details>
+
+
                 <!-- Reports -->
                 <details>
 
@@ -304,27 +438,26 @@
 
             </main>
 
+            <!-- FOOTER -->
+            <footer class="border-top footer text-muted admin-footer">
+
+                <div class="container">
+
+                    &copy; 2026 - Project_Hrms -
+
+                    <a asp-area=""
+                       asp-controller="Home"
+                       asp-action="Privacy">
+                        Privacy
+                    </a>
+
+                </div>
+
+            </footer>
+
         </div>
 
     </div>
-
-
-    <!-- FOOTER -->
-    <footer class="border-top footer text-muted">
-
-        <div class="container">
-
-            &copy; 2026 - Project_Hrms -
-
-            <a asp-area=""
-               asp-controller="Home"
-               asp-action="Privacy">
-                Privacy
-            </a>
-
-        </div>
-
-    </footer>
 
     <!-- jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -350,17 +483,17 @@
     <!-- DataTables initialization -->
     <script>
 
-        $(document).ready(function () {
+            $(document).ready(function () {
 
-            $('table')
-                .not('.no-datatable')
-                .each(function () {
+                $('table')
+                    .not('.no-datatable')
+                    .each(function () {
 
-                    new DataTable(this);
+                        new DataTable(this);
 
-                });
+                    });
 
-        });
+            });
 
     </script>
 

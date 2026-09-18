@@ -29,6 +29,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     ));
 
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+builder.Services.AddScoped<ILeaveService, LeaveService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
