@@ -1,0 +1,727 @@
+﻿@model List<Project_Hrms.Models.Tasks>
+
+@{
+    ViewData["Title"] = "Task Report";
+
+    var totalTasks = Model?.Count ?? 0;
+    var completedTasks = Model?.Count(x => x.Status == "Completed") ?? 0;
+    var pendingTasks = Model?.Count(x => x.Status == "Pending") ?? 0;
+    var otherTasks = totalTasks - completedTasks - pendingTasks;
+
+    var statusChart = Model?
+        .GroupBy(x => x.Status)
+        .Select(x => new
+        {
+            Status = x.Key,
+            Count = x.Count()
+        })
+        .ToList();
+}
+
+<div class="page-wrapper">
+    <div class="content">
+
+        <!-- Page Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+
+            <div>
+                <h4 class="mb-1">Task Report</h4>
+
+                <div class="d-flex align-items-center text-muted">
+                    <span>Reports</span>
+                    <i class="ti ti-chevron-right mx-2"></i>
+                    <span>Task Report</span>
+                </div>
+            </div>
+
+            <!-- Export -->
+            <div class="dropdown">
+
+                <button class="btn btn-primary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown">
+
+                    <i class="ti ti-download me-1"></i>
+                    Export
+
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="ti ti-file-type-xls me-2"></i>
+                            Excel
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="ti ti-file-type-pdf me-2"></i>
+                            PDF
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- Summary Cards -->
+        <div class="row">
+
+            <!-- Total Tasks -->
+            <div class="col-xl-3 col-sm-6">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1 text-muted">
+                                    Total Tasks
+                                </p>
+
+                                <h3 class="mb-0">
+                                    @totalTasks
+                                </h3>
+
+                            </div>
+
+                            <div class="avatar avatar-lg bg-primary">
+
+                                <i class="ti ti-list-check fs-24"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Completed -->
+            <div class="col-xl-3 col-sm-6">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1 text-muted">
+                                    Completed Tasks
+                                </p>
+
+                                <h3 class="mb-0">
+                                    @completedTasks
+                                </h3>
+
+                            </div>
+
+                            <div class="avatar avatar-lg bg-success">
+
+                                <i class="ti ti-circle-check fs-24"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Pending -->
+            <div class="col-xl-3 col-sm-6">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1 text-muted">
+                                    Pending Tasks
+                                </p>
+
+                                <h3 class="mb-0">
+                                    @pendingTasks
+                                </h3>
+
+                            </div>
+
+                            <div class="avatar avatar-lg bg-warning">
+
+                                <i class="ti ti-clock fs-24"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Other -->
+            <div class="col-xl-3 col-sm-6">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1 text-muted">
+                                    Other Status
+                                </p>
+
+                                <h3 class="mb-0">
+                                    @otherTasks
+                                </h3>
+
+                            </div>
+
+                            <div class="avatar avatar-lg bg-info">
+
+                                <i class="ti ti-progress fs-24"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Task Status Chart -->
+        <div class="row mt-3">
+
+            <div class="col-xl-12">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-1">
+                            Task Status
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Overview of tasks by status
+                        </p>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div style="height: 300px;">
+
+                            <canvas id="taskStatusChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Task Table -->
+        <div class="card mt-3">
+
+            <div class="card-header">
+
+                <div class="d-flex align-items-center justify-content-between">
+
+                    <div>
+
+                        <h5 class="card-title mb-1">
+                            Task List
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            View all task details
+                        </p>
+
+                    </div>
+
+
+                    <!-- Status Filter -->
+                    <div class="dropdown">
+
+                        <button class="btn btn-light dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown">
+
+                            <i class="ti ti-filter me-1"></i>
+                            Status
+
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li>
+                                <a class="dropdown-item task-status-filter"
+                                   href="#"
+                                   data-status="">
+                                    All
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item task-status-filter"
+                                   href="#"
+                                   data-status="Completed">
+                                    Completed
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item task-status-filter"
+                                   href="#"
+                                   data-status="Pending">
+                                    Pending
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover"
+                           id="taskTable">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Task ID</th>
+
+                                <th>Task Name</th>
+
+                                <th>Project</th>
+
+                                <th>Assigned To</th>
+
+                                <th>Deadline</th>
+
+                                <th>Priority</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <!-- Task ID -->
+                                        <td>
+                                            @item.TaskId
+                                        </td>
+
+
+                                        <!-- Task Name -->
+                                        <td>
+                                            <strong>
+                                                @item.Title
+                                            </strong>
+                                        </td>
+
+
+                                        <!-- Project -->
+                                        <td>
+                                            @item.Projects?.ProjectName
+                                        </td>
+
+
+                                        <!-- Assigned To -->
+                                        <td>
+
+                                            @if (item.Taskmember != null &&
+                                                item.Taskmember.Any())
+                                            {
+                                                var members = item.Taskmember
+                                                    .Where(x => x.User != null)
+                                                    .Select(x =>
+                                                        (x.User.FirstName ?? "") +
+                                                        " " +
+                                                        (x.User.LastName ?? ""))
+                                                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                                                    .ToList();
+
+                                                if (members.Any())
+                                                {
+                                                    @string.Join(", ", members)
+                                                }
+                                                else
+                                                {
+                                                    <span>-</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+
+                                        </td>
+
+
+                                        <!-- Deadline -->
+                                        <td>
+                                            @item.Deadline.ToString("dd-MM-yyyy")
+                                        </td>
+
+
+                                        <!-- Priority -->
+                                        <td>
+
+                                            @if (item.Priority == "High")
+                                            {
+                                                <span class="task-badge high-priority">
+                                                    @item.Priority
+                                                </span>
+                                            }
+                                            else if (item.Priority == "Medium")
+                                            {
+                                                <span class="task-badge medium-priority">
+                                                    @item.Priority
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="task-badge low-priority">
+                                                    @item.Priority
+                                                </span>
+                                            }
+
+                                        </td>
+
+
+                                        <!-- Status -->
+                                        <td>
+
+                                            @if (item.Status == "Completed")
+                                            {
+                                                <span class="task-badge completed-status">
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    @item.Status
+                                                </span>
+                                            }
+                                            else if (item.Status == "Pending")
+                                            {
+                                                <span class="task-badge pending-status">
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    @item.Status
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="task-badge other-status">
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    @item.Status
+                                                </span>
+                                            }
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+
+                                    <td colspan="7"
+                                        class="text-center">
+
+                                        No tasks found.
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Badge CSS -->
+<style>
+
+    .task-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+
+    /* Priority */
+
+    .high-priority {
+        background-color: #dc3545;
+        color: #ffffff;
+    }
+
+    .medium-priority {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .low-priority {
+        background-color: #28a745;
+        color: #ffffff;
+    }
+
+
+    /* Status */
+
+    .completed-status {
+        background-color: #28a745;
+        color: #ffffff;
+    }
+
+    .pending-status {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .other-status {
+        background-color: #6c757d;
+        color: #ffffff;
+    }
+
+
+    .task-badge i {
+        font-size: 10px;
+    }
+
+</style>
+
+
+@section Scripts {
+
+    <!-- Task Status Chart -->
+
+    <script>
+
+        var statusData = @Html.Raw(
+                    System.Text.Json.JsonSerializer.Serialize(
+                            statusChart
+                    )
+            );
+
+        var chartLabels =
+            statusData.map(x => x.Status);
+
+        var chartValues =
+            statusData.map(x => x.Count);
+
+        var chartElement =
+            document.getElementById("taskStatusChart");
+
+
+        if (chartElement) {
+
+            new Chart(chartElement, {
+
+                type: "bar",
+
+                data: {
+
+                    labels: chartLabels,
+
+                    datasets: [
+                        {
+                            label: "Tasks",
+                            data: chartValues,
+                            borderRadius: 6
+                        }
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    scales: {
+
+                        y: {
+                            beginAtZero: true,
+
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+
+                    },
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+    <!-- DataTable -->
+
+    <script>
+
+        $(document).ready(function () {
+
+            if ($.fn.DataTable.isDataTable("#taskTable")) {
+
+                $("#taskTable")
+                    .DataTable()
+                    .destroy();
+
+            }
+
+
+            $("#taskTable").DataTable({
+
+                paging: true,
+
+                searching: true,
+
+                ordering: true,
+
+                info: true,
+
+                pageLength: 10,
+
+                lengthMenu: [
+                    [10, 25, 50, 100],
+                    [10, 25, 50, 100]
+                ],
+
+                language: {
+
+                    search: "Search:",
+
+                    lengthMenu: "_MENU_ entries",
+
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries"
+
+                }
+
+            });
+
+
+            // Status Filter
+
+            $(".task-status-filter").on("click", function (e) {
+
+                e.preventDefault();
+
+                var status =
+                    $(this).data("status");
+
+                var table =
+                    $("#taskTable").DataTable();
+
+
+                if (status === "") {
+
+                    table
+                        .column(6)
+                        .search("")
+                        .draw();
+
+                }
+                else {
+
+                    table
+                        .column(6)
+                        .search(
+                            "^" + status + "$",
+                            true,
+                            false
+                        )
+                        .draw();
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+}

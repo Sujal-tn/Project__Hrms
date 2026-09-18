@@ -40,11 +40,14 @@ builder.Services.AddScoped<ITask, TaskService>();
 builder.Services.AddScoped<IEvent, EventService>();
 builder.Services.AddScoped<IMasterEvent, MasterEventService>();
 
+builder.Services.AddScoped<IDailyReportService, DailyReportService>();
 builder.Services.AddScoped<IPaySlipsReportService, PaySlipsReportService>();
 builder.Services.AddScoped<ILeaveReportService, LeaveReportService>();
-
+builder.Services.AddScoped<IProjectReportService, ProjectReportService>();
 builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
+builder.Services.AddScoped<ITaskReportService, TaskReportService>();
+builder.Services.AddScoped<ITermination, TerminationService>();
 
 
 var app = builder.Build();
@@ -67,7 +70,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Projects}/{action=Index}/{id?}")
+    pattern: "{controller=TaskReport}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();
