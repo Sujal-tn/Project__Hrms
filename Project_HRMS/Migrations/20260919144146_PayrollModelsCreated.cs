@@ -6,11 +6,52 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project_Hrms.Migrations
 {
     /// <inheritdoc />
-    public partial class dbinit : Migration
+    public partial class PayrollModelsCreated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AdminAddDocuments",
+                columns: table => new
+                {
+                    AdminDocId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocFile = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdminAddDocuments", x => x.AdminDocId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AdminAddDocumentsNames",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ADocumentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdminAddDocumentsNames", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeductionTypes",
+                columns: table => new
+                {
+                    DeductionTypeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DeductionsName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeductionTypes", x => x.DeductionTypeId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
@@ -31,12 +72,69 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EarningTypes",
+                columns: table => new
+                {
+                    EarntypeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EarningName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EarningTypes", x => x.EarntypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeAddDocumentsNames",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EDocumentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeAddDocumentsNames", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EventTypeId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MasterEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MasterEvents", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MasterLeaveType",
                 columns: table => new
                 {
                     LeaveTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LeaveType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LeaveType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,6 +298,82 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Deductions",
+                columns: table => new
+                {
+                    DeductionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DeductionTypeId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    DesignationId = table.Column<int>(type: "int", nullable: false),
+                    DeductionPercentage = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deductions", x => x.DeductionId);
+                    table.ForeignKey(
+                        name: "FK_Deductions_DeductionTypes_DeductionTypeId",
+                        column: x => x.DeductionTypeId,
+                        principalTable: "DeductionTypes",
+                        principalColumn: "DeductionTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Deductions_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Deductions_Designations_DesignationId",
+                        column: x => x.DesignationId,
+                        principalTable: "Designations",
+                        principalColumn: "DesignationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Earnings",
+                columns: table => new
+                {
+                    EarningsId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EarntypeId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    DesignationId = table.Column<int>(type: "int", nullable: false),
+                    EarningsPercentage = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Earnings", x => x.EarningsId);
+                    table.ForeignKey(
+                        name: "FK_Earnings_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Earnings_Designations_DesignationId",
+                        column: x => x.DesignationId,
+                        principalTable: "Designations",
+                        principalColumn: "DesignationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Earnings_EarningTypes_EarntypeId",
+                        column: x => x.EarntypeId,
+                        principalTable: "EarningTypes",
+                        principalColumn: "EarntypeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -307,6 +481,73 @@ namespace Project_Hrms.Migrations
                     table.PrimaryKey("PK_Attendance", x => x.AttendanceId);
                     table.ForeignKey(
                         name: "FK_Attendance_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeBankDetails",
+                columns: table => new
+                {
+                    BankDetailId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IFSCCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BranchName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeBankDetails", x => x.BankDetailId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeBankDetails_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeSalaries",
+                columns: table => new
+                {
+                    SalaryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TotalSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NetSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeSalaries", x => x.SalaryId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSalaries_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Files",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Files", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Files_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -481,6 +722,29 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Termination",
+                columns: table => new
+                {
+                    TerminationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TerminationType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NoticeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ResignDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Termination", x => x.TerminationId);
+                    table.ForeignKey(
+                        name: "FK_Termination_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Timesheets",
                 columns: table => new
                 {
@@ -528,8 +792,8 @@ namespace Project_Hrms.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -555,10 +819,93 @@ namespace Project_Hrms.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EmployeeDeductions",
+                columns: table => new
+                {
+                    EmployeeDeductionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SalaryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    DeductionId = table.Column<int>(type: "int", nullable: false),
+                    DeductionAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeDeductions", x => x.EmployeeDeductionId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeDeductions_Deductions_DeductionId",
+                        column: x => x.DeductionId,
+                        principalTable: "Deductions",
+                        principalColumn: "DeductionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeDeductions_EmployeeSalaries_SalaryId",
+                        column: x => x.SalaryId,
+                        principalTable: "EmployeeSalaries",
+                        principalColumn: "SalaryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeDeductions_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeEarnings",
+                columns: table => new
+                {
+                    EmployeeEarningId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SalaryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    EarningId = table.Column<int>(type: "int", nullable: false),
+                    EarningAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeEarnings", x => x.EmployeeEarningId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeEarnings_Earnings_EarningId",
+                        column: x => x.EarningId,
+                        principalTable: "Earnings",
+                        principalColumn: "EarningsId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeEarnings_EmployeeSalaries_SalaryId",
+                        column: x => x.SalaryId,
+                        principalTable: "EmployeeSalaries",
+                        principalColumn: "SalaryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeEarnings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Attendance_UserId",
                 table: "Attendance",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deductions_DeductionTypeId",
+                table: "Deductions",
+                column: "DeductionTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deductions_DepartmentId",
+                table: "Deductions",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deductions_DesignationId",
+                table: "Deductions",
+                column: "DesignationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentLeaves_DepartmentId",
@@ -574,6 +921,66 @@ namespace Project_Hrms.Migrations
                 name: "IX_Designations_DepartmentId",
                 table: "Designations",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Earnings_DepartmentId",
+                table: "Earnings",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Earnings_DesignationId",
+                table: "Earnings",
+                column: "DesignationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Earnings_EarntypeId",
+                table: "Earnings",
+                column: "EarntypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeBankDetails_UserId",
+                table: "EmployeeBankDetails",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeDeductions_DeductionId",
+                table: "EmployeeDeductions",
+                column: "DeductionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeDeductions_SalaryId",
+                table: "EmployeeDeductions",
+                column: "SalaryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeDeductions_UserId",
+                table: "EmployeeDeductions",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEarnings_EarningId",
+                table: "EmployeeEarnings",
+                column: "EarningId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEarnings_SalaryId",
+                table: "EmployeeEarnings",
+                column: "SalaryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEarnings_UserId",
+                table: "EmployeeEarnings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeSalaries_UserId",
+                table: "EmployeeSalaries",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_UserId",
+                table: "Files",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveBalance_DepartmentLeavesId",
@@ -646,6 +1053,11 @@ namespace Project_Hrms.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Termination_UserId",
+                table: "Termination",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Timesheets_ProjectId",
                 table: "Timesheets",
                 column: "ProjectId");
@@ -695,13 +1107,40 @@ namespace Project_Hrms.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AdminAddDocuments");
+
+            migrationBuilder.DropTable(
+                name: "AdminAddDocumentsNames");
+
+            migrationBuilder.DropTable(
                 name: "Attendance");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeAddDocumentsNames");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeBankDetails");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeDeductions");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeEarnings");
+
+            migrationBuilder.DropTable(
+                name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "Files");
 
             migrationBuilder.DropTable(
                 name: "LeaveBalance");
 
             migrationBuilder.DropTable(
                 name: "LeaveRequest");
+
+            migrationBuilder.DropTable(
+                name: "MasterEvents");
 
             migrationBuilder.DropTable(
                 name: "Payslips");
@@ -719,10 +1158,22 @@ namespace Project_Hrms.Migrations
                 name: "TaskMembers");
 
             migrationBuilder.DropTable(
+                name: "Termination");
+
+            migrationBuilder.DropTable(
                 name: "Timesheets");
 
             migrationBuilder.DropTable(
                 name: "Trainings");
+
+            migrationBuilder.DropTable(
+                name: "Deductions");
+
+            migrationBuilder.DropTable(
+                name: "Earnings");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeSalaries");
 
             migrationBuilder.DropTable(
                 name: "DepartmentLeaves");
@@ -735,6 +1186,12 @@ namespace Project_Hrms.Migrations
 
             migrationBuilder.DropTable(
                 name: "TrainingTypes");
+
+            migrationBuilder.DropTable(
+                name: "DeductionTypes");
+
+            migrationBuilder.DropTable(
+                name: "EarningTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");
