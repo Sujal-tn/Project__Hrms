@@ -21,6 +21,7 @@ namespace Project_Hrms.Controllers
             var summary = await attendanceService.GetAttendanceSummaryAsync(userId);
             var history = await attendanceService.GetAttendanceHistoryAsync(userId);
 
+            ViewBag.Employee = await attendanceService.GetEmployeeAsync(userId);
             ViewBag.AttendanceStatus = await attendanceService.GetAttendanceStatusAsync(userId);
             ViewBag.TotalToday = summary.TotalToday;
             ViewBag.TotalWeek = summary.TotalWeek;
@@ -47,6 +48,7 @@ namespace Project_Hrms.Controllers
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0; // placeholder until login is wired in
 
             var summary = await attendanceService.GetAttendanceSummaryAsync(userId);
+            ViewBag.Employee = await attendanceService.GetEmployeeAsync(userId);
             ViewBag.AttendanceStatus = await attendanceService.GetAttendanceStatusAsync(userId);
             ViewBag.TotalToday = summary.TotalToday;
             ViewBag.TotalWeek = summary.TotalWeek;

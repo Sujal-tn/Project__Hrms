@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
 
-
 namespace Project_Hrms.Data
 {
     public class ApplicationDbContext : DbContext
@@ -13,7 +12,6 @@ namespace Project_Hrms.Data
         {
 
         }
-
 
         public DbSet<Role> Roles { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -33,6 +31,15 @@ namespace Project_Hrms.Data
         public DbSet<LeaveBalance> LeaveBalance { get; set; }
         public DbSet<DepartmentLeaves> DepartmentLeaves { get; set; }
 
+        public DbSet<Earning> Earnings { get; set; }
+        public DbSet<EarningType> EarningTypes { get; set; }
+        public DbSet<Deduction> Deductions { get; set; }
+        public DbSet<DeductionType> DeductionTypes { get; set; }
+        public DbSet<EmployeeSalaries> EmployeeSalaries { get; set; }
+        public DbSet<EmployeeEarnings> EmployeeEarnings { get; set; }
+        public DbSet<EmployeeDeductions> EmployeeDeductions { get; set; }
+        public DbSet<EmployeeBankDetails> EmployeeBankDetails { get; set; }
+
         public DbSet<Projects> Projects { get; set; }
 
         public DbSet<AdminAddDocumentsName> AdminAddDocumentsNames { get; set; }
@@ -41,7 +48,6 @@ namespace Project_Hrms.Data
         public DbSet<AdminDocuments> AdminAddDocuments { get; set; }
 
         public DbSet<FileUploads> Files { get; set; }
-
 
         public DbSet<Tasks> Tasks { get; set; }
 
@@ -52,6 +58,7 @@ namespace Project_Hrms.Data
         public DbSet<Events> Events { get; set; }
 
         public DbSet<MasterEvents> MasterEvents { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -63,25 +70,18 @@ namespace Project_Hrms.Data
                       .OnDelete(DeleteBehavior.Restrict)
             );
 
-
-
             modelBuilder.Entity<User>(
                 e =>
                 {
-
                     e.HasOne(x => x.Role)
                      .WithMany(x => x.Employes)
                      .HasForeignKey(x => x.RoleId)
                      .OnDelete(DeleteBehavior.Restrict);
 
-
-
                     e.HasOne(x => x.Department)
                      .WithMany(x => x.Employes)
                      .HasForeignKey(x => x.DepartmentId)
                      .OnDelete(DeleteBehavior.Restrict);
-
-
 
                     e.HasOne(x => x.Designation)
                      .WithMany(x => x.Employes)
@@ -96,6 +96,62 @@ namespace Project_Hrms.Data
                 .HasForeignKey(dl => dl.LeaveTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // EmployeeSalaries -> User
+            modelBuilder.Entity<EmployeeSalaries>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            // EmployeeEarnings -> EmployeeSalaries
+            modelBuilder.Entity<EmployeeEarnings>()
+                .HasOne(x => x.EmployeeSalaries)
+                .WithMany(x => x.EmployeeEarnings)
+                .HasForeignKey(x => x.SalaryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // EmployeeEarnings -> User
+            modelBuilder.Entity<EmployeeEarnings>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // EmployeeEarnings -> Earning
+            modelBuilder.Entity<EmployeeEarnings>()
+                .HasOne(x => x.Earning)
+                .WithMany()
+                .HasForeignKey(x => x.EarningId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            // EmployeeDeductions -> EmployeeSalaries
+            modelBuilder.Entity<EmployeeDeductions>()
+                .HasOne(x => x.EmployeeSalaries)
+                .WithMany(x => x.EmployeeDeductions)
+                .HasForeignKey(x => x.SalaryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EmployeeDeductions>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // EmployeeDeductions -> Deduction
+            modelBuilder.Entity<EmployeeDeductions>()
+                .HasOne(x => x.Deduction)
+                .WithMany()
+                .HasForeignKey(x => x.DeductionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // EmployeeBankDetails -> User
+            modelBuilder.Entity<EmployeeBankDetails>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TaskBoards>()
                 .HasOne(x => x.Project)

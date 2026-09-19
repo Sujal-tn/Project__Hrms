@@ -186,6 +186,11 @@ namespace Project_Hrms.Services
                 .ToListAsync();
         }
 
+        public async Task<User?> GetEmployeeAsync(int userId)
+        {
+            return await db.Users.FindAsync(userId);
+        }
+
         public async Task<List<Attendance>> GetFilteredAttendanceAsync(int userId, string? status, DateTime? startDate, DateTime? endDate, string sortBy)
         {
             var query = db.Attendance.Where(a => a.UserId == userId).AsQueryable();
