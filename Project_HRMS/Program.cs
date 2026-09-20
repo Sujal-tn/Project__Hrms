@@ -16,6 +16,10 @@ using Project_Hrms.Services.Documents;
 
 
 using Project_Hrms.Service;
+<<<<<<< HEAD
+=======
+using Project_Hrms.Services.Training;
+>>>>>>> 7b3b1cadb92f4eda1bfe6b1bd61e9eec49ac4aed
 
 var builder = WebApplication.CreateBuilder(args);
 
