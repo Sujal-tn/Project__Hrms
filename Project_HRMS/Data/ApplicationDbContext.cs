@@ -23,6 +23,7 @@ namespace Project_Hrms.Data
         public DbSet<Promotion> Promotion { get; set; }
         public DbSet<Resignation> Resignation { get; set; }
         public DbSet<Termination> Termination { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Timesheet> Timesheets { get; set; }
         public DbSet<Payslips> Payslips { get; set; }

@@ -70,6 +70,7 @@ builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
 builder.Services.AddScoped<ITaskReportService, TaskReportService>();
 builder.Services.AddScoped<ITermination, TerminationService>();
+builder.Services.AddScoped<ITicket, TicketService>();
 
 
 var app = builder.Build();
