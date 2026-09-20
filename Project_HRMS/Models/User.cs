@@ -54,5 +54,12 @@ namespace Project_Hrms.Models.EmployeeModel
         public List<LeaveBalance> LeaveBalances { get; set; }
         public List<LeaveRequest> LeaveRequests { get; set; }
 
+        public List<Projects> Projects { get; set; }
+
+        public List<BankInformation> BankInformation { get; set; }
+        public List<FamilyInformation> FamilyInformation { get; set; }
+        public List<EductionDetails> EductionDetails { get; set; }
+        public List<Experince> Experince { get; set; }
+
     }
 }

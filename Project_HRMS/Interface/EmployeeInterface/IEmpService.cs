@@ -23,5 +23,7 @@ namespace Project_Hrms.Interface.EmployeeInterface
         Task<List<User>> FetchManagersAsync();
 
         string GetRoleName(int roleId);
+
+       List<UserView> GetEmployeeCardData();
     }
 }
