@@ -3,27 +3,22 @@ using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Interface.LoginInterface;
-<<<<<<< HEAD
 using Project_Hrms.Services.EmployeeService;
 using Project_Hrms.Services.LoginService;
 using Project_Hrms.Interface;
 using Project_Hrms.Services;
 using Project_Hrms.Services.MasterDocuments;
 using Project_Hrms.Interface.TrainingInterface;
-=======
->>>>>>> origin/main
 using Project_Hrms.Interface.MasterDocuments;
 using Project_Hrms.Interface.MasterDocuments.Documents;
 using Project_Hrms.Interface.PayrollInterface;
 using Project_Hrms.Interface.TrainingInterface;
 using Project_Hrms.Models;
 using Project_Hrms.Service;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
+
 using Project_Hrms.Services.Training;
->>>>>>> 7b3b1cadb92f4eda1bfe6b1bd61e9eec49ac4aed
-=======
+
 
 using Project_Hrms.Services;
 using Project_Hrms.Services.Documents;
@@ -31,7 +26,6 @@ using Project_Hrms.Services.EmployeeService;
 using Project_Hrms.Services.LoginService;
 using Project_Hrms.Services.MasterDocuments;
 using Project_Hrms.Services.PayrollService;
->>>>>>> origin/main
 
 var builder = WebApplication.CreateBuilder(args);
 

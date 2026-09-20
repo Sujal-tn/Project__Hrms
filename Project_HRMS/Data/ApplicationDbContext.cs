@@ -58,15 +58,8 @@ namespace Project_Hrms.Data
         public DbSet<Events> Events { get; set; }
 
         public DbSet<MasterEvents> MasterEvents { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-        public DbSet<UploadDocuments> MasterDocument { get; set; }
 
 
-=======
->>>>>>> 7b3b1cadb92f4eda1bfe6b1bd61e9eec49ac4aed
-=======
 
         public DbSet<BankInformation> BankInformations { get; set; }
 
@@ -75,7 +68,7 @@ namespace Project_Hrms.Data
         public DbSet<EductionDetails> EductionDetails { get; set; }
 
         public DbSet<Experince> Experinces { get; set; }
->>>>>>> origin/main
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
