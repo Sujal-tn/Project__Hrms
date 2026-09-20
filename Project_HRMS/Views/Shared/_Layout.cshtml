@@ -12,7 +12,7 @@
 
     <!-- Tabler Icons -->
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+      href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
@@ -253,26 +253,26 @@
                             </summary>
 
                             <div class="submenu">
-                            <a asp-controller="Leave"
-                               asp-action="AddLeaveType">
-                                Add Leave Type
-                            </a>
+                                <a asp-controller="Leave"
+                                   asp-action="AddLeaveType">
+                                    Add Leave Type
+                                </a>
 
-                            <a asp-controller="Leave"
-                               asp-action="AddLeaveDeptwise">
-                                Add Leave
-                            </a>
+                                <a asp-controller="Leave"
+                                   asp-action="AddLeaveDeptwise">
+                                    Add Leave
+                                </a>
 
-                            <a asp-controller="Leave"
-                               asp-action="DepartmentLeaveDetails">
-                                Department Leave Details
-                            </a>
+                                <a asp-controller="Leave"
+                                   asp-action="DepartmentLeaveDetails">
+                                    Department Leave Details
+                                </a>
 
-                            <a asp-controller="Leave"
-                               asp-action="ManageLeaveSettings">
-                                Leave Setting
-                            </a>
-                        </div>
+                                <a asp-controller="Leave"
+                                   asp-action="ManageLeaveSettings">
+                                    Leave Setting
+                                </a>
+                            </div>
                         </details>
 
                         <a asp-controller="AdminAttendance"
@@ -456,6 +456,17 @@
                 </a>
 
 
+                <!-- Tickets -->
+                <a asp-controller="Ticket"
+                   asp-action="Index"
+                   class="sidebar-link">
+
+                    <span>🎫</span>
+                    Tickets
+
+                </a>
+
+
                 <!-- Logout -->
                 <a asp-controller="Auth"
                    asp-action="Logout"
@@ -498,8 +509,6 @@
                        asp-action="Privacy">
                         Privacy
                     </a>
-    @* <!-- FOOTER -->
-    <footer class="border-top footer text-muted">
 
                 </div>
 
@@ -508,7 +517,6 @@
         </div>
 
     </div>
-    </footer> *@
 
     <!-- jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
