@@ -12,19 +12,18 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
     [Migration("20260920061059_addtables")]
     partial class addtables
-
+========
     [Migration("20260918092255_UpdateTerminationModel")]
     partial class UpdateTerminationModel
+>>>>>>>> 7b3b1cadb92f4eda1bfe6b1bd61e9eec49ac4aed:Project_HRMS/Migrations/20260918092255_UpdateTerminationModel.Designer.cs
+========
     [Migration("20260920094010_addProjectsinuser")]
     partial class addProjectsinuser
-
-
-    [Migration("20260920094010_addProjectsinuser")]
-    partial class addProjectsinuser
-
+>>>>>>>> origin/main:Project_HRMS/Migrations/20260920094010_addProjectsinuser.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -679,7 +678,10 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Resignation");
                 });
 
-
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+========
+>>>>>>>> origin/main:Project_HRMS/Migrations/20260920094010_addProjectsinuser.Designer.cs
             modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
                 {
                     b.Property<int>("TaskBoardId")
@@ -772,6 +774,11 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Tasks");
                 });
 
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+========
+>>>>>>>> 7b3b1cadb92f4eda1bfe6b1bd61e9eec49ac4aed:Project_HRMS/Migrations/20260918092255_UpdateTerminationModel.Designer.cs
+========
+>>>>>>>> origin/main:Project_HRMS/Migrations/20260920094010_addProjectsinuser.Designer.cs
             modelBuilder.Entity("Project_Hrms.Models.Termination", b =>
                 {
                     b.Property<int>("TerminationId")
@@ -1212,7 +1219,10 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
-
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+========
+>>>>>>>> origin/main:Project_HRMS/Migrations/20260920094010_addProjectsinuser.Designer.cs
             modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
                 {
                     b.HasOne("Project_Hrms.Models.Projects", "Project")
@@ -1260,6 +1270,11 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Projects");
                 });
 
+<<<<<<<< HEAD:Project_HRMS/Migrations/20260920061059_addtables.Designer.cs
+========
+>>>>>>>> 7b3b1cadb92f4eda1bfe6b1bd61e9eec49ac4aed:Project_HRMS/Migrations/20260918092255_UpdateTerminationModel.Designer.cs
+========
+>>>>>>>> origin/main:Project_HRMS/Migrations/20260920094010_addProjectsinuser.Designer.cs
             modelBuilder.Entity("Project_Hrms.Models.Termination", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")

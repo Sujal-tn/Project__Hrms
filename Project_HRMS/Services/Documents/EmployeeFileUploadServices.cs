@@ -7,35 +7,35 @@ using Project_Hrms.Models.EmployeeModel;
 
 namespace Project_Hrms.Services.Documents
 {
-    public class AdminFileUploadServices : IAdminFileUpload
+    public class EmployeeFileUploadServices : IEmployeeFileUpload
     {
-            private readonly ApplicationDbContext db;
-            private readonly IWebHostEnvironment env;
-            private readonly IEmailService emailService;
+        private readonly ApplicationDbContext db;
+        private readonly IWebHostEnvironment env;
+        private readonly IEmailService emailService;
+        public EmployeeFileUploadServices(ApplicationDbContext db ,IWebHostEnvironment env , IEmailService emailService)
+        {
+            this.db = db;
+            this.env = env;
+            this.emailService = emailService;
 
-        public AdminFileUploadServices( ApplicationDbContext db,IWebHostEnvironment env,IEmailService emailService)
-            {
-                this.db = db;
-                this.env = env;
-                this.emailService = emailService;
+        }
 
-            }
-        
-            public async Task<List<User>> FetchAllUsers()
-            {
-                var data = await db.Users.ToListAsync();
+        public async Task<List<UploadDocuments>> FetchAllDocuments()
+        {
+            var data = await db.MasterDocument
+                   .Where(x => x.DocumentType == "Employee")
+                   .ToListAsync();
+            return data;
+        }
 
-                return data;
-            }
-            public async Task<List<UploadDocuments>> FetchAllDocumentNames()
-            {
-                 var data = await db.MasterDocument
-                        .Where(x => x.DocumentType == "Admin")
-                        .ToListAsync();
-                         return data;
-            }
+        public async Task<List<User>> FetchAllUser()
+        {
+            var data = await db.Users.ToListAsync();
+            return data;
+        }
 
-        public async Task SaveFiles(AdminFileUploadViewModel model)
+
+        public async Task SaveFiles(EmployeeFileUploadViewModel model)
         {
             string uploadfolder = Path.Combine(env.WebRootPath, "uploads");
 
@@ -56,7 +56,6 @@ namespace Project_Hrms.Services.Documents
                                       + Path.GetExtension(orgfilename);
 
                     string filepath = Path.Combine(uploadfolder, filename);
-
                     using (FileStream stream = new FileStream(filepath, FileMode.Create))
                     {
                         await documents.File.CopyToAsync(stream);
@@ -75,9 +74,7 @@ namespace Project_Hrms.Services.Documents
                     filePaths.Add(filepath);
                 }
             }
-
             await db.SaveChangesAsync();
-
 
             var user = await db.Users
                 .FirstOrDefaultAsync(x => x.UserId == model.UserId);
@@ -89,11 +86,11 @@ namespace Project_Hrms.Services.Documents
                     "Documents Uploaded",
                     "Your documents have been uploaded successfully.",
                     filePaths);
+            
             }
+       
         }
 
-    
-    }
 
-    
+    }
 }

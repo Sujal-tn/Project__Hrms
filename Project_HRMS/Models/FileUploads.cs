@@ -13,5 +13,11 @@ namespace Project_Hrms.Models
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
+
+
+        [ForeignKey("Document")]
+        public int DocumentId { get; set; }
+        public UploadDocuments Document { get; set; }
     }
 }
+    

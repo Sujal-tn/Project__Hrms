@@ -3,12 +3,22 @@ using Project_Hrms.Data;
 using Project_Hrms.Interface;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Interface.LoginInterface;
+using Project_Hrms.Services.EmployeeService;
+using Project_Hrms.Services.LoginService;
+using Project_Hrms.Interface;
+using Project_Hrms.Services;
+using Project_Hrms.Services.MasterDocuments;
+using Project_Hrms.Interface.TrainingInterface;
 using Project_Hrms.Interface.MasterDocuments;
 using Project_Hrms.Interface.MasterDocuments.Documents;
 using Project_Hrms.Interface.PayrollInterface;
 using Project_Hrms.Interface.TrainingInterface;
 using Project_Hrms.Models;
 using Project_Hrms.Service;
+
+
+using Project_Hrms.Services.Training;
+
 
 using Project_Hrms.Services;
 using Project_Hrms.Services.Documents;
@@ -54,6 +64,9 @@ builder.Services.AddScoped<ITrainingList, AddTrainingListServices>();
 builder.Services.AddScoped<IAdminDocumentsServices, AdminDocumentsAddServices>();
 builder.Services.AddScoped<IEmployeeDocumentsServices, EmployeeDocumentsAddServices>();
 builder.Services.AddScoped<IAdminFileUpload, AdminFileUploadServices>();
+builder.Services.AddScoped<IUploadedDocument, UploadedDocumentListServices>();
+builder.Services.AddScoped<IEmployeeFileUpload, EmployeeFileUploadServices>();
+builder.Services.AddScoped<IEmailService, EmailServices>();
 
 
 

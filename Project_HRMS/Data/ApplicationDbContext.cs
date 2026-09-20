@@ -46,7 +46,6 @@ namespace Project_Hrms.Data
         public DbSet<AdminAddDocumentsName> AdminAddDocumentsNames { get; set; }
 
         public DbSet<EmployeeAddDocumentsName> EmployeeAddDocumentsNames { get; set; }
-        public DbSet<AdminDocuments> AdminAddDocuments { get; set; }
 
         public DbSet<FileUploads> Files { get; set; }
 
@@ -60,6 +59,8 @@ namespace Project_Hrms.Data
 
         public DbSet<MasterEvents> MasterEvents { get; set; }
 
+
+
         public DbSet<BankInformation> BankInformations { get; set; }
 
         public DbSet<FamilyInformation> FamilyInformations { get; set; }
@@ -67,6 +68,7 @@ namespace Project_Hrms.Data
         public DbSet<EductionDetails> EductionDetails { get; set; }
 
         public DbSet<Experince> Experinces { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
