@@ -28,7 +28,7 @@ namespace Project_Hrms.Services
 
         public async Task DeleteMasterEvent(int id)
         {
-            var data = await d.MasterEvents.FirstOrDefaultAsync(x => x.Id == id);
+            var data = await d.MasterEvents.FindAsync(id);
 
             if (data != null)
             {

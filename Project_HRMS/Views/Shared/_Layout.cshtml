@@ -172,10 +172,10 @@
 
                     <div class="submenu">
 
-                        <a asp-controller="Event"
-                           asp-action="index11">
-                            Add event
-                        </a>
+                        <a asp-controller="Events"
+   asp-action="Index">
+    Events
+</a>
 
                     </div>
 
@@ -514,17 +514,16 @@
     @await RenderSectionAsync("Scripts", required: false)
     <script>
 
-            $(document).ready(function () {
+           $(document).ready(function () {
 
-                $('table')
-                    .not('.no-datatable')
-                    .each(function () {
+    $('.datatable')
+        .each(function () {
 
-                        new DataTable(this);
+            new DataTable(this);
 
-                    });
+        });
 
-            });
+});
 
     </script>
 

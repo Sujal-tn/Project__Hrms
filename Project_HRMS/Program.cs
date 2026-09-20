@@ -17,7 +17,7 @@ using Project_Hrms.Services.Documents;
 
 
 using Project_Hrms.Service;
-using Project_Hrms.Services.Training;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -8,7 +8,6 @@ namespace Project_Hrms.Controllers
     {
         IEvent Ev;
         IMasterEvent me;
-
         public EventsController(IEvent E, IMasterEvent M)
         {
             this.Ev = E;
