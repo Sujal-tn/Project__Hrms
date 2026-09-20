@@ -5,14 +5,14 @@
 namespace Project_Hrms.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateMasterLeaveTypeModel : Migration
+    public partial class addPhone : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Status",
-                table: "MasterLeaveType",
+                name: "Phone",
+                table: "FamilyInformations",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
@@ -22,8 +22,8 @@ namespace Project_Hrms.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Status",
-                table: "MasterLeaveType");
+                name: "Phone",
+                table: "FamilyInformations");
         }
     }
 }

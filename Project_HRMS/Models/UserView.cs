@@ -34,6 +34,8 @@ namespace Project_Hrms.Models
         public string? AboutEmployee { get; set; }
         public IFormFile? ProfilePicture { get; set; }
 
+        public string? ProfilePicturePath { get; set; }
+
         public int? ReportingManager { get; set; }
 
         public User? Manager { get; set; }
@@ -42,5 +44,10 @@ namespace Project_Hrms.Models
         public string? ModifiedBy { get; set; }
         public string? ModifiedAt { get; set; }
         public string? Status { get; set; }
+        public int Projects { get; set; }
+        public int Done { get; set; }
+        public int Progress { get; set; }
+
+        public double    Productivity { get; set; }
     }
 }

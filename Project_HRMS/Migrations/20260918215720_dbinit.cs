@@ -12,6 +12,34 @@ namespace Project_Hrms.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AdminAddDocuments",
+                columns: table => new
+                {
+                    AdminDocId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocFile = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdminAddDocuments", x => x.AdminDocId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AdminAddDocumentsNames",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ADocumentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdminAddDocumentsNames", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
@@ -31,12 +59,56 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeeAddDocumentsNames",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EDocumentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeAddDocumentsNames", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EventTypeId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MasterEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MasterEvents", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MasterLeaveType",
                 columns: table => new
                 {
                     LeaveTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LeaveType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LeaveType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -314,6 +386,27 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Files",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Files", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Files_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LeaveBalance",
                 columns: table => new
                 {
@@ -481,6 +574,29 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Termination",
+                columns: table => new
+                {
+                    TerminationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TerminationType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NoticeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ResignDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Termination", x => x.TerminationId);
+                    table.ForeignKey(
+                        name: "FK_Termination_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Timesheets",
                 columns: table => new
                 {
@@ -528,8 +644,8 @@ namespace Project_Hrms.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -574,6 +690,11 @@ namespace Project_Hrms.Migrations
                 name: "IX_Designations_DepartmentId",
                 table: "Designations",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_UserId",
+                table: "Files",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveBalance_DepartmentLeavesId",
@@ -646,6 +767,11 @@ namespace Project_Hrms.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Termination_UserId",
+                table: "Termination",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Timesheets_ProjectId",
                 table: "Timesheets",
                 column: "ProjectId");
@@ -695,13 +821,31 @@ namespace Project_Hrms.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AdminAddDocuments");
+
+            migrationBuilder.DropTable(
+                name: "AdminAddDocumentsNames");
+
+            migrationBuilder.DropTable(
                 name: "Attendance");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeAddDocumentsNames");
+
+            migrationBuilder.DropTable(
+                name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "Files");
 
             migrationBuilder.DropTable(
                 name: "LeaveBalance");
 
             migrationBuilder.DropTable(
                 name: "LeaveRequest");
+
+            migrationBuilder.DropTable(
+                name: "MasterEvents");
 
             migrationBuilder.DropTable(
                 name: "Payslips");
@@ -717,6 +861,9 @@ namespace Project_Hrms.Migrations
 
             migrationBuilder.DropTable(
                 name: "TaskMembers");
+
+            migrationBuilder.DropTable(
+                name: "Termination");
 
             migrationBuilder.DropTable(
                 name: "Timesheets");

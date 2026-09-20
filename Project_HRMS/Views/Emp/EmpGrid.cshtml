@@ -1,0 +1,269 @@
+﻿@model List<Project_Hrms.Models.UserView>
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-4">
+        <div class="my-auto mb-2">
+            <h2 class="mb-1">Employee</h2>
+            <nav>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="#">
+                            <i class="ti ti-smart-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Employee</li>
+                    <li class="breadcrumb-item active">Employee Grid</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="d-flex align-items-center flex-wrap">
+
+            <div class="me-2 mb-2">
+                <div class="d-flex align-items-center border bg-white rounded p-1">
+                    <a asp-controller="Employee"
+                       asp-action="EmpList"
+                       class="btn btn-icon btn-sm me-1">
+                        <i class="ti ti-list-tree"></i>
+                    </a>
+
+                    <a asp-controller="Employee"
+                       asp-action="EmpGrid"
+                       class="btn btn-icon btn-sm active bg-primary text-white">
+                        <i class="ti ti-layout-grid"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="me-2 mb-2">
+                <div class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                       data-bs-toggle="dropdown">
+                        <i class="ti ti-file-export me-1"></i>
+                        Export
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end p-3">
+                        <li>
+                            <a asp-controller="Employee"
+                               asp-action="ExportToPdf"
+                               class="dropdown-item rounded-1">
+                                <i class="ti ti-file-type-pdf me-1"></i>
+                                Export as PDF
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                               class="dropdown-item rounded-1">
+                                <i class="ti ti-file-type-xls me-1"></i>
+                                Export as Excel
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <a id="openmod"
+                   class="btn btn-primary d-flex align-items-center">
+                    <i class="ti ti-circle-plus me-2"></i>
+                    Add Employee
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row">
+
+        <!-- Total -->
+        <div class="col-xl-3 col-lg-6 col-md-6 d-flex">
+            <div class="card flex-fill border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-dark rounded-circle">
+                        <i class="ti ti-users"></i>
+                    </span>
+
+                    <div class="ms-3">
+                        <p class="fs-12 fw-medium mb-1 text-muted">
+                            Total Employee
+                        </p>
+                        <h4 class="mb-0">
+                            @ViewBag.TUser
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Active -->
+        <div class="col-xl-3 col-lg-6 col-md-6 d-flex">
+            <div class="card flex-fill border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-success rounded-circle">
+                        <i class="ti ti-user-share"></i>
+                    </span>
+
+                    <div class="ms-3">
+                        <p class="fs-12 fw-medium mb-1 text-muted">
+                            Active
+                        </p>
+                        <h4 class="mb-0">
+                            @ViewBag.Auser
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Inactive -->
+        <div class="col-xl-3 col-lg-6 col-md-6 d-flex">
+            <div class="card flex-fill border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-danger rounded-circle">
+                        <i class="ti ti-user-pause"></i>
+                    </span>
+
+                    <div class="ms-3">
+                        <p class="fs-12 fw-medium mb-1 text-muted">
+                            InActive
+                        </p>
+                        <h4 class="mb-0">
+                            @ViewBag.InUser
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- New Joiners -->
+        <div class="col-xl-3 col-lg-6 col-md-6 d-flex">
+            <div class="card flex-fill border-0 shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <span class="avatar avatar-lg bg-info rounded-circle">
+                        <i class="ti ti-user-plus"></i>
+                    </span>
+
+                    <div class="ms-3">
+                        <p class="fs-12 fw-medium mb-1 text-muted">
+                            New Joiners
+                        </p>
+                        <h4 class="mb-0">
+                            @ViewBag.NewJ
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Employee Cards -->
+<div class="row g-4">
+    @foreach (var emp in Model)
+    {
+        <div class="col-xl-4 col-lg-6 col-md-6">
+            <div class="card border-0 shadow-sm h-100 employee-card">
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-4">
+                        @if (!string.IsNullOrEmpty(emp.ProfilePicturePath))
+                        {
+                            <img src="~/@emp.ProfilePicturePath"
+                                 class="rounded-circle employee-img"
+                                 width="65"
+                                 height="65" />
+                        }
+                        else
+                        {
+                            <div class="employee-img-placeholder">
+                                <i class="ti ti-user"></i>
+                            </div>
+                        }
+
+                        <div class="ms-3 overflow-hidden">
+                            <h5 class="mb-1 text-truncate">
+                                @emp.FirstName @emp.LastName
+                            </h5>
+                            <p class="text-muted mb-0 text-truncate">
+                                @emp.Designation
+                            </p>
+                        </div>
+
+                        <button class="btn btn-light btn-sm rounded-circle ms-auto">
+                            <i class="ti ti-dots-vertical"></i>
+                        </button>
+                    </div>
+
+                    <div class="employee-stats">
+                        <div class="stat-box">
+                            <span class="stat-icon bg-primary-subtle text-primary">
+                                <i class="ti ti-briefcase"></i>
+                            </span>
+                            <div>
+                                <small>Projects</small>
+                                <h5>@emp.Projects</h5>
+                            </div>
+                        </div>
+
+                        <div class="stat-box">
+                            <span class="stat-icon bg-success-subtle text-success">
+                                <i class="ti ti-circle-check"></i>
+                            </span>
+                            <div>
+                                <small>Done</small>
+                                <h5>@emp.Done</h5>
+                            </div>
+                        </div>
+
+                        <div class="stat-box">
+                            <span class="stat-icon bg-warning-subtle text-warning">
+                                <i class="ti ti-clock"></i>
+                            </span>
+                            <div>
+                                <small>Progress</small>
+                                <h5>@emp.Progress</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-medium">Productivity</span>
+                            <strong class="text-success">@emp.Productivity%</strong>
+                        </div>
+
+                        <div class="progress productivity-progress">
+                            <div class="progress-bar bg-success"
+                                 style="width:@emp.Productivity%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                        <span class="text-muted fs-12">
+                            ID: #@emp.UserId
+                        </span>
+
+                        <a href="#" class="btn btn-sm btn-light">
+                            View Profile
+                            <i class="ti ti-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+</div>
