@@ -2,24 +2,33 @@
 @model List<Project_Hrms.Models.EmployeeModel.Department>
 @if (TempData["msg"] != null)
 {
-    <alert class="text-bg-success">@TempData["msg"]</alert>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle"></i>
+        @TempData["msg"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
 }
 
 @if (TempData["DelMsg"] != null)
 {
-    <alert class="text-bg-danger"> @TempData["DelMsg"]</alert>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-exclamation-circle"></i>
+        @TempData["DelMsg"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
 }
 <a asp-controller="Department" asp-action="AddDepartment" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addDepartmentModal"> <i class="fa fa-plus"></i> Add Department</a>
 
 <br>
-<table class="table">
+<table id="departmentTable" class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Department</th>
-            <th scope="auto">NO-Of-Employes </th>
-            <th scope="col">CreatedBy</th>
-            <th scope="col">ModifiedBy</th>
+            <th>ID</th>
+            <th>Department</th>
+            <th>No Of Employees</th>
+            <th>Created By</th>
+            <th>Modified By</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -157,7 +166,12 @@
 <script>
     $(document).ready(function() {
 
-        $('#departmentTable').DataTable();
+        $('#departmentTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 25, 50],
+            "ordering": true,
+            "searching": true
+        });
 
     });
 </script>

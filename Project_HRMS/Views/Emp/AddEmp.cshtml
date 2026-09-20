@@ -2,7 +2,7 @@
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Project_Hrms.Models.EmployeeModel.User
+@model Project_Hrms.Models.UserView
 @{
     string srole = "";
     if (ViewBag.srname != null)
@@ -19,7 +19,7 @@
                 Employee / Add Employee
             </p>
         </div>
-        <a asp-controller="Employee" asp-action="EmpList" class="btn btn-secondary">
+        <a asp-controller="Emp" asp-action="Index" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i>
             Back
         </a>
@@ -199,7 +199,7 @@
                         <label class="form-label">
                             Profile Picture
                         </label>
-                        <input type="file" name="ProfilePictureFile" class="form-control" accept="image/*" />
+                        <input type="file" asp-for="ProfilePicture" class="form-control" />
                     </div>
                 </div>
                 <div class="text-end mt-3">

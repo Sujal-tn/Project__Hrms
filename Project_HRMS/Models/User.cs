@@ -43,8 +43,8 @@ namespace Project_Hrms.Models.EmployeeModel
         [ForeignKey("ReportingManager")]
         public User? Manager { get; set; }
         public string? CreatedAt { get; set; }
-        public int CreatedBy { get; set; }
-        public int ModifiedBy { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModifiedBy { get; set; }
         public string? ModifiedAt { get; set; }
         public string? Status { get; set; }
 
@@ -53,6 +53,13 @@ namespace Project_Hrms.Models.EmployeeModel
         public List<Timesheet> Timesheets { get; set; }
         public List<LeaveBalance> LeaveBalances { get; set; }
         public List<LeaveRequest> LeaveRequests { get; set; }
+
+        public List<Projects> Projects { get; set; }
+
+        public List<BankInformation> BankInformation { get; set; }
+        public List<FamilyInformation> FamilyInformation { get; set; }
+        public List<EductionDetails> EductionDetails { get; set; }
+        public List<Experince> Experince { get; set; }
 
     }
 }

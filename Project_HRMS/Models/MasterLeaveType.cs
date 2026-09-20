@@ -7,6 +7,7 @@ namespace Project_Hrms.Models
         [Key]
         public int LeaveTypeId { get; set; }
         public string LeaveType { get; set; }
+        public string Status { get; set; }
 
         public List<DepartmentLeaves> DepartmentLeaves { get; set; }
         public List<LeaveBalance> LeaveBalances { get; set; }

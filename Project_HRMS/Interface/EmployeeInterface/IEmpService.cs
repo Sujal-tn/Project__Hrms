@@ -1,10 +1,11 @@
-﻿using Project_Hrms.Models.EmployeeModel;
+﻿using Project_Hrms.Models;
+using Project_Hrms.Models.EmployeeModel;
 
 namespace Project_Hrms.Interface.EmployeeInterface
 {
     public interface IEmpService
     {
-        void AddEmp(User d);
+        void AddEmp(UserView d);
         List<User> FetchEmp();
 
         void DeleteEmp(int id);
@@ -22,5 +23,7 @@ namespace Project_Hrms.Interface.EmployeeInterface
         Task<List<User>> FetchManagersAsync();
 
         string GetRoleName(int roleId);
+
+       List<UserView> GetEmployeeCardData();
     }
 }

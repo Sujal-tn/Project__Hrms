@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Project_Hrms.Models.EmployeeModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project_Hrms.Models
 {
@@ -43,6 +45,10 @@ namespace Project_Hrms.Models
 
         public List<Timesheet> Timesheets { get; set; }
 
+        [ForeignKey("UserId")]
+        public int? UserId { get; set; }
+
+        public User? User { get; set; }
 
     }
 }

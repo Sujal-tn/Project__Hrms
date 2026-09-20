@@ -6,21 +6,37 @@
 @model List<Project_Hrms.Models.EmployeeModel.Role>
 @if (TempData["msg"] != null)
 {
-    <alert class="text-bg-success">@TempData["msg"]</alert>
-}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle"></i>
+        @TempData["msg"]
 
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+}
 @if (TempData["DelMsg"]!=null)
 {
-    <alert class="text-bg-danger"> @TempData["DelMsg"]</alert>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-exclamation-circle"></i>
+        @TempData["DelMsg"]
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
 }
 <a asp-controller="Role" asp-action="AddRole" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addRoleModal"> <i class="fa fa-plus"></i> Add Role</a>
 
 <br>
-<table class="table">
+<table id="roleTable" class="table">
     <thead>
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Role</th>
+            <th scope="col">Status</th>
             <th scope="col">CreatedBy</th>
             <th scope="col">ModifiedBy</th>
             <th>Action</th>
@@ -113,8 +129,11 @@
 
 <script>
     $(document).ready(function() {
-
-        $('#roleTable').DataTable();
-
+        $('#roleTable').DataTable({
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50],
+            ordering: true,
+            searching: true
+        });
     });
 </script>
