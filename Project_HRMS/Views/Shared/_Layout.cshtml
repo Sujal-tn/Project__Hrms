@@ -1,12 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-
-@{
-    var userName = Context.Session.GetString("Name");
-    var userEmail = Context.Session.GetString("Email");
-    var roleName = Context.Session.GetString("RoleName");
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,18 +6,23 @@
 
     <title>@ViewData["Title"] - Project_Hrms</title>
 
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet"
           href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
+    <!-- Tabler Icons -->
     <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+          href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
+    <!-- DataTables CSS - ONE VERSION ONLY -->
     <link rel="stylesheet"
           href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css" />
 
+    <!-- Custom CSS -->
     <link rel="stylesheet"
           href="~/css/site.css"
           asp-append-version="true" />
@@ -35,6 +32,7 @@
           asp-append-version="true" />
 
     <style>
+        /* Keep the admin page and footer inside one normal document flow. */
         html, body {
             min-height: 100%;
             margin: 0;
@@ -86,34 +84,41 @@
 
 <body>
 
-<div class="admin-layout">
+    <div class="admin-layout">
 
-    <aside class="admin-sidebar">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
 
-        <div class="sidebar-logo">
-            <h2>HRMS</h2>
-        </div>
+            <div class="sidebar-logo">
+                <h2>HRMS</h2>
+            </div>
 
-        <p class="sidebar-title">MAIN MENU</p>
+            <p class="sidebar-title">MAIN MENU</p>
 
-        <nav class="sidebar-menu">
+            <nav class="sidebar-menu">
 
-            <a asp-controller="Auth"
-               asp-action="Admin"
-               class="sidebar-link">
+                <!-- Dashboard -->
+                <a asp-controller="Auth"
+                   asp-action="Admin"
+                   class="sidebar-link active">
 
-                <span>⌂</span>
-                Dashboard
-            </a>
+                    <span>⌂</span>
+                    Dashboard
+
+                    <span class="hot-badge">Hot</span>
+                </a>
 
 
-            @if (roleName == "Admin")
-            {
-                <details>
+                <!-- Employees -->
+                <details open>
+
                     <summary class="sidebar-link">
+
                         <span>♙</span>
                         Employees
+
                         <span class="menu-arrow">⌃</span>
+
                     </summary>
 
                     <div class="submenu">
@@ -139,24 +144,30 @@
                         </a>
 
                         <a asp-controller="Emp"
-                           asp-action="EmpGrid">
+                           asp-action="Grid">
                             Employee Grid
                         </a>
 
                         <a asp-controller="Emp"
-                           asp-action="EmpDetails">
+                           asp-action="Index">
                             Employee Details
                         </a>
 
                     </div>
+
                 </details>
 
 
+                <!-- Events -->
                 <details>
+
                     <summary class="sidebar-link">
-                        <span>▣</span>
+
+                        <span>♧</span>
                         Events
-                        <span class="menu-arrow">⌃</span>
+
+                        <span class="menu-arrow">⌄</span>
+
                     </summary>
 
                     <div class="submenu">
@@ -165,20 +176,22 @@
    asp-action="Index">
     Events
 </a>
-                        <a asp-controller="Event"
-                           asp-action="index11">
-                            Add Event
-                        </a>
 
                     </div>
+
                 </details>
 
 
+                <!-- Training -->
                 <details>
+
                     <summary class="sidebar-link">
+
                         <span>✎</span>
                         Training
-                        <span class="menu-arrow">⌃</span>
+
+                        <span class="menu-arrow">⌄</span>
+
                     </summary>
 
                     <div class="submenu">
@@ -192,14 +205,20 @@
                         </a>
 
                     </div>
+
                 </details>
 
 
+                <!-- Performance -->
                 <details>
+
                     <summary class="sidebar-link">
+
                         <span>▱</span>
-                        Performance & Goal
-                        <span class="menu-arrow">⌃</span>
+                        Performance &amp; Goal
+
+                        <span class="menu-arrow">⌄</span>
+
                     </summary>
 
                     <div class="submenu">
@@ -213,9 +232,11 @@
                         </a>
 
                     </div>
+
                 </details>
 
 
+                <!-- Attendance -->
                 <details>
                     <summary class="sidebar-link">
                         <span>♧</span>
@@ -232,42 +253,27 @@
                             </summary>
 
                             <div class="submenu">
-                                <a asp-controller="Leave"
-                                   asp-action="AddLeaveType">
-                                    Add Leave Type
-                                </a>
+                            <a asp-controller="Leave"
+                               asp-action="AddLeaveType">
+                                Add Leave Type
+                            </a>
 
-                                <a asp-controller="Leave"
-                                   asp-action="AddLeaveDeptwise">
-                                    Add Leave
-                                </a>
+                            <a asp-controller="Leave"
+                               asp-action="AddLeaveDeptwise">
+                                Add Leave
+                            </a>
 
-                                <a asp-controller="Leave"
-                                   asp-action="DepartmentLeaveDetails">
-                                    Department Leave Details
-                                </a>
+                            <a asp-controller="Leave"
+                               asp-action="DepartmentLeaveDetails">
+                                Department Leave Details
+                            </a>
 
-                                <a asp-controller="Leave"
-                                   asp-action="ManageLeaveSettings">
-                                    Leave Setting
-                                </a>
-                            </div>
+                            <a asp-controller="Leave"
+                               asp-action="ManageLeaveSettings">
+                                Leave Setting
+                            </a>
+                        </div>
                         </details>
-
-                        <a asp-controller="Leave"
-                           asp-action="AddLeaveDeptwise">
-                            Add Leave
-                        </a>
-
-                        <a asp-controller="Leave"
-                           asp-action="DepartmentLeaveDetails">
-                            Department Leave Details
-                        </a>
-
-                        <a asp-controller="Leave"
-                           asp-action="ManageLeaveSettings">
-                            Leave Setting
-                        </a>
 
                         <a asp-controller="AdminAttendance"
                            asp-action="Index">
@@ -278,11 +284,11 @@
                            asp-action="Index">
                             Timesheet
                         </a>
-
                     </div>
                 </details>
 
 
+                <!-- Payroll -->
                 <details>
                     <summary class="sidebar-link">
                         <span>▣</span>
@@ -291,89 +297,100 @@
                     </summary>
 
                     <div class="submenu">
-                        <a asp-controller="EmpSalaries" asp-action="AddEmployeeSalary">
+                        <a href="#">
                             Add Employee Salary
                         </a>
 
-                        <a asp-controller="Earning" asp-action="Earning">
+                        <a href="#">
                             Master Payroll
                         </a>
 
-                        <a asp-controller="EmpSalaries" asp-action="EmployeeSalary">
+                        <a href="#">
                             Employee Salary List
-                            </a>
+                        </a>
 
-                        <a asp-controller="Payslip" asp-action="GeneratePayslipsForAllUsersByDate">
+                        <a href="#">
                             Generate Payslip Monthly
                         </a>
 
                         <a href="#">
                             Transaction History
                         </a>
-
-                        <a asp-controller="Payslip" asp-action="TransactionHistory">Transaction History</a>
                     </div>
                 </details>
 
 
+                <!-- Reports -->
                 <details>
+
                     <summary class="sidebar-link">
+
                         <span>▱</span>
                         Reports
-                        <span class="menu-arrow">⌃</span>
+
+                        <span class="menu-arrow">⌄</span>
+
+                    </summary>
+
+                    <div class="submenu">
+
+                        <a asp-controller="Reports"
+                           asp-action="Index">
+                            Employee Report
+                        </a>
+
+                        <a asp-controller="Reports"
+                           asp-action="Attendance">
+                            Attendance Report
+                        </a>
+
+                        <a asp-controller="Reports"
+                           asp-action="LeaveReport">
+                            Leave Report
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <!-- Master Documents -->
+                <details>
+
+                    <summary class="sidebar-link">
+
+                        <span>▱</span>
+                        Master Documents
+
+                        <span class="menu-arrow">⌄</span>
+
                     </summary>
 
                     <div class="submenu">
 
                         <a href="#">
-                            Employee Report
+                            Document Categories
                         </a>
 
                         <a href="#">
-                            Attendance Report
-                        </a>
-
-                        <a href="#">
-                            Payroll Report
-                        <a asp-controller="EmployeeReport"
-                           asp-action="Index">
-                            Employee Report
-                        </a>
-
-                        <a asp-controller="AttendanceReport"
-                           asp-action="Index">
-                            Attendance Report
-                        </a>
-
-                        <a asp-controller="LeaveReport"
-                           asp-action="Index">
-                            Leave Report
-                        </a>
-
-                        <a asp-controller="ProjectReport"
-                           asp-action="Index">
-                            Project Report
-                        </a>
-
-                        <a asp-controller="TaskReport"
-                           asp-action="Index">
-                            Task Report
-                        </a>
-
-                        <a asp-controller="DailyReport"
-                           asp-action="Index">
-                            Daily Report
+                            Document Types
                         </a>
 
                     </div>
+
                 </details>
 
 
+                <!-- Documents -->
                 <details>
+
                     <summary class="sidebar-link">
+
                         <span>▱</span>
                         Documents
-                        <span class="menu-arrow">⌃</span>
+
+                        <span class="menu-arrow">⌄</span>
+
                     </summary>
 
                     <div class="submenu">
@@ -387,9 +404,11 @@
                         </a>
 
                     </div>
+
                 </details>
 
 
+                <!-- Promotion -->
                 <a asp-controller="Promotion"
                    asp-action="Index"
                    class="sidebar-link">
@@ -400,6 +419,7 @@
                 </a>
 
 
+                <!-- Resignation -->
                 <a asp-controller="Resignation"
                    asp-action="Index"
                    class="sidebar-link">
@@ -410,216 +430,13 @@
                 </a>
 
 
+                <!-- Termination -->
                 <a asp-controller="Termination"
                    asp-action="Index"
                    class="sidebar-link">
 
                     <span>✖</span>
                     Termination
-
-                </a>
-            }
-
-
-            @if (roleName == "Manager")
-            {
-                <details>
-                    <summary class="sidebar-link">
-                        <span>♙</span>
-                        Employees
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
-
-                    <div class="submenu">
-
-                        <a asp-controller="Emp"
-                           asp-action="EmpGrid">
-                            Team Employees
-                        </a>
-
-                        <a asp-controller="Emp"
-                           asp-action="EmpDetails">
-                            Employee Details
-                        </a>
-
-                    </div>
-                </details>
-
-
-                <details>
-                    <summary class="sidebar-link">
-                        <span>▣</span>
-                        Projects
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
-
-                    <div class="submenu">
-
-                        <a href="#">
-                            Project List
-                        </a>
-
-                        <a href="#">
-                            Add Project
-                        </a>
-
-                        <a href="#">
-                            Project Details
-                        </a>
-
-                    </div>
-                </details>
-
-
-                <details>
-                    <summary class="sidebar-link">
-                        <span>♧</span>
-                        Attendance
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
-
-                    <div class="submenu">
-
-                        <a asp-controller="AdminAttendance"
-                           asp-action="Index">
-                            Team Attendance
-                        </a>
-
-                        <a asp-controller="AdminTimesheet"
-                           asp-action="Index">
-                            Team Timesheet
-                        </a>
-
-                        <a asp-controller="Leave"
-                           asp-action="DepartmentLeaveDetails">
-                            Team Leave
-                        </a>
-
-                    </div>
-                </details>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Performance
-
-                </a>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Reports
-
-                </a>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Training
-
-                </a>
-            }
-
-
-            @if (roleName == "Employee")
-            {
-                <a asp-controller="Emp"
-                   asp-action="EmpDetails"
-                   class="sidebar-link">
-
-                    <span>♙</span>
-                    My Profile
-
-                </a>
-
-
-                <details>
-                    <summary class="sidebar-link">
-                        <span>♧</span>
-                        Attendance
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
-
-                    <div class="submenu">
-
-                        <a href="#">
-                            My Attendance
-                        </a>
-
-                        <a href="#">
-                            My Timesheet
-                        </a>
-
-                        <a href="#">
-                            My Leave
-                        </a>
-
-                    </div>
-                </details>
-
-
-                <details>
-                    <summary class="sidebar-link">
-                        <span>▣</span>
-                        Projects
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
-
-                    <div class="submenu">
-
-                        <a href="#">
-                            My Projects
-                        </a>
-
-                        <a href="#">
-                            My Tasks
-                        </a>
-
-                    </div>
-                </details>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>✎</span>
-                    Training
-
-                </a>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Performance
-
-                </a>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Documents
-
-                </a>
-            }
-
-
-                <!-- Tickets -->
-                <a asp-controller="Ticket"
-                   asp-action="Index"
-                   class="sidebar-link">
-
-                    <span>🎫</span>
-                    Tickets
 
                 </a>
 
@@ -631,69 +448,71 @@
 
                     <span>⇥</span>
                     Logout
-            <a asp-controller="Auth"
-               asp-action="Logout"
-               class="sidebar-link logout-link">
 
-                <span>⇥</span>
-                Logout
+                </a>
 
-            </a>
+            </nav>
 
-        </nav>
-
-    </aside>
+        </aside>
 
 
-    <div class="admin-content">
+        <!-- MAIN CONTENT -->
+        <div class="admin-content">
 
-        <header class="admin-header">
+            <header class="admin-header">
 
-            <div>
-                <h2>HRMS - @roleName Panel</h2>
-                <small>@userName</small>
-            </div>
+                <h2>HRMS - Admin Panel</h2>
 
-        </header>
+            </header>
 
+            <main>
 
-        <main>
+                @RenderBody()
 
-            @RenderBody()
+            </main>
 
-        </main>
+            <!-- FOOTER -->
+            <footer class="border-top footer text-muted admin-footer">
 
+                <div class="container">
+
+                    &copy; 2026 - Project_Hrms -
 
                     <a asp-area=""
                        asp-controller="Home"
                        asp-action="Privacy">
                         Privacy
                     </a>
-        <footer class="border-top footer text-muted admin-footer">
+    @* <!-- FOOTER -->
+    <footer class="border-top footer text-muted">
 
-            <div class="container">
+                </div>
 
-                &copy; 2026 - Project_Hrms -
+            </footer>
 
-                <a asp-area=""
-                   asp-controller="Home"
-                   asp-action="Privacy">
-                    Privacy
-                </a>
+        </div>
 
     </div>
-            </div>
+    </footer> *@
 
-        </footer>
+    <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-    </div>
+    <!-- Bootstrap -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-</div>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Custom JS -->
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
 
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
 
            $(document).ready(function () {
 
@@ -707,24 +526,6 @@
 });
 
     </script>
-<script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script src="~/js/site.js"
-        asp-append-version="true"></script>
-
-@await RenderSectionAsync("Scripts", required: false)
-
-<script>
-    $(document).ready(function () {
-        $('table')
-            .not('.no-datatable')
-            .each(function () {
-                new DataTable(this);
-            });
-    });
-</script>
 
 </body>
 </html>
