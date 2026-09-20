@@ -297,25 +297,23 @@
                     </summary>
 
                     <div class="submenu">
-                        <a href="#">
+                        <a asp-controller="EmpSalaries" asp-action="AddEmployeeSalary">
                             Add Employee Salary
                         </a>
 
-                        <a href="#">
+                        <a asp-controller="Earning" asp-action="Earning">
                             Master Payroll
                         </a>
 
-                        <a href="#">
+                        <a asp-controller="EmpSalaries" asp-action="EmployeeSalary">
                             Employee Salary List
-                        </a>
+                            </a>
 
-                        <a href="#">
+                        <a asp-controller="Payslip" asp-action="GeneratePayslipsForAllUsersByDate">
                             Generate Payslip Monthly
                         </a>
 
-                        <a href="#">
-                            Transaction History
-                        </a>
+                        <a asp-controller="Payslip" asp-action="TransactionHistory">Transaction History</a>
                     </div>
                 </details>
 

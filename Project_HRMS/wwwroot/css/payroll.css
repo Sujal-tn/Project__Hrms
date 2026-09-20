@@ -1,0 +1,162 @@
+﻿
+:root {
+    --pay-teal: #3b7080;
+    --pay-teal-dark: #2f5966;
+    --pay-orange: #f26522;
+    --pay-orange-dark: #d9531a;
+    --pay-ink: #111827;
+    --pay-muted: #6b7280;
+    --pay-line: #e5e7eb;
+    --pay-head: #e9ebef;
+}
+
+/* ---------- Top row: dropdown buttons (left) + Add button (right) ---------- */
+.payroll-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 1.5rem 0;
+}
+
+.payroll-tabs {
+    display: flex;
+    gap: 16px;
+}
+
+    .payroll-tabs .dropdown {
+        position: relative;
+    }
+
+/* Earning / Deduction buttons */
+.payroll-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: .55rem 1.1rem;
+    background: #fff;
+    color: var(--pay-ink);
+    font-weight: 500;
+    border: 1px solid var(--pay-line);
+    border-radius: .375rem;
+    cursor: pointer;
+}
+
+    .payroll-tab i {
+        margin-left: .6rem;
+        font-size: .85rem;
+    }
+
+    .payroll-tab:hover {
+        border-color: var(--pay-teal);
+    }
+
+    .payroll-tab:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 .2rem rgba(59, 112, 128, .25);
+    }
+
+    /* the section you are currently in is filled teal */
+    .payroll-tab.active {
+        background: var(--pay-teal);
+        border-color: var(--pay-teal);
+        color: #fff;
+    }
+
+        .payroll-tab.active:hover {
+            background: var(--pay-teal-dark);
+        }
+
+/* dropdown menu under each button */
+.payroll-tabs .dropdown-menu {
+    top: 100%;
+    left: 0;
+    min-width: 11rem;
+    margin-top: .25rem;
+    padding: .5rem;
+    z-index: 1050;
+    border: 1px solid var(--pay-line);
+    border-radius: .5rem;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, .08);
+}
+
+.payroll-tabs .dropdown-item {
+    padding: .45rem .75rem;
+    color: var(--pay-muted);
+    border-radius: .375rem;
+}
+
+    .payroll-tabs .dropdown-item:hover {
+        background: var(--pay-head);
+        color: var(--pay-ink);
+    }
+
+    .payroll-tabs .dropdown-item.active,
+    .payroll-tabs .dropdown-item:active {
+        background: var(--pay-teal);
+        color: #fff;
+    }
+
+/* ---------- Orange action button (Add ..., modal Save buttons) ---------- */
+.btn-payroll {
+    display: inline-flex;
+    align-items: center;
+    padding: .55rem 1.1rem;
+    background: var(--pay-orange);
+    border: 1px solid var(--pay-orange);
+    color: #fff;
+    font-weight: 600;
+    border-radius: .375rem;
+}
+
+    .btn-payroll:hover,
+    .btn-payroll:focus {
+        background: var(--pay-orange-dark);
+        border-color: var(--pay-orange-dark);
+        color: #fff;
+    }
+
+/* ---------- Table ---------- */
+.payroll-table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+    .payroll-table thead th {
+        padding: .9rem 1.5rem;
+        background: var(--pay-head);
+        color: var(--pay-ink);
+        font-weight: 700;
+        border-bottom: 1px solid var(--pay-ink);
+    }
+
+    .payroll-table tbody td {
+        padding: .8rem 1.5rem;
+        background: transparent;
+        color: var(--pay-muted);
+        vertical-align: middle;
+        border-bottom: 1px solid var(--pay-line);
+    }
+
+    /* edit / delete icons */
+    .payroll-table .action-icons a {
+        margin-right: .35rem;
+        color: var(--pay-ink);
+        font-size: 1.05rem;
+        text-decoration: none;
+    }
+
+        .payroll-table .action-icons a:hover {
+            color: var(--pay-orange);
+        }
+
+/* ---------- Modals ---------- */
+.payroll-modal .modal-title {
+    font-weight: 600;
+}
+
+.payroll-modal .form-control:focus,
+.payroll-modal .form-select:focus {
+    border-color: var(--pay-teal);
+    box-shadow: 0 0 0 .2rem rgba(59, 112, 128, .2);
+}

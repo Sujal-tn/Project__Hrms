@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_Hrms.Data;
 
@@ -11,9 +12,11 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260920072331_PayslipsModelUpdated")]
+    partial class PayslipsModelUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,9 +151,6 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PayslipsPayslipId")
-                        .HasColumnType("int");
-
                     b.HasKey("DeductionId");
 
                     b.HasIndex("DeductionTypeId");
@@ -158,8 +158,6 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("DesignationId");
-
-                    b.HasIndex("PayslipsPayslipId");
 
                     b.ToTable("Deductions");
                 });
@@ -243,9 +241,6 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PayslipsPayslipId")
-                        .HasColumnType("int");
-
                     b.HasKey("EarningsId");
 
                     b.HasIndex("DepartmentId");
@@ -253,8 +248,6 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("DesignationId");
 
                     b.HasIndex("EarntypeId");
-
-                    b.HasIndex("PayslipsPayslipId");
 
                     b.ToTable("Earnings");
                 });
@@ -796,49 +789,25 @@ namespace Project_Hrms.Migrations
                     b.Property<DateTime>("GeneratedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("HourlyRate")
-                        .HasColumnType("decimal(9,2)");
-
                     b.Property<string>("Month")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("NetSalary")
-                        .HasColumnType("decimal(9,2)");
-
-                    b.Property<string>("OrganizationAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrganizationEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrganizationName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrganizationPhone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal?>("NetSalary")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PayslipPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("TotalDeductions")
-                        .HasColumnType("decimal(9,2)");
+                    b.Property<decimal?>("TotalDeductions")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("TotalEarnings")
-                        .HasColumnType("decimal(9,2)");
-
-                    b.Property<decimal>("TotalHoursInMonth")
-                        .HasColumnType("decimal(9,2)");
+                    b.Property<decimal?>("TotalEarnings")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("WorkedHours")
-                        .HasColumnType("decimal(9,2)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -1296,10 +1265,6 @@ namespace Project_Hrms.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project_Hrms.Models.Payslips", null)
-                        .WithMany("Deductions")
-                        .HasForeignKey("PayslipsPayslipId");
-
                     b.Navigation("DeductionType");
 
                     b.Navigation("Department");
@@ -1345,10 +1310,6 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("EarntypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Project_Hrms.Models.Payslips", null)
-                        .WithMany("Earnings")
-                        .HasForeignKey("PayslipsPayslipId");
 
                     b.Navigation("Department");
 
@@ -1729,13 +1690,6 @@ namespace Project_Hrms.Migrations
                     b.Navigation("LeaveBalances");
 
                     b.Navigation("LeaveRequests");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.Payslips", b =>
-                {
-                    b.Navigation("Deductions");
-
-                    b.Navigation("Earnings");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
