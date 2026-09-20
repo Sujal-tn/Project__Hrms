@@ -161,6 +161,10 @@
 
                     <div class="submenu">
 
+                        <a asp-controller="Events"
+   asp-action="Index">
+    Events
+</a>
                         <a asp-controller="Event"
                            asp-action="index11">
                             Add Event
@@ -691,6 +695,18 @@
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+           $(document).ready(function () {
+
+    $('.datatable')
+        .each(function () {
+
+            new DataTable(this);
+
+        });
+
+});
+
+    </script>
 <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

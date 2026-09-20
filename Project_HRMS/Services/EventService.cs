@@ -8,6 +8,7 @@ namespace Project_Hrms.Services
     public class EventService : IEvent
     {
         private readonly ApplicationDbContext d;
+
         public EventService(ApplicationDbContext db)
         {
             this.d = db;
@@ -21,13 +22,13 @@ namespace Project_Hrms.Services
 
         public async Task<List<Events>> GetAllEvents()
         {
-            var data=await d.Events.ToListAsync();
+            var data = await d.Events.ToListAsync();
             return data;
         }
 
         public async Task<Events> FindEventById(int id)
         {
-            var data = await d.Events.FirstOrDefaultAsync(x => x.Id == id);
+            var data = await d.Events.FindAsync(id);
             return data;
         }
 
@@ -39,7 +40,8 @@ namespace Project_Hrms.Services
 
         public async Task DeleteEvent(int id)
         {
-            var data = await d.Events.FirstOrDefaultAsync(x => x.Id == id);
+            var data = await d.Events.FindAsync(id);
+
             if (data != null)
             {
                 d.Events.Remove(data);
