@@ -29,5 +29,9 @@ namespace Project_Hrms.Interface
         Task<List<LeaveRequest>> GetLeaveRequestsByUserAsync(int userId);
         Task ApplyLeaveAsync(LeaveRequest request);
         Task<List<DepartmentLeaves>> GetDepartmentLeaveTypesForUserAsync(int userId);
+
+        // ---- Manager: Leave Approval ----
+        Task<List<LeaveRequest>> GetLeaveRequestsForManagerAsync(int managerId);
+        Task UpdateLeaveRequestStatusAsync(int leaveRequestId, string action, string approvedBy);
     }
 }

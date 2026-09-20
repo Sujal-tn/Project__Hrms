@@ -1,0 +1,35 @@
+﻿@*
+    Earning / Deduction dropdown buttons shared by the four Payroll master pages.
+    Each page sets:  ViewData["PayrollActive"] = "Earning";   (or "Deduction")
+*@
+@{
+    var active = ViewData["PayrollActive"] as string;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+    string ActiveIf(string actionName) =>
+        string.Equals(currentAction, actionName, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+}
+
+<link rel="stylesheet" href="~/css/payroll.css" asp-append-version="true" />
+
+<div class="payroll-tabs">
+    <div class="dropdown">
+        <button type="button" class="payroll-tab @(active == "Earning" ? "active" : "")" data-bs-toggle="dropdown" aria-expanded="false">
+            Earning <i class="ti ti-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a asp-controller="Earning" asp-action="EarningType" class="dropdown-item @ActiveIf("EarningType")">Earning Type</a></li>
+            <li><a asp-controller="Earning" asp-action="Earning" class="dropdown-item @ActiveIf("Earning")">Earning</a></li>
+        </ul>
+    </div>
+
+    <div class="dropdown">
+        <button type="button" class="payroll-tab @(active == "Deduction" ? "active" : "")" data-bs-toggle="dropdown" aria-expanded="false">
+            Deduction <i class="ti ti-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a asp-controller="Deduction" asp-action="DeductionType" class="dropdown-item @ActiveIf("DeductionType")">Deduction Type</a></li>
+            <li><a asp-controller="Deduction" asp-action="Deduction" class="dropdown-item @ActiveIf("Deduction")">Deduction</a></li>
+        </ul>
+    </div>
+</div>

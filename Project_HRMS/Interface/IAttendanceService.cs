@@ -19,6 +19,7 @@ namespace Project_Hrms.Interface
         Task<string> GetAttendanceStatusAsync(int userId);
         Task MarkAttendanceAsync(int userId);
         Task<List<Attendance>> GetAttendanceHistoryAsync(int userId);
+        Task<User?> GetEmployeeAsync(int userId);
         Task<List<Attendance>> GetFilteredAttendanceAsync(int userId, string? status, DateTime? startDate, DateTime? endDate, string sortBy);
         Task<(decimal TotalToday, decimal TotalWeek, decimal TotalMonth, decimal OvertimeMonth)> GetAttendanceSummaryAsync(int userId);
     }

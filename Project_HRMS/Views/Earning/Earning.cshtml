@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Earning";
+    ViewData["PayrollActive"] = "Earning";
+}
+
+<div class="payroll-top">
+	<partial name="_PayrollMasterTabs" />
+
+	<a href="#" id="openearningmodal" data-bs-target="#earning" data-bs-toggle="modal" class="btn-payroll text-decoration-none">
+		<i class="ti ti-circle-plus me-2"></i>Add Earning
+	</a>
+</div>
+
+<div class="card-body p-0">
+	<div class="table-responsive">
+		<table class="table payroll-table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Earning</th>
+					<th>Earning Percentage</th>
+					<th>Department</th>
+					<th>Designation</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody id="earningdata">
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- Add Earning -->
+<div class="modal fade payroll-modal" id="earning" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Earning</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="post" id="earningform">
+					<div class="mb-3">
+						<label class="form-label">Earning Type</label>
+						<select class="form-select" name="EarntypeId" asp-items="ViewBag.earningType">
+							<option value="">Select an Earning Type</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Earning Percentage</label>
+						<input type="number" step="0.01" min="0" max="100" class="form-control" name="EarningsPercentage" placeholder="Enter percentage" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Department</label>
+						<select class="form-select" name="DepartmentId" asp-items="ViewBag.department">
+							<option value="">Select a Department</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Designation</label>
+						<select class="form-select" name="DesignationId" asp-items="ViewBag.designation">
+							<option value="">Select a Designation</option>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light border me-2" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn-payroll" id="addearningbtn">Add Earning</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Earning -->
+<div class="modal fade payroll-modal" id="editearning" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Earning</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="post" id="editearningform">
+					<input type="hidden" name="EarningsId" id="editEarningsId" />
+
+					<div class="mb-3">
+						<label class="form-label">Earning Type</label>
+						<select class="form-select" name="EarntypeId" id="editEarntypeId" asp-items="ViewBag.earningType">
+							<option value="">Select an Earning Type</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Earning Percentage</label>
+						<input type="number" step="0.01" min="0" max="100" class="form-control" name="EarningsPercentage" id="editEarningsPercentage" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Department</label>
+						<select class="form-select" name="DepartmentId" id="editDepartmentId" asp-items="ViewBag.department">
+							<option value="">Select a Department</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Designation</label>
+						<select class="form-select" name="DesignationId" id="editDesignationId" asp-items="ViewBag.designation">
+							<option value="">Select a Designation</option>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light border me-2" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn-payroll" id="editearningbtn">Update Earning</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/earningjavascript.js"></script>

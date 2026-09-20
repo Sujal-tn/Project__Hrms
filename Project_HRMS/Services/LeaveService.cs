@@ -245,5 +245,55 @@ namespace Project_Hrms.Services
                 .Where(dl => dl.DepartmentId == user.DepartmentId && dl.MasterLeaveType.Status == "Active")
                 .ToListAsync();
         }
+
+        // ---------- Manager: Leave Approval ----------
+        public async Task<List<LeaveRequest>> GetLeaveRequestsForManagerAsync(int managerId)
+        {
+            return await db.LeaveRequest
+                .Include(lr => lr.User)
+                .Include(lr => lr.MasterLeaveType)
+                .Where(lr => lr.User.ReportingManager == managerId)
+                .OrderByDescending(lr => lr.LeaveRequestId)
+                .ToListAsync();
+        }
+
+        public async Task UpdateLeaveRequestStatusAsync(int leaveRequestId, string action, string approvedBy)
+        {
+            var request = await db.LeaveRequest.FindAsync(leaveRequestId);
+            if (request == null)
+            {
+                throw new InvalidOperationException("Leave request not found.");
+            }
+
+            if (request.Status != "Pending")
+            {
+                throw new InvalidOperationException("This leave request has already been processed.");
+            }
+
+            if (action == "Approve")
+            {
+                request.Status = "Approved";
+            }
+            else if (action == "Reject")
+            {
+                request.Status = "Rejected";
+
+                // Give the deducted days back to the employee's balance
+                var leaveBalance = await db.LeaveBalance
+                    .FirstOrDefaultAsync(lb => lb.UserId == request.UserId && lb.LeaveTypeId == request.LeaveTypeId);
+
+                if (leaveBalance != null)
+                {
+                    leaveBalance.RevertLeave(request.NumberOfDays);
+                    db.LeaveBalance.Update(leaveBalance);
+                }
+            }
+
+            request.ApprovedBy = approvedBy;
+            request.StatusHistory += $" | {action}d on {DateTime.Now:dd-MM-yyyy} by {approvedBy}";
+
+            db.LeaveRequest.Update(request);
+            await db.SaveChangesAsync();
+        }
     }
 }

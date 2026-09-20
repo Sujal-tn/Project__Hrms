@@ -44,7 +44,7 @@
                   enctype="multipart/form-data">
 
 
-                <!-- User Dropdown -->
+                
                 <div class="mb-3">
 
                     <label class="form-label">
@@ -93,8 +93,8 @@
                                 {
                                     foreach (var document in ViewBag.DocumentNames)
                                     {
-                                        <option value="@document.id">
-                                            @document.ADocumentName
+                                        <option value="@document.DocumentId">
+                                            @document.DocumentName
                                         </option>
                                     }
                                 }

@@ -1,0 +1,164 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Project_Hrms.Models.FileUploads>
+
+<div class="container-fluid">
+
+    <div class="mb-3">
+
+        <h2>Uploaded Document List</h2>
+
+      @*   <div>
+            <span>⌂</span>
+            <span class="mx-2">/</span>
+            <span>Documents</span>
+            <span class="mx-2">/</span>
+            <span>Uploaded Document List</span>
+        </div> *@
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Uploaded Document List
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table id="uploadedDocumentTable"
+                       class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th style="width: 20%; text-align: center;">
+                                Document ID
+                            </th>
+
+                            <th style="width: 35%; text-align: center;">
+                                Document Name
+                            </th>
+
+                            <th style="width: 20%; text-align: center;">
+                                User ID
+                            </th>
+
+                            <th style="width: 25%; text-align: center;">
+                                Action
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var file in Model)
+                        {
+                            <tr>
+
+                                <td class="text-center">
+                                    @file.id
+                                </td>
+
+                                <td class="text-center">
+                                    @file.Document?.DocumentName
+                                </td>
+
+                                <td class="text-center">
+                                    @file.UserId
+                                </td>
+
+                                <td class="text-center">
+
+                                    <div class="d-flex justify-content-center gap-2">
+
+                                       
+                                        <a asp-controller="AdminUploadFileList"
+                                           asp-action="ViewFile"
+                                           asp-route-id="@file.id"
+                                           class="text-dark"
+                                           title="View">
+
+                                            <i class="bi bi-eye"></i>
+
+                                        </a>
+
+
+                                       
+                                        <a asp-action="Download"
+                                           asp-route-id="@file.id"
+                                           class="text-dark"
+                                           title="Download">
+
+                                            <i class="bi bi-download"></i>
+
+                                        </a>
+
+
+                                       
+                                        <form asp-action="Delete"
+                                              asp-route-id="@file.id"
+                                              method="post"
+                                              class="d-inline">
+
+                                            <button type="submit"
+                                                    class="btn btn-link p-0 text-dark"
+                                                    title="Delete"
+                                                    onclick="return confirm('Are you sure you want to delete this document?');">
+
+                                                <i class="bi bi-trash"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $('#uploadedDocumentTable').DataTable({
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                searching: true,
+                info: true
+            });
+
+        });
+
+    </script>
+}

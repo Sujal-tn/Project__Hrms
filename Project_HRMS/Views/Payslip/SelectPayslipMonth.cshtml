@@ -1,0 +1,104 @@
+﻿@model List<Payslips>
+
+@{
+    ViewData["Title"] = "Select Payslip Month";
+}
+
+<div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+    <div class="my-auto mb-2">
+        <h2 class="mb-1">Select Payslip Month</h2>
+        <nav>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="index.html"><i class="ti ti-smart-home"></i></a></li>
+                <li class="breadcrumb-item">HR</li>
+                <li class="breadcrumb-item active" aria-current="page">Employee Salary</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+        <h5>Payslip</h5>
+        <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+            <div class="me-3">
+                <select id="filterMonth" class="form-control w-auto">
+                    <option value="">Select Month</option>
+                    @foreach (var m in new[] { "January","February","March","April","May","June","July","August","September","October","November","December" })
+                    {
+                        <option value="@m">@m</option>
+                    }
+                </select>
+            </div>
+            <div class="me-3">
+                <select id="filterYear" class="form-control w-auto">
+                    <option value="">Select Year</option>
+                    @foreach (var year in (List<int>)ViewBag.AvailableYears)
+                    {
+                        <option value="@year">@year</option>
+                    }
+                </select>
+            </div>
+            <div class="me-3">
+                <button id="applyFiltersBtn" class="btn btn-primary">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table" id="selectPayslipMonth">
+                <thead>
+                    <tr>
+                        <th>Month / Year</th>
+                        <th>Net Salary</th>
+                        <th>View Payslip</th>
+                        <th>Download Payslip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var payslip in Model)
+                    {
+                        <tr>
+                            <td>@payslip.Month @payslip.Year</td>
+                            <td>@payslip.NetSalary.ToString("C")</td>
+                            <td>
+                                <a href="@Url.Action("GeneratePayslip", "Payslip", new { userId = (int)ViewBag.UserId, month = payslip.Month, year = payslip.Year })">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("DownloadPayslip", "Payslip", new { payslipPath = payslip.PayslipPath })">
+                                    <i class="ti ti-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+            else
+            {
+                <p>No payslips available.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#selectPayslipMonth').DataTable({ pageLength: 10 });
+
+            $("#applyFiltersBtn").click(function () {
+                var query = "?userId=@ViewBag.UserId&month=" + encodeURIComponent($("#filterMonth").val()) +
+                    "&year=" + encodeURIComponent($("#filterYear").val());
+                window.location.href = "@Url.Action("SelectPayslipMonth", "Payslip")" + query;
+            });
+        });
+    </script>
+}
