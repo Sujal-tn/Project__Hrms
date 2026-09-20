@@ -9,6 +9,7 @@ using Project_Hrms.Interface.PayrollInterface;
 using Project_Hrms.Interface.TrainingInterface;
 using Project_Hrms.Models;
 using Project_Hrms.Service;
+
 using Project_Hrms.Services;
 using Project_Hrms.Services.Documents;
 using Project_Hrms.Services.EmployeeService;
@@ -91,7 +92,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=TaskReport}/{action=Index}/{id?}")
+    pattern: "{controller=Auth}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 app.Run();

@@ -59,6 +59,13 @@ namespace Project_Hrms.Data
 
         public DbSet<MasterEvents> MasterEvents { get; set; }
 
+        public DbSet<BankInformation> BankInformations { get; set; }
+
+        public DbSet<FamilyInformation> FamilyInformations { get; set; }
+
+        public DbSet<EductionDetails> EductionDetails { get; set; }
+
+        public DbSet<Experince> Experinces { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -87,6 +94,9 @@ namespace Project_Hrms.Data
                      .WithMany(x => x.Employes)
                      .HasForeignKey(x => x.DesignationtId)
                      .OnDelete(DeleteBehavior.Restrict);
+
+                  
+
                 }
             );
 
@@ -163,6 +173,36 @@ namespace Project_Hrms.Data
                 .HasOne(x => x.Task)
                 .WithMany(x => x.TaskBoards)
                 .HasForeignKey(x => x.TaskId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Projects>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Projects)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BankInformation>()
+               .HasOne(x => x.User)
+               .WithMany()
+               .HasForeignKey(x => x.UserId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FamilyInformation>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EductionDetails>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Experince>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
