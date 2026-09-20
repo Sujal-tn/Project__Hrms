@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Deduction Type";
+    ViewData["PayrollActive"] = "Deduction";
+}
+
+<div class="payroll-top">
+	<partial name="_PayrollMasterTabs" />
+
+	<a href="#" id="openmodal" data-bs-target="#deduction_type" data-bs-toggle="modal" class="btn-payroll text-decoration-none">
+		<i class="ti ti-circle-plus me-2"></i>Add Deduction Type
+	</a>
+</div>
+
+<div class="card-body p-0">
+	<div class="table-responsive">
+		<table class="table payroll-table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Deduction Type Name</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody id="deductiontypedata">
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- Add Deduction Type -->
+<div class="modal fade payroll-modal" id="deduction_type" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Deduction Type</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="post" id="deductiontypeform">
+					<label class="form-label">Deduction Type Name</label>
+					<input type="text" class="form-control" placeholder="Enter Deduction Type Name" name="DeductionsName" />
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light border me-2" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn-payroll" id="addbtn">Add Deduction Type</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Deduction Type -->
+<div class="modal fade payroll-modal" id="editdeductiontype" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Deduction Type</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="post" id="editdeductiontypeform">
+					<input type="hidden" name="DeductionTypeId" id="editDeductTypeId" />
+					<label class="form-label">Deduction Type Name</label>
+					<input type="text" class="form-control" name="DeductionsName" id="editDeductionsName" />
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light border me-2" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn-payroll" id="editbtn">Update Deduction Type</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/deductiontypejavascript.js"></script>
