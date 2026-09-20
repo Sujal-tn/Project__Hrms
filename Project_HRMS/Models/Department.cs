@@ -23,5 +23,8 @@ namespace Project_Hrms.Models.EmployeeModel
         public List<User>? Employes { get; set; }
 
         public List<Designation>? Designations { get; set; }
+
+        public List<DepartmentLeaves> DepartmentLeaves { get; set; }
+
     }
 }

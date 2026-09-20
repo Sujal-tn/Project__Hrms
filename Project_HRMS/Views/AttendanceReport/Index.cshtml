@@ -61,10 +61,10 @@
 
             <h5>
                 <i class="bi bi-bar-chart-fill text-danger"></i>
-                Employee
+                Attendance
             </h5>
 
-            <canvas id="employeeStatusChart"></canvas>
+            <canvas id="AttendanceLine"></canvas>
 
         </div>
 
@@ -80,7 +80,7 @@
 
         <div class="table-responsive">
 
-            <table id="employeeTable" class="table table-bordered table-hover">
+            <table id="LeaveTable" class="table table-bordered table-hover">
 
                 <thead class="table-light">
                     <tr>
@@ -108,7 +108,10 @@
 
                             <td>@ar.AttendanceId</td>
 
-
+                            <td>
+                                @* @user.FirstName @user.LastName *@
+                                @ar.UserId
+                            </td>
 
                             <td>@ar.Date</td>
 
@@ -152,4 +155,57 @@
 
     </div>
     </div>
-</div> 
+</div>
+
+@section Scripts{
+
+   <script>
+
+    var monthlyAttendance = @Html.Raw(
+        System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthlyAttendance)
+    );
+    console.log(monthlyAttendance);
+
+    var labels = monthlyAttendance.map(x => x.Month);
+    var present = monthlyAttendance.map(x => x.Present);
+    var absent = monthlyAttendance.map(x => x.Absent);
+
+    new Chart(document.getElementById('AttendanceLine'), {
+        type: 'line',
+
+        data: {
+            labels: labels,
+
+            datasets: [
+                {
+                    label: 'Present',
+                    borderColor: 'red',
+                    pointRadius: 5,
+                    tension: 0.1,
+                    data: present
+                },
+                {
+                    label: 'Absent',
+                    borderColor: 'pink',
+                    pointRadius: 5,
+                    tension: 0.1,
+                    data: absent
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monthly Attendance'
+                }
+            }
+        }
+    });
+
+</script>
+
+}

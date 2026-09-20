@@ -12,8 +12,8 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260917181420_addDocumentsTables")]
-    partial class addDocumentsTables
+    [Migration("20260920061059_addtables")]
+    partial class addtables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,31 +40,6 @@ namespace Project_Hrms.Migrations
                     b.HasKey("id");
 
                     b.ToTable("AdminAddDocumentsNames");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.AdminDocuments", b =>
-                {
-                    b.Property<int>("AdminDocId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminDocId"));
-
-                    b.Property<string>("DocFile")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DocName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AdminDocId");
-
-                    b.ToTable("AdminAddDocuments");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Attendance", b =>
@@ -117,6 +92,36 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Attendance");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.DepartmentLeaves", b =>
+                {
+                    b.Property<int>("DepartmentLeavesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentLeavesId"));
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeaveTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeavesCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentLeavesId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("LeaveTypeId");
+
+                    b.ToTable("DepartmentLeaves");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeAddDocumentsName", b =>
@@ -266,10 +271,10 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("DateOfJoining")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DesignationtId")
+                    b.Property<int?>("DesignationtId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -302,8 +307,8 @@ namespace Project_Hrms.Migrations
                     b.Property<string>("RememberMe")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReportingManager")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ReportingManager")
+                        .HasColumnType("int");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -317,9 +322,104 @@ namespace Project_Hrms.Migrations
 
                     b.HasIndex("DesignationtId");
 
+                    b.HasIndex("ReportingManager");
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Events", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EventTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.FileUploads", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("DocumentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.LeaveBalance", b =>
+                {
+                    b.Property<int>("LeaveBalanceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeaveBalanceId"));
+
+                    b.Property<int>("DepartmentLeavesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeaveTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalLeaves")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsedLeaves")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LeaveBalanceId");
+
+                    b.HasIndex("DepartmentLeavesId");
+
+                    b.HasIndex("LeaveTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LeaveBalance");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.LeaveRequest", b =>
@@ -368,6 +468,27 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LeaveRequest");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.MasterEvents", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MasterEvents");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.MasterLeaveType", b =>
@@ -502,6 +623,165 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Promotion");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Resignation", b =>
+                {
+                    b.Property<int>("ResignationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResignationId"));
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NoticeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("ResignDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResignationId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Resignation");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
+                {
+                    b.Property<int>("TaskBoardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskBoardId"));
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TaskBoardId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskBoards");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
+                {
+                    b.Property<int>("AssignedId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssignedId"));
+
+                    b.Property<int?>("TaskId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssignedId");
+
+                    b.HasIndex("TaskId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TaskMembers");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskId"));
+
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaskId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Termination", b =>
+                {
+                    b.Property<int>("TerminationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TerminationId"));
+
+                    b.Property<DateTime>("NoticeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("ResignDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TerminationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TerminationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Termination");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Timesheet", b =>
@@ -675,6 +955,27 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Trainings");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.UploadDocuments", b =>
+                {
+                    b.Property<int>("DocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"));
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DocumentId");
+
+                    b.ToTable("MasterDocument");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.Attendance", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
@@ -684,6 +985,25 @@ namespace Project_Hrms.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.DepartmentLeaves", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
+                        .WithMany("DepartmentLeaves")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.MasterLeaveType", "MasterLeaveType")
+                        .WithMany("DepartmentLeaves")
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("MasterLeaveType");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.Designation", b =>
@@ -702,14 +1022,16 @@ namespace Project_Hrms.Migrations
                     b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
                         .WithMany("Employes")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Project_Hrms.Models.EmployeeModel.Designation", "Designation")
                         .WithMany("Employes")
                         .HasForeignKey("DesignationtId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ReportingManager");
 
                     b.HasOne("Project_Hrms.Models.EmployeeModel.Role", "Role")
                         .WithMany("Employes")
@@ -721,7 +1043,55 @@ namespace Project_Hrms.Migrations
 
                     b.Navigation("Designation");
 
+                    b.Navigation("Manager");
+
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.FileUploads", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.UploadDocuments", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.LeaveBalance", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.DepartmentLeaves", "DepartmentLeaves")
+                        .WithMany()
+                        .HasForeignKey("DepartmentLeavesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.MasterLeaveType", "MasterLeaveType")
+                        .WithMany("LeaveBalances")
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany("LeaveBalances")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DepartmentLeaves");
+
+                    b.Navigation("MasterLeaveType");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.LeaveRequest", b =>
@@ -755,6 +1125,83 @@ namespace Project_Hrms.Migrations
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Promotion", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Resignation", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TaskBoards", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Projects", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
+                        .WithMany("TaskBoards")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.TaskMembers", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Tasks", "Task")
+                        .WithMany("Taskmember")
+                        .HasForeignKey("TaskId");
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Projects", "Projects")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Termination", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
                         .WithMany()
@@ -813,6 +1260,8 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.Department", b =>
                 {
+                    b.Navigation("DepartmentLeaves");
+
                     b.Navigation("Designations");
 
                     b.Navigation("Employes");
@@ -830,6 +1279,8 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.User", b =>
                 {
+                    b.Navigation("LeaveBalances");
+
                     b.Navigation("LeaveRequests");
 
                     b.Navigation("Timesheets");
@@ -837,12 +1288,23 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.MasterLeaveType", b =>
                 {
+                    b.Navigation("DepartmentLeaves");
+
+                    b.Navigation("LeaveBalances");
+
                     b.Navigation("LeaveRequests");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
                 {
                     b.Navigation("Timesheets");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Tasks", b =>
+                {
+                    b.Navigation("TaskBoards");
+
+                    b.Navigation("Taskmember");
                 });
 #pragma warning restore 612, 618
         }

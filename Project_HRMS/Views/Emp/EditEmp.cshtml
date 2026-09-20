@@ -1,0 +1,247 @@
+﻿
+@model Project_Hrms.Models.EmployeeModel.User
+@{
+    string srole = "";
+    if (ViewBag.srname != null)
+    {
+        srole = ViewBag.srname.ToString();
+    }
+}
+@using Project_Hrms.Models.EmployeeModel
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Add Employee</h2>
+            <p class="text-muted">
+                Employee / Add Employee
+            </p>
+        </div>
+        <a asp-controller="Employee" asp-action="EmpList" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i>
+            Back
+        </a>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Employee Information</h5>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Emp" asp-action="AddEmp" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FirstName" class="form-label">
+                            First Name <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Enter First Name" />
+                        <span asp-validation-for="FirstName" class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="LastName" class="form-label">
+                            Last Name
+                        </label>
+                        <input asp-for="LastName" class="form-control" placeholder="Enter Last Name" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Email" class="form-label">
+                            Email <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter Email" />
+                        <span asp-validation-for="Email"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Password" class="form-label">
+                            Password <span class="text-danger">*</span>
+                        </label>
+
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter Password" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="DateOfJoining" class="form-label">
+                            Joining Date <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="DateOfJoining" type="date" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="DateOfBirth" class="form-label">
+                            Birth Date <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RoleId" class="form-label">
+                            Role
+                        </label>
+                        <select asp-for="RoleId" class="form-control" id="roleDropdown"  onchange="roleChange()">
+                            <option value="">
+                                -- Select Role --
+                            </option>
+                            @foreach (var role in ViewBag.Role)
+                            {
+                                <option value="@role.RoleId">
+                                    @role.RoleName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3" id="departmentContainer">
+                        <label asp-for="DepartmentId" class="form-label">
+                            Department
+                        </label>
+                        <select asp-for="DepartmentId" class="form-control">
+                            <option value="">
+                                -- Select Department --
+                            </option>
+                            @foreach (var department in ViewBag.Depart)
+                            {
+                                <option value="@department.DepartmentId">
+                                    @department.DepartmentName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3" id="designationContainer">
+                        <label asp-for="DesignationtId" class="form-label">
+                            Designation
+                        </label>
+                        <select asp-for="DesignationtId" class="form-control">
+                            <option value="">
+                                -- Select Designation --
+                            </option>
+                            @foreach (var designation in ViewBag.Desig)
+                            {
+                                <option value="@designation.DesignationId">
+                                    @designation.DesignationName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3"  id="managerContainer">
+                        <label asp-for="ReportingManager" class="form-label">
+                            Reporting Manager
+                        </label>
+
+                        <select asp-for="ReportingManager" class="form-control" id="managerDropdown">
+                            <option value="">
+                                -- Select Manager --
+                            </option>
+                            @foreach (var manager in (List<User>)ViewBag.Man)
+                            {
+                                <option value="@manager.UserId">
+                                    @manager.FirstName @manager.LastName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PhoneNumber" class="form-label">
+                            Phone Number <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="Enter Phone Number" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Gender" class="form-label">
+                            Gender
+                        </label>
+                        <select asp-for="Gender" class="form-control">
+                            <option value="">
+                                -- Select Gender --
+                            </option>
+                            <option value="Male">
+                                Male
+                            </option>
+                            <option value="Female">
+                                Female
+                            </option>
+                            <option value="Other">
+                                Other
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Status" class="form-label">
+                            Status
+                        </label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="Active">
+                                Active
+                            </option>
+                            <option value="InActive">
+                                InActive
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label asp-for="Address" class="form-label">
+                            Address <span class="text-danger">*</span>
+                        </label>
+                        <textarea asp-for="Address"  class="form-control" rows="3" placeholder="Enter Address"></textarea>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label asp-for="AboutEmployee" class="form-label">
+                            About Employee
+                        </label>
+                        <textarea asp-for="AboutEmployee" class="form-control" rows="4" placeholder="Enter about employee"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Profile Picture
+                        </label>
+                        <input type="file" name="ProfilePictureFile" class="form-control" accept="image/*" />
+                    </div>
+                </div>
+                <div class="text-end mt-3">
+                    <a asp-controller="Emp" asp-action="Index" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i>
+                        Save Employee
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+    function roleChange() {
+        var roleDropdown = document.getElementById("roleDropdown");
+        var selectedRole = roleDropdown.options[roleDropdown.selectedIndex].text.trim();
+        var department = document.getElementById("departmentContainer");
+        var designation = document.getElementById("designationContainer");
+        var manager = document.getElementById("managerContainer");
+        department.style.display = "none";
+        designation.style.display = "none";
+        manager.style.display = "none";
+
+        if (selectedRole === "Manager") {
+
+            department.style.display = "block";
+            designation.style.display = "block";
+
+        }
+        else if (selectedRole === "Employee") {
+
+            department.style.display = "block";
+            designation.style.display = "block";
+            manager.style.display = "block";
+
+        }
+    }
+    </script>
+}
+

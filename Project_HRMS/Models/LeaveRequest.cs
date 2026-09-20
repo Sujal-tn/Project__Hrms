@@ -24,5 +24,11 @@ namespace Project_Hrms.Models
         public string ApprovedBy { get; set; }
         public string Status { get; set; }
         public string StatusHistory { get; set; }
+
+        [NotMapped]
+        public string Month { get; set; }
+
+        [NotMapped]
+        public double Days { get; set; }
     }
 }
