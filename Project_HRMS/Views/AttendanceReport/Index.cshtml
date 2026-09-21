@@ -8,52 +8,57 @@
     <div class="row">
 
         <!-- Cards -->
-        <div class="col-md-6">
+       <!-- Attendance Cards -->
+<div class="col-md-6">
 
-            <div class="row">
+    <div class="row">
 
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-person-circle text-danger"></i>
-                            Total Users
-                        </h5>
-                        <p>@ViewBag.TUser</p>
-                    </div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-person-check text-danger"></i>
-                            Active Users
-                        </h5>
-                        <p>@ViewBag.AUser</p>
-                    </div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-person-x text-danger"></i>
-                            Inactive Users
-                        </h5>
-                        <p>@ViewBag.InUser</p>
-                    </div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-briefcase text-danger"></i>
-                            Roles
-                        </h5>
-                        <p>@ViewBag.Rcount</p>
-                    </div>
-                </div>
-
+        <!-- Total Working Days -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-calendar-check text-danger"></i>
+                    Total Working Days
+                </h5>
+                <p>@ViewBag.TotalWorkingDays</p>
             </div>
         </div>
+
+        <!-- Total Leave Taken -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-calendar-x text-danger"></i>
+                    Total Leave Taken
+                </h5>
+                <p>@ViewBag.TotalLeaveTaken</p>
+            </div>
+        </div>
+
+        <!-- Total Holidays -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-sun text-danger"></i>
+                    Total Holidays
+                </h5>
+                <p>@ViewBag.TotalHolidays</p>
+            </div>
+        </div>
+
+        <!-- Total Halfdays -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-clock text-danger"></i>
+                    Total Halfdays
+                </h5>
+                <p>@ViewBag.TotalHalfdays</p>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
         <!-- Chart -->
@@ -69,6 +74,118 @@
         </div>
 
     </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row mb-3">
+
+                <!-- Date Filter -->
+                <div class="col-md-4">
+
+                    <label for="dateFilter">
+                        Select Date Filter:
+                    </label>
+
+                    <select id="dateFilter" class="form-control">
+
+                        <option value="">
+                            --Select Date Filter--
+                        </option>
+
+                        <option value="yesterday">
+                            Yesterday
+                        </option>
+
+                        <option value="last7days">
+                            Last 7 Days
+                        </option>
+
+                        <option value="last30days">
+                            Last 30 Days
+                        </option>
+
+                        <option value="lastYear">
+                            Last Year
+                        </option>
+
+                        <option value="thisYear">
+                            This Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Status Filter -->
+                <div class="col-md-4">
+
+                    <label for="statusFilter">
+                        Select Status Filter:
+                    </label>
+
+                    <select id="statusFilter" class="form-control">
+
+                        <option value="">
+                            All
+                        </option>
+
+                        <option value="Present">
+                            Present
+                        </option>
+
+                        <option value="Absent">
+                            Absent
+                        </option>
+
+                        <option value="Half Day">
+                            Half Day
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Sorting Filter -->
+                <div class="col-md-4">
+
+                    <label for="sortOrder">
+                        Sort By:
+                    </label>
+
+                    <select id="sortOrder" class="form-control">
+
+                        <option value="">
+                            --Select--
+                        </option>
+
+                        <option value="asc">
+                            Ascending
+                        </option>
+
+                        <option value="desc">
+                            Descending
+                        </option>
+
+                        <option value="last7days">
+                            Last 7 Days
+                        </option>
+
+                        <option value="lastMonth">
+                            Last Month
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
 
 <div class="card mt-4">
 
@@ -109,11 +226,13 @@
                             <td>@ar.AttendanceId</td>
 
                             <td>
-                                @* @user.FirstName @user.LastName *@
-                                @ar.UserId
+                                @ar.User?.FirstName @ar.User?.LastName
                             </td>
 
-                            <td>@ar.Date</td>
+                                
+                                <td data-date="@ar.Date.ToString("yyyy-MM-dd")">
+                                    @ar.Date.ToString("dd-MM-yyyy")
+                                </td>
 
                             <td>@ar.CheckIn</td>
 
@@ -122,12 +241,19 @@
                             <td>@ar.LunchIn</td>
                             <td>@ar.LunchOut</td>
                             
+                           
                             <td>
 
                                 @if (ar.Status == "Present")
                                 {
                                     <span class="badge bg-success">
                                         Present
+                                    </span>
+                                }
+                                else if (ar.Status == "Half Day")
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Half Day
                                     </span>
                                 }
                                 else
@@ -160,51 +286,280 @@
 @section Scripts{
 
    <script>
+            var monthlyAttendance = @Html.Raw(
+                            System.Text.Json.JsonSerializer.Serialize(
+                                    ViewBag.MonthlyAttendance ?? new List<object>()
+                            )
+                    );
 
-    var monthlyAttendance = @Html.Raw(
-        System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthlyAttendance)
-    );
-    console.log(monthlyAttendance);
+            console.log("Monthly Attendance:", monthlyAttendance);
 
-    var labels = monthlyAttendance.map(x => x.Month);
-    var present = monthlyAttendance.map(x => x.Present);
-    var absent = monthlyAttendance.map(x => x.Absent);
 
-    new Chart(document.getElementById('AttendanceLine'), {
-        type: 'line',
+            var labels = monthlyAttendance.map(x => x.Month);
+            var present = monthlyAttendance.map(x => x.Present);
+            var absent = monthlyAttendance.map(x => x.Absent);
 
-        data: {
-            labels: labels,
 
-            datasets: [
-                {
-                    label: 'Present',
-                    borderColor: 'red',
-                    pointRadius: 5,
-                    tension: 0.1,
-                    data: present
+            new Chart(document.getElementById('AttendanceLine'), {
+
+                type: 'line',
+
+                data: {
+                    labels: labels,
+
+                    datasets: [
+                        {
+                            label: 'Present',
+                            data: present,
+                            borderColor: 'red',
+                            pointRadius: 5,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Absent',
+                            data: absent,
+                            borderColor: 'pink',
+                            pointRadius: 5,
+                            tension: 0.1
+                        }
+                    ]
                 },
-                {
-                    label: 'Absent',
-                    borderColor: 'pink',
-                    pointRadius: 5,
-                    tension: 0.1,
-                    data: absent
+
+                options: {
+                    responsive: true,
+
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Attendance'
+                        }
+                    }
                 }
-            ]
-        },
 
-        options: {
-            responsive: true,
+            });
 
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Monthly Attendance'
+        var table = $('#LeaveTable').DataTable();
+
+
+        // ======================================
+        // Attendance Custom Filter
+        // ======================================
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+            // Only apply to Attendance table
+            if (settings.nTable.id !== 'LeaveTable') {
+                return true;
+            }
+
+
+            // Get selected filters
+            var selectedStatus = $('#statusFilter').val();
+            var selectedDate = $('#dateFilter').val();
+            var selectedSort = $('#sortOrder').val();
+
+
+            // ======================================
+            // STATUS FILTER
+            // ======================================
+
+            if (selectedStatus !== '') {
+
+                var status = $('<div>')
+                    .html(data[7])
+                    .text()
+                    .trim();
+
+                if (status !== selectedStatus) {
+                    return false;
                 }
             }
-        }
-    });
+
+
+            // ======================================
+            // DATE
+            // ======================================
+
+            var dateCell = table.cell(dataIndex, 2).node();
+
+            var dateValue = $(dateCell).attr('data-date');
+
+            if (!dateValue) {
+                return false;
+            }
+
+            var attendanceDate = new Date(dateValue);
+
+            attendanceDate.setHours(0, 0, 0, 0);
+
+
+            var today = new Date();
+
+            today.setHours(0, 0, 0, 0);
+
+
+            // ======================================
+            // DATE FILTER
+            // ======================================
+
+            if (selectedDate === 'yesterday') {
+
+                var yesterday = new Date(today);
+
+                yesterday.setDate(today.getDate() - 1);
+
+                if (attendanceDate.getTime() !== yesterday.getTime()) {
+                    return false;
+                }
+            }
+
+
+            if (selectedDate === 'last7days') {
+
+                var sevenDaysAgo = new Date(today);
+
+                sevenDaysAgo.setDate(today.getDate() - 7);
+
+                if (attendanceDate < sevenDaysAgo ||
+                    attendanceDate > today) {
+
+                    return false;
+                }
+            }
+
+
+            if (selectedDate === 'last30days') {
+
+                var thirtyDaysAgo = new Date(today);
+
+                thirtyDaysAgo.setDate(today.getDate() - 30);
+
+                if (attendanceDate < thirtyDaysAgo ||
+                    attendanceDate > today) {
+
+                    return false;
+                }
+            }
+
+
+            if (selectedDate === 'lastYear') {
+
+                var lastYear = today.getFullYear() - 1;
+
+                if (attendanceDate.getFullYear() !== lastYear) {
+                    return false;
+                }
+            }
+
+
+            if (selectedDate === 'thisYear') {
+
+                if (attendanceDate.getFullYear() !== today.getFullYear()) {
+                    return false;
+                }
+            }
+
+
+
+            if (selectedSort === 'last7days') {
+
+                var sevenDaysAgoSort = new Date(today);
+
+                sevenDaysAgoSort.setDate(today.getDate() - 7);
+
+                if (attendanceDate < sevenDaysAgoSort ||
+                    attendanceDate > today) {
+
+                    return false;
+                }
+            }
+
+
+            
+
+            if (selectedSort === 'lastMonth') {
+
+                var firstDayLastMonth = new Date(
+                    today.getFullYear(),
+                    today.getMonth() - 1,
+                    1
+                );
+
+                var lastDayLastMonth = new Date(
+                    today.getFullYear(),
+                    today.getMonth(),
+                    0
+                );
+
+                if (attendanceDate < firstDayLastMonth ||
+                    attendanceDate > lastDayLastMonth) {
+
+                    return false;
+                }
+            }
+
+
+            return true;
+
+        });
+
+
+      
+
+        $('#statusFilter').on('change', function () {
+
+            table.draw();
+
+        });
+
+
+      
+
+        $('#dateFilter').on('change', function () {
+
+            table.draw();
+
+        });
+
+
+
+        $('#sortOrder').on('change', function () {
+
+            var sort = $(this).val();
+
+
+            
+            if (sort === 'asc') {
+
+                table.order([0, 'asc']).draw();
+
+            }
+
+
+            else if (sort === 'desc') {
+
+                table.order([0, 'desc']).draw();
+
+            }
+
+
+            
+            else if (sort === 'last7days') {
+
+                table.draw();
+
+            }
+
+
+           
+            else if (sort === 'lastMonth') {
+
+                table.draw();
+
+            }
+
+        });
+        
 
 </script>
 

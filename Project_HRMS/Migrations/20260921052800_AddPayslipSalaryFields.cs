@@ -5,43 +5,46 @@
 namespace Project_Hrms.Migrations
 {
     /// <inheritdoc />
-    public partial class PayslipsModelUpdated : Migration
+    public partial class AddPayslipSalaryFields : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<decimal>(
-                name: "NetSalary",
+                name: "Deductions",
                 table: "Payslips",
                 type: "decimal(18,2)",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0m);
 
             migrationBuilder.AddColumn<decimal>(
-                name: "TotalDeductions",
+                name: "Earnings",
                 table: "Payslips",
                 type: "decimal(18,2)",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0m);
 
             migrationBuilder.AddColumn<decimal>(
-                name: "TotalEarnings",
+                name: "TotalSalary",
                 table: "Payslips",
                 type: "decimal(18,2)",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0m);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "NetSalary",
+                name: "Deductions",
                 table: "Payslips");
 
             migrationBuilder.DropColumn(
-                name: "TotalDeductions",
+                name: "Earnings",
                 table: "Payslips");
 
             migrationBuilder.DropColumn(
-                name: "TotalEarnings",
+                name: "TotalSalary",
                 table: "Payslips");
         }
     }

@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
 
-    <!-- Page Header -->
+  
     <div class="mb-4">
 
         <h2>Admin FileUpload</h2>
@@ -18,7 +18,7 @@
     </div>
 
 
-    <!-- Main Card -->
+   
     <div class="card">
 
         <div class="card-header">
@@ -28,7 +28,7 @@
 
         <div class="card-body p-4">
 
-            <!-- Success Message -->
+            
             @if (TempData["SuccessMessage"] != null)
             {
                 <div class="alert alert-success">
@@ -37,7 +37,7 @@
             }
 
 
-            <!-- Form -->
+         
             <form asp-controller="AdminFilesUpload"
                   asp-action="Index"
                   method="post"
@@ -73,13 +73,13 @@
                 </div>
 
 
-                <!-- Document Rows -->
+              
                 <div id="documentContainer">
 
-                    <!-- First Row -->
+                   
                     <div class="document-row row g-3 mb-3">
 
-                        <!-- Document Name -->
+                      
                         <div class="col-md-5">
 
                             <select name="Documents[0].DocumentId"
@@ -159,35 +159,33 @@
 
         $(document).ready(function () {
 
-            // Add new document row
+            
             $(document).on('click', '.add-row', function () {
 
                 var row = $('.document-row:first').clone();
 
-                // Clear selected document
                 row.find('select').val('');
 
-                // Clear selected file
+            
                 row.find('input[type="file"]').val('');
 
-                // Add new row
+            
                 $('#documentContainer').append(row);
 
-                // Update indexes
+           
                 updateIndexes();
 
             });
 
 
-            // Delete document row
+      
             $(document).on('click', '.delete-row', function () {
 
-                // Keep at least one row
                 if ($('.document-row').length > 1) {
 
                     $(this).closest('.document-row').remove();
 
-                    // Update indexes
+                  
                     updateIndexes();
 
                 }
@@ -195,12 +193,12 @@
             });
 
 
-            // Update document indexes
+            
             function updateIndexes() {
 
                 $('.document-row').each(function (index) {
 
-                    // Document dropdown name
+                   
                     $(this)
                         .find('select')
                         .attr(
@@ -209,7 +207,7 @@
                         );
 
 
-                    // File input name
+                  
                     $(this)
                         .find('input[type="file"]')
                         .attr(

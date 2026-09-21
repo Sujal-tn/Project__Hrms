@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project_Hrms.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class letdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,19 +40,6 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeductionTypes",
-                columns: table => new
-                {
-                    DeductionTypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DeductionsName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeductionTypes", x => x.DeductionTypeId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
@@ -69,19 +56,6 @@ namespace Project_Hrms.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.DepartmentId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EarningTypes",
-                columns: table => new
-                {
-                    EarntypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EarningName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EarningTypes", x => x.EarntypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,82 +272,6 @@ namespace Project_Hrms.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Deductions",
-                columns: table => new
-                {
-                    DeductionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DeductionTypeId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    DesignationId = table.Column<int>(type: "int", nullable: false),
-                    DeductionPercentage = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Deductions", x => x.DeductionId);
-                    table.ForeignKey(
-                        name: "FK_Deductions_DeductionTypes_DeductionTypeId",
-                        column: x => x.DeductionTypeId,
-                        principalTable: "DeductionTypes",
-                        principalColumn: "DeductionTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deductions_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "DepartmentId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deductions_Designations_DesignationId",
-                        column: x => x.DesignationId,
-                        principalTable: "Designations",
-                        principalColumn: "DesignationId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Earnings",
-                columns: table => new
-                {
-                    EarningsId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EarntypeId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    DesignationId = table.Column<int>(type: "int", nullable: false),
-                    EarningsPercentage = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Earnings", x => x.EarningsId);
-                    table.ForeignKey(
-                        name: "FK_Earnings_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "DepartmentId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Earnings_Designations_DesignationId",
-                        column: x => x.DesignationId,
-                        principalTable: "Designations",
-                        principalColumn: "DesignationId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Earnings_EarningTypes_EarntypeId",
-                        column: x => x.EarntypeId,
-                        principalTable: "EarningTypes",
-                        principalColumn: "EarntypeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -481,52 +379,6 @@ namespace Project_Hrms.Migrations
                     table.PrimaryKey("PK_Attendance", x => x.AttendanceId);
                     table.ForeignKey(
                         name: "FK_Attendance_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmployeeBankDetails",
-                columns: table => new
-                {
-                    BankDetailId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IFSCCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BranchName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeBankDetails", x => x.BankDetailId);
-                    table.ForeignKey(
-                        name: "FK_EmployeeBankDetails_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmployeeSalaries",
-                columns: table => new
-                {
-                    SalaryId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    TotalSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NetSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeSalaries", x => x.SalaryId);
-                    table.ForeignKey(
-                        name: "FK_EmployeeSalaries_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -819,93 +671,10 @@ namespace Project_Hrms.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "EmployeeDeductions",
-                columns: table => new
-                {
-                    EmployeeDeductionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SalaryId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    DeductionId = table.Column<int>(type: "int", nullable: false),
-                    DeductionAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeDeductions", x => x.EmployeeDeductionId);
-                    table.ForeignKey(
-                        name: "FK_EmployeeDeductions_Deductions_DeductionId",
-                        column: x => x.DeductionId,
-                        principalTable: "Deductions",
-                        principalColumn: "DeductionId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeDeductions_EmployeeSalaries_SalaryId",
-                        column: x => x.SalaryId,
-                        principalTable: "EmployeeSalaries",
-                        principalColumn: "SalaryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeDeductions_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmployeeEarnings",
-                columns: table => new
-                {
-                    EmployeeEarningId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SalaryId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    EarningId = table.Column<int>(type: "int", nullable: false),
-                    EarningAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeEarnings", x => x.EmployeeEarningId);
-                    table.ForeignKey(
-                        name: "FK_EmployeeEarnings_Earnings_EarningId",
-                        column: x => x.EarningId,
-                        principalTable: "Earnings",
-                        principalColumn: "EarningsId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeEarnings_EmployeeSalaries_SalaryId",
-                        column: x => x.SalaryId,
-                        principalTable: "EmployeeSalaries",
-                        principalColumn: "SalaryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeEarnings_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Attendance_UserId",
                 table: "Attendance",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Deductions_DeductionTypeId",
-                table: "Deductions",
-                column: "DeductionTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Deductions_DepartmentId",
-                table: "Deductions",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Deductions_DesignationId",
-                table: "Deductions",
-                column: "DesignationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentLeaves_DepartmentId",
@@ -921,61 +690,6 @@ namespace Project_Hrms.Migrations
                 name: "IX_Designations_DepartmentId",
                 table: "Designations",
                 column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Earnings_DepartmentId",
-                table: "Earnings",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Earnings_DesignationId",
-                table: "Earnings",
-                column: "DesignationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Earnings_EarntypeId",
-                table: "Earnings",
-                column: "EarntypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeBankDetails_UserId",
-                table: "EmployeeBankDetails",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeDeductions_DeductionId",
-                table: "EmployeeDeductions",
-                column: "DeductionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeDeductions_SalaryId",
-                table: "EmployeeDeductions",
-                column: "SalaryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeDeductions_UserId",
-                table: "EmployeeDeductions",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeEarnings_EarningId",
-                table: "EmployeeEarnings",
-                column: "EarningId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeEarnings_SalaryId",
-                table: "EmployeeEarnings",
-                column: "SalaryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeEarnings_UserId",
-                table: "EmployeeEarnings",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeSalaries_UserId",
-                table: "EmployeeSalaries",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Files_UserId",
@@ -1119,15 +833,6 @@ namespace Project_Hrms.Migrations
                 name: "EmployeeAddDocumentsNames");
 
             migrationBuilder.DropTable(
-                name: "EmployeeBankDetails");
-
-            migrationBuilder.DropTable(
-                name: "EmployeeDeductions");
-
-            migrationBuilder.DropTable(
-                name: "EmployeeEarnings");
-
-            migrationBuilder.DropTable(
                 name: "Events");
 
             migrationBuilder.DropTable(
@@ -1167,15 +872,6 @@ namespace Project_Hrms.Migrations
                 name: "Trainings");
 
             migrationBuilder.DropTable(
-                name: "Deductions");
-
-            migrationBuilder.DropTable(
-                name: "Earnings");
-
-            migrationBuilder.DropTable(
-                name: "EmployeeSalaries");
-
-            migrationBuilder.DropTable(
                 name: "DepartmentLeaves");
 
             migrationBuilder.DropTable(
@@ -1186,12 +882,6 @@ namespace Project_Hrms.Migrations
 
             migrationBuilder.DropTable(
                 name: "TrainingTypes");
-
-            migrationBuilder.DropTable(
-                name: "DeductionTypes");
-
-            migrationBuilder.DropTable(
-                name: "EarningTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -16,7 +16,7 @@ namespace Project_Hrms.Services
         }
         public async Task<List<User>> FeatchUser()
         {
-            var data = await db.Users.ToListAsync();
+            var data = await db.Users.Include(d=>d.Department).ToListAsync();
             return data;
         }
     }

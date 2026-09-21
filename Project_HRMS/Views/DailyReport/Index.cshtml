@@ -272,6 +272,82 @@
 
     </div>
 
+<div class="card">
+    <div class="card-body">
+
+        <div class="row mb-3">
+
+            <!-- Status Filter -->
+            
+<div class="col-md-6">
+
+    <label for="statusFilter">
+        Select Status:
+    </label>
+
+    <select id="statusFilter"
+            class="form-control">
+
+        <option value="">
+            All
+        </option>
+
+        <option value="Present">
+            Present
+        </option>
+
+        <option value="Absent">
+            Absent
+        </option>
+
+    </select>
+
+</div>
+
+
+
+            <!-- Sort Filter -->
+            <div class="col-md-6">
+                <label for="sortOrder">
+                    Sort By:
+                </label>
+
+                <select id="sortOrder"
+                        class="form-control">
+
+                    <option value="">
+                        --Select--
+                    </option>
+
+                    <option value="recent">
+                        Recently Added
+                    </option>
+
+                    <option value="asc">
+                        Ascending
+                    </option>
+
+                    <option value="desc">
+                        Descending
+                    </option>
+
+                    <option value="lastMonth">
+                        Last Month
+                    </option>
+
+                    <option value="last7days">
+                        Last 7 Days
+                    </option>
+
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
 
     <!-- ================= TABLE ================= -->
 
@@ -285,38 +361,6 @@
 
             <div class="d-flex align-items-center">
 
-                <div class="dropdown me-2">
-
-                    <button class="btn btn-white dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown">
-
-                        Status
-                    </button>
-
-                    <ul class="dropdown-menu">
-
-                        <li>
-                            <a class="dropdown-item status-filter" href="#" data-status="">
-                                All
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item status-filter" href="#" data-status="Present">
-                                Present
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item status-filter" href="#" data-status="Absent">
-                                Absent
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
 
             </div>
 
@@ -572,77 +616,262 @@
 
     <!-- ================= DATATABLE ================= -->
 
-    <script>
+<script>
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            if ($.fn.DataTable.isDataTable("#attendanceTable")) {
-                $("#attendanceTable").DataTable().destroy();
+        /*
+         * Initialize DataTable
+         */
+        if ($.fn.DataTable.isDataTable("#attendanceTable")) {
+
+            $("#attendanceTable")
+                .DataTable()
+                .destroy();
+
+        }
+
+
+        var table = $("#attendanceTable").DataTable({
+
+            paging: true,
+
+            searching: true,
+
+            ordering: true,
+
+            info: true,
+
+            pageLength: 10,
+
+            lengthMenu: [
+                [10, 25, 50, 100],
+                [10, 25, 50, 100]
+            ],
+
+            language: {
+
+                search: "Search:",
+
+                lengthMenu: "_MENU_ entries",
+
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+
+                emptyTable: "No attendance records available"
+
             }
 
-            $("#attendanceTable").DataTable({
+        });
 
-                paging: true,
 
-                searching: true,
+        
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
-                ordering: true,
+            if (settings.nTable.id !== "attendanceTable") {
 
-                info: true,
+                return true;
 
-                pageLength: 10,
+            }
 
-                lengthMenu: [
-                    [10, 25, 50, 100],
-                    [10, 25, 50, 100]
-                ],
 
-                language: {
+          
+            var selectedStatus =
+                $("#statusFilter").val();
 
-                    search: "Search:",
 
-                    lengthMenu: "_MENU_ entries",
+            var selectedSort =
+                $("#sortOrder").val();
 
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries"
+            if (selectedStatus !== "") {
+
+                var tableStatus = $("<div>")
+                    .html(data[3])
+                    .text()
+                    .trim();
+
+
+                if (tableStatus !== selectedStatus) {
+
+                    return false;
 
                 }
 
-            });
+            }
+
+
+           
+            if (
+                selectedSort === "lastMonth" ||
+                selectedSort === "last7days"
+            ) {
+
+                var dateText = $("<div>")
+                    .html(data[1])
+                    .text()
+                    .trim();
+
+
+                var parts = dateText.split("-");
+
+
+                if (parts.length !== 3) {
+
+                    return false;
+
+                }
+
+
+               
+                var rowDate = new Date(
+                    parseInt(parts[2]),
+                    parseInt(parts[1]) - 1,
+                    parseInt(parts[0])
+                );
+
+
+                if (isNaN(rowDate.getTime())) {
+
+                    return false;
+
+                }
+
+
+                rowDate.setHours(0, 0, 0, 0);
+
+
+               
+                var today = new Date();
+
+                today.setHours(0, 0, 0, 0);
+
+
+                
+                if (selectedSort === "last7days") {
+
+                    var sevenDaysAgo = new Date(today);
+
+                    sevenDaysAgo.setDate(
+                        today.getDate() - 7
+                    );
+
+
+                    return rowDate >= sevenDaysAgo &&
+                           rowDate <= today;
+
+                }
+
+
+                
+                if (selectedSort === "lastMonth") {
+
+                    var firstDayCurrentMonth =
+                        new Date(
+                            today.getFullYear(),
+                            today.getMonth(),
+                            1
+                        );
+
+
+                    var firstDayLastMonth =
+                        new Date(
+                            today.getFullYear(),
+                            today.getMonth() - 1,
+                            1
+                        );
+
+
+                    return rowDate >= firstDayLastMonth &&
+                           rowDate < firstDayCurrentMonth;
+
+                }
+
+            }
+
+
+            return true;
 
         });
 
-    </script>
 
+        /*
+         * ==========================
+         * STATUS CHANGE
+         * ==========================
+         */
+        $("#statusFilter").on("change", function () {
 
-    <!-- ================= STATUS FILTER ================= -->
-
-    <script>
-
-        $(document).ready(function () {
-
-            $(".status-filter").on("click", function (e) {
-
-                e.preventDefault();
-
-                var status = $(this).data("status");
-
-                var table = $("#attendanceTable").DataTable();
-
-                if (status === "") {
-
-                    table.column(3).search("").draw();
-
-                }
-                else {
-
-                    table.column(3).search("^" + status + "$", true, false).draw();
-
-                }
-
-            });
+            table.draw();
 
         });
 
-    </script>
+
+       
+        $("#sortOrder").on("change", function () {
+
+            var selectedSort = $(this).val();
+
+
+            if (selectedSort === "recent") {
+
+                table
+                    .order([1, "desc"])
+                    .draw();
+
+            }
+
+
+          
+            else if (selectedSort === "asc") {
+
+                table
+                    .order([1, "asc"])
+                    .draw();
+
+            }
+
+
+            else if (selectedSort === "desc") {
+
+                table
+                    .order([1, "desc"])
+                    .draw();
+
+            }
+
+
+            
+            else if (selectedSort === "lastMonth") {
+
+                table
+                    .order([1, "desc"])
+                    .draw();
+
+            }
+
+
+          
+            else if (selectedSort === "last7days") {
+
+                table
+                    .order([1, "desc"])
+                    .draw();
+
+            }
+
+
+            
+            else {
+
+                table
+                    .order([])
+                    .draw();
+
+            }
+
+        });
+
+    });
+
+</script>
 
 }

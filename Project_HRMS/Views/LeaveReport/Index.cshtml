@@ -12,52 +12,57 @@
     <div class="row">
 
         <!-- Cards -->
-        <div class="col-md-6">
+       <!-- Cards -->
+<div class="col-md-6">
 
-            <div class="row">
+    <div class="row">
 
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-person-circle text-danger"></i>
-                            Total Users
-                        </h5>
-                        <p>@ViewBag.TUser</p>
-                    </div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-person-check text-danger"></i>
-                            Active Users
-                        </h5>
-                        <p>@ViewBag.AUser</p>
-                    </div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-person-x text-danger"></i>
-                            Inactive Users
-                        </h5>
-                        <p>@ViewBag.InUser</p>
-                    </div>
-                </div>
-
-                <div class="col-6 mb-3">
-                    <div class="card text-center p-3">
-                        <h5>
-                            <i class="bi bi-briefcase text-danger"></i>
-                            Roles
-                        </h5>
-                        <p>@ViewBag.Rcount</p>
-                    </div>
-                </div>
-
+        <!-- Total Leaves -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-calendar-check text-danger"></i>
+                    Total Leaves
+                </h5>
+                <p>@ViewBag.TotalLeaves</p>
             </div>
         </div>
+
+        <!-- Approved Leaves -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-check-circle text-success"></i>
+                    Approved Leaves
+                </h5>
+                <p>@ViewBag.ApprovedLeaves</p>
+            </div>
+        </div>
+
+        <!-- Pending Requests -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-hourglass-split text-warning"></i>
+                    Pending Requests
+                </h5>
+                <p>@ViewBag.PendingRequests</p>
+            </div>
+        </div>
+
+        <!-- Rejected Leaves -->
+        <div class="col-6 mb-3">
+            <div class="card text-center p-3">
+                <h5>
+                    <i class="bi bi-x-circle text-danger"></i>
+                    Rejected Leaves
+                </h5>
+                <p>@ViewBag.RejectedLeaves</p>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
         <!-- Chart -->
@@ -73,6 +78,48 @@
         </div>
 
     </div>
+
+<div class="card">
+    <div class="row mb-3">
+
+        <div class="col-md-4">
+            <label for="dateFilter">Select Date Filter:</label>
+
+            <select id="dateFilter" class="form-control">
+                <option value="">All</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="last7days">Last 7 Days</option>
+                <option value="last30days">Last 30 Days</option>
+                <option value="lastYear">Last Year</option>
+                <option value="thisYear">This Year</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="statusFilter">Select Status Filter:</label>
+
+            <select id="statusFilter" class="form-control">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="sortOrder">Sort By:</label>
+
+            <select id="sortOrder" class="form-control">
+                <option value="">--Select--</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+                <option value="last7days">Last 7 Days</option>
+                <option value="lastMonth">Last Month</option>
+            </select>
+        </div>
+
+    </div>
+</div>
 
     <div class="card shadow-sm">
         <div class="card-header">
@@ -105,9 +152,11 @@
                         {
                             <tr>
                                 <td>@leave.LeaveRequestId</td>
-                                <td>@leave.UserId</td>
-                                <td>@leave.LeaveTypeId</td>
-                                <td>@leave.StartDate</td>
+                                <td>@leave.User?.FirstName @leave.User?.LastName</td>
+                                <td>@leave.MasterLeaveType?.LeaveType</td>
+                                <td data-date="@leave.StartDate.ToString("yyyy-MM-dd")">
+                                    @leave.StartDate.ToString("dd-MM-yyyy")
+                                </td>
                                 <td>@leave.EndDate</td>
                                 <td>@leave.NumberOfDays</td>
                                 <td>@leave.Reason</td>
@@ -186,6 +235,212 @@
         }
 
     });
+
+var table = $('#leaveTable').DataTable();
+
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+    if (settings.nTable.id !== 'leaveTable') {
+        return true;
+    }
+
+    var selectedStatus = $('#statusFilter').val();
+    var selectedDate = $('#dateFilter').val();
+    var selectedSort = $('#sortOrder').val();
+
+   
+    if (selectedStatus !== '') {
+
+        // Status column = 8
+        var status = $('<div>')
+            .html(data[8])
+            .text()
+            .trim();
+
+        if (status !== selectedStatus) {
+            return false;
+        }
+    }
+
+
+    // -------------------------
+    // DATE
+    // -------------------------
+
+    // Start Date column = 3
+    var startDateText = $('<div>')
+        .html(data[3])
+        .text()
+        .trim();
+
+    var startDate = new Date(startDateText);
+
+    if (isNaN(startDate.getTime())) {
+        return false;
+    }
+
+    startDate.setHours(0, 0, 0, 0);
+
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+
+    // -------------------------
+    // DATE FILTER
+    // -------------------------
+
+    if (selectedDate === 'yesterday') {
+
+        var yesterday = new Date(today);
+
+        yesterday.setDate(today.getDate() - 1);
+
+        if (startDate.getTime() !== yesterday.getTime()) {
+            return false;
+        }
+    }
+
+
+    if (selectedDate === 'last7days') {
+
+        var sevenDaysAgo = new Date(today);
+
+        sevenDaysAgo.setDate(today.getDate() - 7);
+
+        if (startDate < sevenDaysAgo ||
+            startDate > today) {
+
+            return false;
+        }
+    }
+
+
+    if (selectedDate === 'last30days') {
+
+        var thirtyDaysAgo = new Date(today);
+
+        thirtyDaysAgo.setDate(today.getDate() - 30);
+
+        if (startDate < thirtyDaysAgo ||
+            startDate > today) {
+
+            return false;
+        }
+    }
+
+
+    if (selectedDate === 'lastYear') {
+
+        var lastYear = today.getFullYear() - 1;
+
+        if (startDate.getFullYear() !== lastYear) {
+            return false;
+        }
+    }
+
+
+    if (selectedDate === 'thisYear') {
+
+        if (startDate.getFullYear() !== today.getFullYear()) {
+            return false;
+        }
+    }
+
+
+    // -------------------------
+    // SORT FILTER - LAST 7 DAYS
+    // -------------------------
+
+    if (selectedSort === 'last7days') {
+
+        var sevenDaysAgoSort = new Date(today);
+
+        sevenDaysAgoSort.setDate(today.getDate() - 7);
+
+        if (startDate < sevenDaysAgoSort ||
+            startDate > today) {
+
+            return false;
+        }
+    }
+
+
+
+    if (selectedSort === 'lastMonth') {
+
+        var firstDayLastMonth = new Date(
+            today.getFullYear(),
+            today.getMonth() - 1,
+            1
+        );
+
+        var lastDayLastMonth = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+        );
+
+        if (startDate < firstDayLastMonth ||
+            startDate > lastDayLastMonth) {
+
+            return false;
+        }
+    }
+
+
+    return true;
+});
+
+
+$('#statusFilter').on('change', function () {
+
+    table.draw();
+
+});
+
+
+$('#dateFilter').on('change', function () {
+
+    table.draw();
+
+});
+
+
+
+$('#sortOrder').on('change', function () {
+
+    var sort = $(this).val();
+
+
+    if (sort === 'asc') {
+
+        // ID ascending
+        table.order([0, 'asc']).draw();
+
+    }
+
+    else if (sort === 'desc') {
+
+        // ID descending
+        table.order([0, 'desc']).draw();
+
+    }
+
+    else if (sort === 'last7days') {
+
+        table.draw();
+
+    }
+
+    else if (sort === 'lastMonth') {
+
+        table.draw();
+
+    }
+
+});
+
 
 </script>
 

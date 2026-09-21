@@ -13,12 +13,25 @@ namespace DemoHRMS.Controllers
         {
             this.leaveReportService = leaveReportService;
         }
+
         public async Task<IActionResult> Index()
         {
             var leaves = await leaveReportService.FeatchLeaveRequest();
 
+            ViewBag.TotalLeaves = leaves.Count();
+
+            ViewBag.ApprovedLeaves = leaves
+                .Count(x => x.Status == "Approved");
+
+            ViewBag.PendingRequests = leaves
+                .Count(x => x.Status == "Pending");
+
+            ViewBag.RejectedLeaves = leaves
+                .Count(x => x.Status == "Rejected");
+
+
             var monthlyPaidLeave = leaves
-                .Where(x => x.LeaveTypeId == 4 && x.Status == "Approved")
+                .Where(x => x.Status == "Approved")
                 .GroupBy(x => x.StartDate.ToString("yyyy-MM"))
                 .Select(x => new LeaveRequest
                 {

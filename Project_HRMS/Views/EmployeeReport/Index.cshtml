@@ -1,5 +1,4 @@
 ﻿
-
 @model List<Project_Hrms.Models.EmployeeModel.User>
 
 @{
@@ -76,6 +75,40 @@
 
     </div>
 
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+
+        <h5 class="mb-0">Employees List</h5>
+
+        <div class="d-flex align-items-center gap-2">
+
+            <select class="form-select form-select-sm"
+                    id="statusFilter"
+                    style="width: 150px;">
+
+                <option value="">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+
+            </select>
+
+            <select class="form-select form-select-sm"
+                    id="sortFilter"
+                    style="width: 170px;">
+
+                <option value="recent">Recently Added</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+                <option value="lastMonth">Last Month</option>
+                <option value="last7Days">Last 7 Days</option>
+
+            </select>
+
+        </div>
+
+    </div>
+</div>
+
 
     <!-- Employee Table -->
     <div class="card mt-4">
@@ -116,7 +149,7 @@
 
                                 <td>@user.Email</td>
 
-                                <td>@user.DepartmentId</td>
+                                <td>@user.Department?.DepartmentName</td>
 
                                 <td>@user.PhoneNumber</td>
 
@@ -157,20 +190,11 @@
 
 @section Scripts {
 
-    <!-- DataTable -->
-    <script>
-        $(document).ready(function() {
-            $('#employeeTable').DataTable();
-        });
-    </script>
-
-
-    <!-- Chart -->
     <script>
 
         var data = @Html.Raw(
-                    System.Text.Json.JsonSerializer.Serialize(ViewBag.YearData)
-                    );
+            System.Text.Json.JsonSerializer.Serialize(ViewBag.YearData)
+        );
 
         var labels = data.map(x => x.Year + '-' + x.Month);
         var active = data.map(x => x.Active);
@@ -189,9 +213,7 @@
                         data: active
                     },
                     {
-                        label: 'Inactive'
-                        
-                        in,
+                        label: 'Inactive',
                         data: inactive
                     }
                 ]
@@ -199,5 +221,72 @@
 
         });
 
+var table = $('#employeeTable').DataTable();
+
+
+// Status Filter
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+    // Only apply this filter to employeeTable
+    if (settings.nTable.id !== 'employeeTable') {
+        return true;
+    }
+
+    var selectedStatus = $('#statusFilter').val();
+
+    // All selected
+    if (selectedStatus === '') {
+        return true;
+    }
+
+    // Status column = column 6
+    var tableStatus = $('<div>').html(data[6]).text().trim();
+
+    // Exact comparison
+    return tableStatus === selectedStatus;
+});
+
+
+$('#statusFilter').on('change', function () {
+
+    table.draw();
+
+});
+
+
+
+
+        $('#sortFilter').on('change', function () {
+
+            var sort = $(this).val();
+
+            if (sort === 'asc') {
+
+                table.order([0, 'asc']).draw();
+
+            }
+            else if (sort === 'desc') {
+
+                table.order([0, 'desc']).draw();
+
+            }
+            else if (sort === 'recent') {
+
+                table.order([5, 'desc']).draw();
+
+            }
+            else if (sort === 'lastMonth') {
+
+
+            }
+            else if (sort === 'last7Days') {
+
+            
+
+            }
+
+        });
+
     </script>
+
 }

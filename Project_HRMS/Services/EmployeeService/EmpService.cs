@@ -3,8 +3,8 @@ using Project_Hrms.Data;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Project_Hrms.Services.EmployeeService
 {
@@ -111,11 +111,15 @@ namespace Project_Hrms.Services.EmployeeService
         {
             var e = db.Users
                 .Include(x => x.Role)
-        .Include(x => x.Department)
-        .Include(x => x.Designation)
-        .Include(x => x.Manager)
-        .FirstOrDefault(x => x.UserId == id); 
-            return e;
+                .Include(x => x.Department)
+                .Include(x => x.Designation)
+                .Include(x => x.Manager)
+                .Include(x => x.BankInformation)
+                .Include(x => x.FamilyInformation)
+                .Include(x => x.EductionDetails)
+                .Include(x => x.Experince)
+                .FirstOrDefault(x => x.UserId == id); 
+                 return e;
 
 
         }
