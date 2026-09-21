@@ -49,5 +49,12 @@ namespace Project_Hrms.Models
         public int Progress { get; set; }
 
         public double    Productivity { get; set; }
+
+        public BankInformation? BankInformation { get; set; }
+
+        public FamilyInformation? FamilyInformation { get; set; }
+
+        public EductionDetails? EductionDetails { get; set; }
+        public Experince? Experince { get; set; }
     }
 }

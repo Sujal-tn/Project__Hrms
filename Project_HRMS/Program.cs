@@ -85,9 +85,17 @@ builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
 builder.Services.AddScoped<ITaskReportService, TaskReportService>();
 builder.Services.AddScoped<ITermination, TerminationService>();
+<<<<<<< HEAD
+builder.Services.AddScoped<IEmpService, EmpService>();
+=======
 builder.Services.AddScoped<ITicket, TicketService>();
+>>>>>>> origin/main
 
-
+builder.Services.AddScoped<IBankInformationService, BankService>();
+builder.Services.AddScoped<IFamilyService, FamilyService>();
+builder.Services.AddScoped<IEducationService, EducationService>();
+builder.Services.AddScoped<IExperienceService, ExperienceService>();
+    builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -85,6 +85,104 @@
 </head>
 
 <body>
+    	<div class="header">
+			<div class="main-header">
+
+				<div class="header-left">
+					<a href="#" class="logo">
+						<img src="assets/img/Logo_Pulse360 (2).png" alt="pic">
+					</a>
+					<a href="#" class="dark-logo">
+						<img src="assets/img/Logo_Pulse360 (2).png" alt="Logo">
+					</a>
+				</div>
+
+				<a id="mobile_btn" class="mobile_btn" href="#sidebar">
+					<span class="bar-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+				</a>
+
+				<div class="header-user">
+					<div class="nav user-menu nav-list">
+
+						<div class="me-auto d-flex align-items-center" id="header-search">
+							<a id="toggle_btn" href="javascript:void(0);" class="btn btn-menubar me-1">
+								<i class="ti ti-arrow-bar-to-left"></i>
+							</a>
+							<!-- Search -->
+							<div class="input-group input-group-flat d-inline-flex me-1">
+								<span class="input-icon-addon">
+									<i class="ti ti-search"></i>
+								</span>
+								<input type="text" class="form-control" placeholder="Search in Pulse360">
+								<span class="input-group-text">
+									<kbd>CTRL + / </kbd>
+								</span>
+							</div>
+							<!-- /Search -->
+							<div class="dropdown crm-dropdown">
+								<a href="#" class="btn btn-menubar me-1" data-bs-toggle="dropdown">
+									<i class="ti ti-layout-grid"></i>
+								</a>
+								<div class="dropdown-menu dropdown-lg dropdown-menu-start">
+									<div class="card mb-0 border-0 shadow-none">
+										<div class="card-header">
+											<h4>CRM</h4>
+										</div>
+										<div class="card-body pb-1">
+											<div class="row">
+												<div class="col-sm-6">
+													<a href="contacts.html" class="d-flex align-items-center justify-content-between p-2 crm-link mb-3">
+														<span class="d-flex align-items-center me-3">
+															<i class="ti ti-user-shield text-default me-2"></i>Contacts
+														</span>
+														<i class="ti ti-arrow-right"></i>
+													</a>
+													<a href="deals-grid.html" class="d-flex align-items-center justify-content-between p-2 crm-link mb-3">
+														<span class="d-flex align-items-center me-3">
+															<i class="ti ti-heart-handshake text-default me-2"></i>Deals
+														</span>
+														<i class="ti ti-arrow-right"></i>
+													</a>
+													<a href="pipeline.html" class="d-flex align-items-center justify-content-between p-2 crm-link mb-3">
+														<span class="d-flex align-items-center me-3">
+															<i class="ti ti-timeline-event-text text-default me-2"></i>Pipeline
+														</span>
+														<i class="ti ti-arrow-right"></i>
+													</a>
+												</div>
+												<div class="col-sm-6">
+													<a href="companies-grid.html" class="d-flex align-items-center justify-content-between p-2 crm-link mb-3">
+														<span class="d-flex align-items-center me-3">
+															<i class="ti ti-building text-default me-2"></i>Companies
+														</span>
+														<i class="ti ti-arrow-right"></i>
+													</a>
+													<a href="leads-grid.html" class="d-flex align-items-center justify-content-between p-2 crm-link mb-3">
+														<span class="d-flex align-items-center me-3">
+															<i class="ti ti-user-check text-default me-2"></i>Leads
+														</span>
+														<i class="ti ti-arrow-right"></i>
+													</a>
+													<a href="activity.html" class="d-flex align-items-center justify-content-between p-2 crm-link mb-3">
+														<span class="d-flex align-items-center me-3">
+															<i class="ti ti-activity text-default me-2"></i>Activities
+														</span>
+														<i class="ti ti-arrow-right"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<a href="profile-settings.html" class="btn btn-menubar">
+								<i class="ti ti-settings-cog"></i>
+							</a>
+						</div>
 
 <div class="admin-layout">
 
@@ -98,18 +196,37 @@
 
         <nav class="sidebar-menu">
 
-            <a asp-controller="Auth"
-               asp-action="Admin"
-               class="sidebar-link">
-
-                <span>⌂</span>
-                Dashboard
-            </a>
 
 
             @if (roleName == "Admin")
             {
                 <details>
+                      <summary class="sidebar-link">
+                         <span>⌂</span>
+                Dashboard
+                        <span class="menu-arrow">⌃</span>
+                    </summary>
+
+        
+              <div class="submenu">
+
+                        <a asp-controller="Auth"
+                           asp-action="AdminD">
+                           Admin DashBoard
+                        </a>
+
+                        <a asp-controller="Organization"
+                           asp-action="Index">
+                            Organization
+                        </a>
+
+                        
+
+                    </div>
+</details>
+
+                <details>
+
                     <summary class="sidebar-link">
                         <span>♙</span>
                         Employees
@@ -539,77 +656,101 @@
                 </a>
 
 
-                <details>
-                    <summary class="sidebar-link">
-                        <span>♧</span>
-                        Attendance
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
+                <div class="sidebar-menu">
+            <div class="menu-title">MAIN MENU</div>
 
-                    <div class="submenu">
+            <a asp-controller="Auth" asp-action="EmpD" class="sidebar-link">
+                <i class="ti ti-layout-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
 
-                        <a href="#">
-                            My Attendance
-                        </a>
+            <a href="#employeeMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-users"></i>
+                <span>Employees</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="employeeMenu">
+                <a asp-controller="Emp" asp-action="EmpDetails">My Profile</a>
+                <a href="#">Employee Details</a>
+                <a href="#">My Team</a>
+            </div>
 
-                        <a href="#">
-                            My Timesheet
-                        </a>
+            <a href="#attendanceMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-calendar-check"></i>
+                <span>Attendance</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="attendanceMenu">
+                <a href="#">My Attendance</a>
+                <a href="#">Attendance Details</a>
+                <a href="#">Attendance History</a>
+            </div>
 
-                        <a href="#">
-                            My Leave
-                        </a>
+            <a href="#payrollMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-wallet"></i>
+                <span>Payroll</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="payrollMenu">
+                <a href="#">My Payroll</a>
+                <a href="#">Payslips</a>
+                <a href="#">Salary Details</a>
+            </div>
 
-                    </div>
-                </details>
+            <a href="#calendarMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-calendar"></i>
+                <span>Calendar</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="calendarMenu">
+                <a href="#">My Calendar</a>
+                <a href="#">Events</a>
+                <a href="#">Holidays</a>
+            </div>
 
+            <a href="#performanceMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-chart-bar"></i>
+                <span>Performance</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="performanceMenu">
+                <a href="#">My Performance</a>
+                <a href="#">Goals</a>
+                <a href="#">Appraisal</a>
+            </div>
 
-                <details>
-                    <summary class="sidebar-link">
-                        <span>▣</span>
-                        Projects
-                        <span class="menu-arrow">⌃</span>
-                    </summary>
+            <a href="#documentsMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-file-description"></i>
+                <span>Documents</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="documentsMenu">
+                <a href="#">My Documents</a>
+                <a href="#">Company Documents</a>
+            </div>
 
-                    <div class="submenu">
+            <a href="#supportMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-headset"></i>
+                <span>Help & Supports</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="supportMenu">
+                <a href="#">Help Center</a>
+                <a href="#">Support</a>
+            </div>
 
-                        <a href="#">
-                            My Projects
-                        </a>
+            <a href="#ticketMenu" class="sidebar-link" data-bs-toggle="collapse">
+                <i class="ti ti-ticket"></i>
+                <span>Tickets</span>
+                <i class="ti ti-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="ticketMenu">
+                <a href="#">My Tickets</a>
+                <a href="#">Create Ticket</a>
+            </div>
 
-                        <a href="#">
-                            My Tasks
-                        </a>
-
-                    </div>
-                </details>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>✎</span>
-                    Training
-
-                </a>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Performance
-
-                </a>
-
-
-                <a href="#"
-                   class="sidebar-link">
-
-                    <span>▱</span>
-                    Documents
-
-                </a>
+        </div>
+  
             }
 
 

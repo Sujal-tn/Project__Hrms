@@ -163,18 +163,35 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if (Model.BankInformation != null)
+                    @if (Model.BankInformation1!= null)
                     {
                         <div class="row">     
                             <div class="col-md-6 mb-3">
                                 <small class="text-muted">Bank Name</small>
-                                @* <h6>@Model.BankI</h6> *@
+                                @Model.BankInformation1.BankName
+                            </div>
+                       </div>
+                             <div class="row">     
+                            <div class="col-md-6 mb-3">
+                                <small class="text-muted">AccountNumber</small>
+                                @Model.BankInformation1.AccountNumber
+                            </div>
+                       </div>
+                             <div class="row">     
+                            <div class="col-md-6 mb-3">
+                                <small class="text-muted">IFSCCode</small>
+                                @Model.BankInformation1.IFSCNumber
+                            </div>
+                       </div>
+                             <div class="row">     
+                            <div class="col-md-6 mb-3">
+                                <small class="text-muted">Branch Name</small>
+                                @Model.BankInformation1.BranchName
                             </div>
                        </div>
                     } 
-
             </div>
-           @*  Family
+         @*    Family *@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
@@ -191,9 +208,39 @@
                             <i class="ti ti-chevron-down"></i>
                         </button>
                     </div>
+
                 </div>
+                    <div class="card-body">
+                        @if (Model.FamilyInformation1 != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted"> Name</small>
+                                    @Model.FamilyInformation1.Name
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted">Relation</small>
+                                    @Model.FamilyInformation1.Relation
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted">Date-Of-Birth</small>
+                                    @Model.FamilyInformation1.DateOfBirth
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted">Phone</small>
+                                    @Model.FamilyInformation1.Phone
+                                </div>
+                            </div>
+                        }
+                    </div>
             </div>
-            @* Education *@
+            @* @* Education *@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="card border-0 shadow-sm">
@@ -212,6 +259,34 @@
                                     <i class="ti ti-chevron-down"></i>
                                 </button>
                             </div>
+                        </div>
+                            @if (Model.EductionDetails1 != null)
+                            {
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">Education</small>
+                                        <div>@Model.EductionDetails1.EducationType</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">University</small>
+                                        <div>@Model.EductionDetails1.UniversityName</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">Start Date</small>
+                                        <div>@Model.EductionDetails1.Startdate</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">End Date</small>
+                                        <div>@Model.EductionDetails1.EndDate</div>
+                                    </div>
+
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -233,6 +308,32 @@
                                     <i class="ti ti-chevron-down"></i>
                                 </button>
                             </div>
+                        </div>
+                        <div class="card-body">
+
+                            @if (Model.Experince1 != null)
+                            {
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">Company Name</small>
+                                        <div>@Model.Experince1.CompanyName</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">Designation</small>
+                                        <div>@Model.Experince1.Designation</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">From Date</small>
+                                        <div>@Model.Experince1.FromDate</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">To Date</small>
+                                        <div>@Model.Experince1.ToDate</div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
