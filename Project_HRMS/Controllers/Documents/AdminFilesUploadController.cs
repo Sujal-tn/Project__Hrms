@@ -25,7 +25,7 @@ namespace Project_Hrms.Controllers.Documents
             if (ModelState.IsValid)
             {
                 await services.SaveFiles(model);
-                TempData["SuccessMessage"] ="Files uploaded successfully!";
+                TempData["SuccessMessage"] ="Files uploaded on Email also successfully!";
                 return RedirectToAction("Index");
             }
 

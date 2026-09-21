@@ -1,0 +1,271 @@
+
+
+select * from Emp;
+ 
+
+
+
+
+Create database Masstech;
+use Masstech ;
+
+
+Create table Emp1 
+(
+	id int primary key identity,
+	name varchar(100),
+	salary decimal(9,2)
+
+
+);
+
+Select * from Emp;
+
+
+
+
+Create Proc sp_SaveEmp
+@ename varchar(10),
+@Esalary decimal(9,2)
+as
+begin
+	insert into Emp values(@ename,@Esalary)
+
+end
+
+exec sp_SaveEmp 'sam' , 5000.10;
+
+truncate table Emp;
+
+
+
+Create proc sp_InputUpdate1
+@Esalary decimal(9,2),
+@Ename varchar(10),
+@Eid int
+as 
+begin
+	declare @cid int;
+	Select @cid=Count(id) from Emp where id=@Eid;
+
+	if(@cid > 0)
+	begin
+
+		if(@Eid > 0 )
+		begin
+			  update Emp set name =@Ename , salary=@Esalary  where id=@Eid;
+		end
+
+		else
+		begin
+				insert into Emp values(@Ename,@Esalary);
+		end
+	end
+
+	else
+	begin
+		Print('Id not exist');
+	end
+
+end
+
+exec sp_InputUpdate1 500.0 ,'fdc' ,1 ;
+
+Select * from Emp;
+
+
+
+
+
+
+Create proc sp_FindSalary5
+@Ename varchar(10),
+@Esalary decimal(9,2)
+as
+begin
+	
+	declare @Epf decimal(9,2);
+	declare @Enet decimal(9,2);
+
+	set @Epf=@Esalary * 0.1;
+	set @Enet = @Esalary - @Epf ;
+
+	insert into Emp values(@Ename , @Esalary , @Epf , @Enet);
+
+
+end
+
+exec sp_FindSalary5 'khushi', 80000.4;
+
+
+alter table Emp drop column pf1 , netsetsalary1;
+
+alter table Emp add pf2 decimal(9,2) , netsetsalary2 decimal(9,2);
+
+
+--------------
+
+create proc sp_CRUD1
+@Id int =null,
+@Name varchar(100)=null,
+@salary decimal(9,2)=null,
+@choice int 
+as
+begin
+
+
+	if(@choice=1)
+	begin
+		declare @ename int ;
+		select @ename =count(name)from Emp where name=@ename;
+		
+		if(@ename>0)
+		begin
+			print('Name is exist');
+		end
+		else
+		begin
+		exec sp_FindEmpSalary5 @Name,@salary;
+		end
+		/*insert into emp values(@name,@salary);*/
+	end
+	else if(@choice=2)
+	begin
+		select * from Emp;
+	end
+	else if(@choice=3)
+	begin
+		update Emp set Name=@Name,salary=@salary where Id=@Id;
+	end
+	else if(@choice=4)
+	begin
+		delete from Emp where Id=@Id;
+	end
+	else
+	begin
+		select * from Emp where Name=@Name;
+	end
+
+
+end
+
+exec sp_CRUD1 @Id=6, @Name='khushi',@salary=4000.50,@choice=1;
+
+insert into Emp values('khushi',45000.80);
+
+delete from Emp where name='sam'
+
+
+Create trigger insertupdate
+on Emp
+/*after*/instead of insert
+as
+begin
+	print('Emp added sucessfuly');
+end
+
+insert into Emp values('sejal',5000,0,0);
+
+
+select id , name ,salary , pf2,netsetsalary2 
+into employee from Emp where 1=0;
+
+alter table employee add createdby varchar(100),createdat datetime;
+
+select * from employee;
+
+alter table employee
+alter column createdat varchar(10);
+
+truncate table Emp;
+SElect * from Emp;
+
+insert into Emp values('sam',400.60,0,0);
+
+
+create trigger AfterinputTrigger
+on Emp
+after insert
+as 
+begin
+	insert into employee(name,salary,pf2,netsetsalary2,createdby,createdat)
+	select name ,salary,pf2,netsetsalary2,'admin',getdate()
+	from inserted;
+
+end
+
+select * from employee;
+
+alter table employee add modifyat varchar(100),modifyby varchar(100);
+
+create trigger modifydata3
+on Emp
+after update
+as
+begin
+	declare @Nam varchar(100);
+	declare @sal decimal(9,2);
+	declare @Pf decimal(9,2);
+	declare @netsal decimal(9,2);
+	declare @id int;
+
+	select @id=id,@Nam=name, @sal=salary,@Pf=pf2,@netsal=netsetsalary2
+	from inserted;
+	update employee set name=@Nam ,salary=@sal,pf2=@Pf,netsetsalary2=@netsal,modifyat=getdate(),modifyby='masstech'
+	where id=@id;
+	
+end
+
+update Emp set name='moon' where id=1;
+
+select * from employee;
+
+alter table employee add deleteadt varchar(100),deletedby varchar(100);
+
+create trigger delate2
+on Emp
+after delete
+as
+begin
+	declare @id int;
+
+   select @id=id from deleted; 
+	update employee set deleteadt=getdate(),deletedby='sampada'
+	where id=@id;
+end
+
+delete from Emp where id=3;
+
+
+create trigger brforet
+on Emp
+instead of insert
+as
+begin
+	declare @id int;
+	declare @Nam varchar(100);
+	declare @sal decimal(9,2);
+	declare @Pf decimal(9,2);
+	declare @netsal decimal(9,2);
+
+	select @id=id,@Nam=name,@sal=salary,@Pf=pf2,@netsal=netsetsalary2
+	from inserted;
+	if(@sal>5000)
+	begin
+		insert into Emp (name,salary,pf2,netsetsalary2) values(@Nam,@sal,@Pf,@netsal);
+	end
+	else
+	begin
+		print('salary must be grater than 5000');
+	end
+end
+
+
+
+create trigger tiggercreate2
+on database
+for /*create_table*/ alter_table
+as
+begin
+	print('Table alter succesfully');
+end
