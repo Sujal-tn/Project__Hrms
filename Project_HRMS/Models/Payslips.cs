@@ -11,6 +11,7 @@ namespace Project_Hrms.Models
 
         [ForeignKey("User")]
         public int UserId { get; set; }
+
         public virtual User User { get; set; }
 
         [Required]
@@ -25,5 +26,13 @@ namespace Project_Hrms.Models
         [Required]
         public DateTime GeneratedOn { get; set; }
 
+        public decimal TotalSalary { get; set; }
+
+        public decimal Deductions { get; set; }
+
+        public decimal Earnings { get; set; }
+
+        [NotMapped]
+        public decimal NetPay { get; set; }
     }
 }
