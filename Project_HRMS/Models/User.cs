@@ -61,5 +61,10 @@ namespace Project_Hrms.Models.EmployeeModel
         public List<EductionDetails> EductionDetails { get; set; }
         public List<Experince> Experince { get; set; }
 
+        public BankInformation? BankInformation1 { get; set; }
+        public FamilyInformation? FamilyInformation1 { get; set; }
+        public EductionDetails? EductionDetails1 { get; set; }
+        public Experince? Experince1 { get; set; }
+
     }
 }

@@ -12,8 +12,8 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260920084657_PayslipUpdated")]
-    partial class PayslipUpdated
+    [Migration("20260920191131_tables")]
+    partial class tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,6 +117,52 @@ namespace Project_Hrms.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Attendance");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.BankInformation", b =>
+                {
+                    b.Property<int>("BankInfoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BankInfoId"));
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IFSCNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId2")
+                        .HasColumnType("int");
+
+                    b.HasKey("BankInfoId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("UserId2")
+                        .IsUnique()
+                        .HasFilter("[UserId2] IS NOT NULL");
+
+                    b.ToTable("BankInformations");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Deduction", b =>
@@ -277,6 +323,52 @@ namespace Project_Hrms.Migrations
                     b.HasKey("EarntypeId");
 
                     b.ToTable("EarningTypes");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EductionDetails", b =>
+                {
+                    b.Property<int>("EducationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EducationId"));
+
+                    b.Property<string>("EducationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Startdate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UniversityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId2")
+                        .HasColumnType("int");
+
+                    b.HasKey("EducationId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("UserId2")
+                        .IsUnique()
+                        .HasFilter("[UserId2] IS NOT NULL");
+
+                    b.ToTable("EductionDetails");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeAddDocumentsName", b =>
@@ -638,6 +730,98 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.Experince", b =>
+                {
+                    b.Property<int>("ExperinceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExperinceId"));
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Designation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FromDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId2")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExperinceId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("UserId2")
+                        .IsUnique()
+                        .HasFilter("[UserId2] IS NOT NULL");
+
+                    b.ToTable("Experinces");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.FamilyInformation", b =>
+                {
+                    b.Property<int>("familyInfoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("familyInfoId"));
+
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Relation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId2")
+                        .HasColumnType("int");
+
+                    b.HasKey("familyInfoId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("UserId2")
+                        .IsUnique()
+                        .HasFilter("[UserId2] IS NOT NULL");
+
+                    b.ToTable("FamilyInformations");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.FileUploads", b =>
                 {
                     b.Property<int>("id")
@@ -904,7 +1088,12 @@ namespace Project_Hrms.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProjectId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
@@ -1279,6 +1468,25 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.BankInformation", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("BankInformation")
+                        .HasForeignKey("UserId1");
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithOne("BankInformation1")
+                        .HasForeignKey("Project_Hrms.Models.BankInformation", "UserId2");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.Deduction", b =>
                 {
                     b.HasOne("Project_Hrms.Models.DeductionType", "DeductionType")
@@ -1358,6 +1566,25 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Designation");
 
                     b.Navigation("EarningType");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EductionDetails", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("EductionDetails")
+                        .HasForeignKey("UserId1");
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithOne("EductionDetails1")
+                        .HasForeignKey("Project_Hrms.Models.EductionDetails", "UserId2");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeBankDetails", b =>
@@ -1478,6 +1705,44 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.Experince", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("Experince")
+                        .HasForeignKey("UserId1");
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithOne("Experince1")
+                        .HasForeignKey("Project_Hrms.Models.Experince", "UserId2");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.FamilyInformation", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("FamilyInformation")
+                        .HasForeignKey("UserId1");
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithOne("FamilyInformation1")
+                        .HasForeignKey("Project_Hrms.Models.FamilyInformation", "UserId2");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.FileUploads", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
@@ -1542,6 +1807,16 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany("Projects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
                 });
@@ -1711,9 +1986,27 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.User", b =>
                 {
+                    b.Navigation("BankInformation");
+
+                    b.Navigation("BankInformation1");
+
+                    b.Navigation("EductionDetails");
+
+                    b.Navigation("EductionDetails1");
+
+                    b.Navigation("Experince");
+
+                    b.Navigation("Experince1");
+
+                    b.Navigation("FamilyInformation");
+
+                    b.Navigation("FamilyInformation1");
+
                     b.Navigation("LeaveBalances");
 
                     b.Navigation("LeaveRequests");
+
+                    b.Navigation("Projects");
 
                     b.Navigation("Timesheets");
                 });

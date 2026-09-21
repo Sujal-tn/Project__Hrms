@@ -66,6 +66,8 @@ namespace Project_Hrms.Data
         public DbSet<EductionDetails> EductionDetails { get; set; }
 
         public DbSet<Experince> Experinces { get; set; }
+
+        public DbSet<Organization> Organizations { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

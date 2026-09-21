@@ -12,8 +12,8 @@ using Project_Hrms.Data;
 namespace Project_Hrms.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260920143544_changesDatatype")]
-    partial class changesDatatype
+    [Migration("20260920175446_dbinit")]
+    partial class dbinit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,11 +146,81 @@ namespace Project_Hrms.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("BankInfoId");
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("UserId1");
+
                     b.ToTable("BankInformations");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Deduction", b =>
+                {
+                    b.Property<int>("DeductionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeductionId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("DeductionPercentage")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int>("DeductionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DesignationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PayslipsPayslipId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeductionId");
+
+                    b.HasIndex("DeductionTypeId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DesignationId");
+
+                    b.HasIndex("PayslipsPayslipId");
+
+                    b.ToTable("Deductions");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.DeductionType", b =>
+                {
+                    b.Property<int>("DeductionTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeductionTypeId"));
+
+                    b.Property<string>("DeductionsName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DeductionTypeId");
+
+                    b.ToTable("DeductionTypes");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.DepartmentLeaves", b =>
@@ -183,6 +253,71 @@ namespace Project_Hrms.Migrations
                     b.ToTable("DepartmentLeaves");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.Earning", b =>
+                {
+                    b.Property<int>("EarningsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EarningsId"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DesignationId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("EarningsPercentage")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int>("EarntypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PayslipsPayslipId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EarningsId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DesignationId");
+
+                    b.HasIndex("EarntypeId");
+
+                    b.HasIndex("PayslipsPayslipId");
+
+                    b.ToTable("Earnings");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EarningType", b =>
+                {
+                    b.Property<int>("EarntypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EarntypeId"));
+
+                    b.Property<string>("EarningName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EarntypeId");
+
+                    b.ToTable("EarningTypes");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.EductionDetails", b =>
                 {
                     b.Property<int>("EducationId")
@@ -210,9 +345,14 @@ namespace Project_Hrms.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("EducationId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("EductionDetails");
                 });
@@ -232,6 +372,102 @@ namespace Project_Hrms.Migrations
                     b.HasKey("id");
 
                     b.ToTable("EmployeeAddDocumentsNames");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeBankDetails", b =>
+                {
+                    b.Property<int>("BankDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BankDetailId"));
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IFSCCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BankDetailId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EmployeeBankDetails");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeDeductions", b =>
+                {
+                    b.Property<int>("EmployeeDeductionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeDeductionId"));
+
+                    b.Property<decimal>("DeductionAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DeductionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalaryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeDeductionId");
+
+                    b.HasIndex("DeductionId");
+
+                    b.HasIndex("SalaryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EmployeeDeductions");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeEarnings", b =>
+                {
+                    b.Property<int>("EmployeeEarningId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeEarningId"));
+
+                    b.Property<decimal>("EarningAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("EarningId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalaryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeEarningId");
+
+                    b.HasIndex("EarningId");
+
+                    b.HasIndex("SalaryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EmployeeEarnings");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.Department", b =>
@@ -422,6 +658,36 @@ namespace Project_Hrms.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeSalaries", b =>
+                {
+                    b.Property<int>("SalaryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalaryId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("NetSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SalaryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EmployeeSalaries");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.Events", b =>
                 {
                     b.Property<int>("Id")
@@ -477,9 +743,14 @@ namespace Project_Hrms.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("ExperinceId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Experinces");
                 });
@@ -511,9 +782,14 @@ namespace Project_Hrms.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("familyInfoId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("FamilyInformations");
                 });
@@ -679,16 +955,49 @@ namespace Project_Hrms.Migrations
                     b.Property<DateTime>("GeneratedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("decimal(9,2)");
+
                     b.Property<string>("Month")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PayslipPath")
+                    b.Property<decimal>("NetSalary")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<string>("OrganizationAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OrganizationEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizationPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PayslipPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalDeductions")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<decimal>("TotalEarnings")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<decimal>("TotalHoursInMonth")
+                        .HasColumnType("decimal(9,2)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("WorkedHours")
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -1139,7 +1448,42 @@ namespace Project_Hrms.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("BankInformation")
+                        .HasForeignKey("UserId1");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Deduction", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.DeductionType", "DeductionType")
+                        .WithMany("Deductions")
+                        .HasForeignKey("DeductionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.Designation", "Designation")
+                        .WithMany()
+                        .HasForeignKey("DesignationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.Payslips", null)
+                        .WithMany("Deductions")
+                        .HasForeignKey("PayslipsPayslipId");
+
+                    b.Navigation("DeductionType");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Designation");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.DepartmentLeaves", b =>
@@ -1161,6 +1505,37 @@ namespace Project_Hrms.Migrations
                     b.Navigation("MasterLeaveType");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.Earning", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.Designation", "Designation")
+                        .WithMany()
+                        .HasForeignKey("DesignationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EarningType", "EarningType")
+                        .WithMany("Earnings")
+                        .HasForeignKey("EarntypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.Payslips", null)
+                        .WithMany("Earnings")
+                        .HasForeignKey("PayslipsPayslipId");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Designation");
+
+                    b.Navigation("EarningType");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.EductionDetails", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
@@ -1168,6 +1543,75 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("EductionDetails")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeBankDetails", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeDeductions", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Deduction", "Deduction")
+                        .WithMany()
+                        .HasForeignKey("DeductionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeSalaries", "EmployeeSalaries")
+                        .WithMany("EmployeeDeductions")
+                        .HasForeignKey("SalaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Deduction");
+
+                    b.Navigation("EmployeeSalaries");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeEarnings", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.Earning", "Earning")
+                        .WithMany()
+                        .HasForeignKey("EarningId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeSalaries", "EmployeeSalaries")
+                        .WithMany("EmployeeEarnings")
+                        .HasForeignKey("SalaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Earning");
+
+                    b.Navigation("EmployeeSalaries");
 
                     b.Navigation("User");
                 });
@@ -1214,6 +1658,17 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeSalaries", b =>
+                {
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.Experince", b =>
                 {
                     b.HasOne("Project_Hrms.Models.EmployeeModel.User", "User")
@@ -1221,6 +1676,10 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("Experince")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
@@ -1232,6 +1691,10 @@ namespace Project_Hrms.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Project_Hrms.Models.EmployeeModel.User", null)
+                        .WithMany("FamilyInformation")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
@@ -1448,6 +1911,16 @@ namespace Project_Hrms.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.DeductionType", b =>
+                {
+                    b.Navigation("Deductions");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.EarningType", b =>
+                {
+                    b.Navigation("Earnings");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.Department", b =>
                 {
                     b.Navigation("DepartmentLeaves");
@@ -1469,6 +1942,14 @@ namespace Project_Hrms.Migrations
 
             modelBuilder.Entity("Project_Hrms.Models.EmployeeModel.User", b =>
                 {
+                    b.Navigation("BankInformation");
+
+                    b.Navigation("EductionDetails");
+
+                    b.Navigation("Experince");
+
+                    b.Navigation("FamilyInformation");
+
                     b.Navigation("LeaveBalances");
 
                     b.Navigation("LeaveRequests");
@@ -1478,6 +1959,13 @@ namespace Project_Hrms.Migrations
                     b.Navigation("Timesheets");
                 });
 
+            modelBuilder.Entity("Project_Hrms.Models.EmployeeSalaries", b =>
+                {
+                    b.Navigation("EmployeeDeductions");
+
+                    b.Navigation("EmployeeEarnings");
+                });
+
             modelBuilder.Entity("Project_Hrms.Models.MasterLeaveType", b =>
                 {
                     b.Navigation("DepartmentLeaves");
@@ -1485,6 +1973,13 @@ namespace Project_Hrms.Migrations
                     b.Navigation("LeaveBalances");
 
                     b.Navigation("LeaveRequests");
+                });
+
+            modelBuilder.Entity("Project_Hrms.Models.Payslips", b =>
+                {
+                    b.Navigation("Deductions");
+
+                    b.Navigation("Earnings");
                 });
 
             modelBuilder.Entity("Project_Hrms.Models.Projects", b =>
