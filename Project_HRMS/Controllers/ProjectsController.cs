@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project_Hrms.Interface;
 using Project_Hrms.Models;
+using Project_Hrms.Models.EmployeeModel;
+using Project_Hrms.Services;
 
 namespace Project_Hrms.Controllers
 {
@@ -8,10 +10,12 @@ namespace Project_Hrms.Controllers
     {
         IProject pro;
         private readonly IWebHostEnvironment environment;
-        public ProjectsController(IProject pr, IWebHostEnvironment env)
+        IUserService userService;
+        public ProjectsController(IProject pr, IWebHostEnvironment env, IUserService us)
         {
             this.pro = pr;
             this.environment = env;
+            this.userService = us;
         }
 
         public async Task<IActionResult> Index()
@@ -20,8 +24,9 @@ namespace Project_Hrms.Controllers
             return View(data);
         }
 
-        public IActionResult AddProject()
+        public async Task<IActionResult> AddProject()
         {
+            ViewBag.Users = await userService.FeatchUser();
             return View();
         }
 
@@ -40,7 +45,8 @@ namespace Project_Hrms.Controllers
                 ProjectValue = p.ProjectValue,
                 PriceType = p.PriceType,
                 Status = p.Status,
-                ManagerName = p.ManagerName
+                ManagerName = p.ManagerName,
+                UserId = p.UserId,
             };
 
             string path = environment.WebRootPath + "/Content/Logo";

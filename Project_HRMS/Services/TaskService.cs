@@ -13,9 +13,17 @@ namespace Project_Hrms.Services
             this.data = data;
         }
 
-        public async Task AddNewTask(Tasks t)
+        public async Task<int> AddNewTask(Tasks t)
         {
             await data.Tasks.AddAsync(t);
+            await data.SaveChangesAsync();
+
+            return t.TaskId;
+        }
+
+        public async Task AddTaskMember(TaskMembers member)
+        {
+            await data.TaskMembers.AddAsync(member);
             await data.SaveChangesAsync();
         }
 
@@ -23,6 +31,8 @@ namespace Project_Hrms.Services
         {
             var taskList = await data.Tasks
                 .Include(t => t.Projects)
+                .Include(t => t.Taskmember)
+                .ThenInclude(x => x.User)
                 .ToListAsync();
 
             return taskList;

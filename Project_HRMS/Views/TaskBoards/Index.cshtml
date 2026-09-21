@@ -1,0 +1,496 @@
+﻿@model List<Project_Hrms.Models.TaskBoards>
+
+@{
+    ViewData["Title"] = "Task Board";
+
+    List<int> projectIds = new List<int>();
+
+    foreach (var board in Model)
+    {
+        if (!projectIds.Contains(board.ProjectId))
+        {
+            projectIds.Add(board.ProjectId);
+        }
+    }
+}
+
+<div class="page-wrapper">
+    <div class="content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+
+                <div class="col">
+                    <h3 class="page-title">Task Board</h3>
+                </div>
+
+                <div class="col-auto">
+                    <a asp-action="AddTaskBoard"
+                       class="btn btn-primary">
+                        <i class="bi bi-plus"></i>Add New Board</a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Project Boards -->
+        @foreach (var projectId in projectIds)
+        {
+            string projectName = "";
+
+            foreach (var board in Model)
+            {
+                if (board.ProjectId == projectId &&board.Project != null)
+                {
+                    projectName = board.Project.ProjectName;
+                    break;
+                }
+            }
+
+            <div class="card mb-4">
+
+                <!-- Project Header -->
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <h5 class="mb-0"> @projectName</h5>
+
+                        <div>
+
+                            <span class="me-3">
+                                Total Task:
+                                <strong>@Model.Count(x => x.ProjectId == projectId)</strong>
+                            </span>
+
+                            <span class="me-3">
+                                Pending:
+                                <strong>
+                                    @Model.Count(x => x.ProjectId == projectId &&
+                                                       x.Task != null &&
+                                                       x.Task.Status == "Pending")
+                                </strong>
+                            </span>
+
+                            <span>
+                                Completed:
+                                <strong>
+                                    @Model.Count(x => x.ProjectId == projectId &&
+                                                       x.Task != null &&
+                                                       x.Task.Status == "Completed")
+                                </strong>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Search and Status -->
+                    <div class="row mt-3">
+
+                        <!-- Search Project -->
+                        <div class="col-md-6">
+
+                            <input type="text" class="form-control" placeholder="Search Project" />
+
+                        </div>
+
+
+                        <!-- Select Status -->
+                        <div class="col-md-6 text-md-end mt-2 mt-md-0">
+
+                            <select class="form-select" style="width:200px; display:inline-block;">
+
+                                <option value="">Select Status</option>
+
+                                <option value="Pending">Pending</option>
+
+                                <option value="Inprogress">Inprogress</option>
+
+                                <option value="Onhold">Onhold</option>
+
+                                <option value="Completed">Completed</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <!-- Priority -->
+                    <div class="mb-3">
+
+                        <small class="fw-bold">
+                            Priority
+                        </small>
+
+                        <button type="button"
+                                class="btn btn-sm btn-light">
+                            All
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-sm btn-light">
+                            High
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-sm btn-light">
+                            Medium
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-sm btn-light">
+                            Low
+                        </button>
+
+                    </div>
+
+
+                    <!-- Kanban Board -->
+                    <div class="row g-3">
+
+
+                        <!-- ========================= -->
+                        <!-- Pending -->
+                        <!-- ========================= -->
+
+                        <div class="col-md-3">
+
+                            <div class="border rounded p-2 bg-light">
+
+                                <h6 class="text-center">
+                                    Pending
+                                </h6>
+
+                                @foreach (var board in Model)
+                                {
+                                    if (board.ProjectId == projectId &&
+                                        board.Task != null &&
+                                        board.Task.Status == "Pending")
+                                    {
+                                        <div class="card mb-2">
+
+                                            <div class="card-body p-3">
+
+                                                <!-- Task Top -->
+                                                <div class="d-flex justify-content-between align-items-center">
+
+                                                    <span class="badge bg-warning">
+                                                        @board.Task.Priority
+                                                    </span>
+
+                                                    <span>
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </span>
+
+                                                </div>
+
+
+                                                <!-- Task Title -->
+                                                <h6 class="mt-2 mb-2">
+                                                    @board.Task.Title
+                                                </h6>
+
+
+                                                <!-- Due Date -->
+                                                <small class="text-muted">
+                                                    Due on:
+                                                    @board.DueDate.ToString("dd MMM yyyy")
+                                                </small>
+
+
+                                                <!-- Progress -->
+                                                <div class="progress mt-2"
+                                                     style="height:6px;">
+
+                                                    <div class="progress-bar"
+                                                         role="progressbar"
+                                                         style="width:@board.Percentage%">
+                                                    </div>
+
+                                                </div>
+
+
+                                                <!-- Percentage -->
+                                                <div class="mt-1">
+
+                                                    <small>
+                                                        @board.Percentage%
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ========================= -->
+                        <!-- Inprogress -->
+                        <!-- ========================= -->
+
+                        <div class="col-md-3">
+
+                            <div class="border rounded p-2 bg-light">
+
+                                <h6 class="text-center">
+                                    Inprogress
+                                </h6>
+
+                                @foreach (var board in Model)
+                                {
+                                    if (board.ProjectId == projectId &&
+                                        board.Task != null &&
+                                        board.Task.Status == "Inprogress")
+                                    {
+                                        <div class="card mb-2">
+
+                                            <div class="card-body p-3">
+
+                                                <!-- Task Top -->
+                                                <div class="d-flex justify-content-between align-items-center">
+
+                                                    <span class="badge bg-info">
+                                                        @board.Task.Priority
+                                                    </span>
+
+                                                    <span>
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </span>
+
+                                                </div>
+
+
+                                                <!-- Task Title -->
+                                                <h6 class="mt-2 mb-2">
+                                                    @board.Task.Title
+                                                </h6>
+
+
+                                                <!-- Due Date -->
+                                                <small class="text-muted">
+                                                    Due on:
+                                                    @board.DueDate.ToString("dd MMM yyyy")
+                                                </small>
+
+
+                                                <!-- Progress -->
+                                                <div class="progress mt-2"
+                                                     style="height:6px;">
+
+                                                    <div class="progress-bar"
+                                                         role="progressbar"
+                                                         style="width:@board.Percentage%">
+                                                    </div>
+
+                                                </div>
+
+
+                                                <!-- Percentage -->
+                                                <div class="mt-1">
+
+                                                    <small>
+                                                        @board.Percentage%
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ========================= -->
+                        <!-- Onhold -->
+                        <!-- ========================= -->
+
+                        <div class="col-md-3">
+
+                            <div class="border rounded p-2 bg-light">
+
+                                <h6 class="text-center">
+                                    Onhold
+                                </h6>
+
+                                @foreach (var board in Model)
+                                {
+                                    if (board.ProjectId == projectId &&
+                                        board.Task != null &&
+                                        board.Task.Status == "Onhold")
+                                    {
+                                        <div class="card mb-2">
+
+                                            <div class="card-body p-3">
+
+                                                <!-- Task Top -->
+                                                <div class="d-flex justify-content-between align-items-center">
+
+                                                    <span class="badge bg-secondary">
+                                                        @board.Task.Priority
+                                                    </span>
+
+                                                    <span>
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </span>
+
+                                                </div>
+
+
+                                                <!-- Task Title -->
+                                                <h6 class="mt-2 mb-2">
+                                                    @board.Task.Title
+                                                </h6>
+
+
+                                                <!-- Due Date -->
+                                                <small class="text-muted">
+                                                    Due on:
+                                                    @board.DueDate.ToString("dd MMM yyyy")
+                                                </small>
+
+
+                                                <!-- Progress -->
+                                                <div class="progress mt-2"
+                                                     style="height:6px;">
+
+                                                    <div class="progress-bar"
+                                                         role="progressbar"
+                                                         style="width:@board.Percentage%">
+                                                    </div>
+
+                                                </div>
+
+
+                                                <!-- Percentage -->
+                                                <div class="mt-1">
+
+                                                    <small>
+                                                        @board.Percentage%
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ========================= -->
+                        <!-- Completed -->
+                        <!-- ========================= -->
+
+                        <div class="col-md-3">
+
+                            <div class="border rounded p-2 bg-light">
+
+                                <h6 class="text-center">
+                                    Completed
+                                </h6>
+
+                                @foreach (var board in Model)
+                                {
+                                    if (board.ProjectId == projectId &&
+                                        board.Task != null &&
+                                        board.Task.Status == "Completed")
+                                    {
+                                        <div class="card mb-2">
+
+                                            <div class="card-body p-3">
+
+                                                <!-- Task Top -->
+                                                <div class="d-flex justify-content-between align-items-center">
+
+                                                    <span class="badge bg-success">
+                                                        @board.Task.Priority
+                                                    </span>
+
+                                                    <span>
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </span>
+
+                                                </div>
+
+
+                                                <!-- Task Title -->
+                                                <h6 class="mt-2 mb-2">
+                                                    @board.Task.Title
+                                                </h6>
+
+
+                                                <!-- Due Date -->
+                                                <small class="text-muted">
+                                                    Due on:
+                                                    @board.DueDate.ToString("dd MMM yyyy")
+                                                </small>
+
+
+                                                <!-- Progress -->
+                                                <div class="progress mt-2"
+                                                     style="height:6px;">
+
+                                                    <div class="progress-bar"
+                                                         role="progressbar"
+                                                         style="width:@board.Percentage%">
+                                                    </div>
+
+                                                </div>
+
+
+                                                <!-- Percentage -->
+                                                <div class="mt-1">
+
+                                                    <small>
+                                                        @board.Percentage%
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>

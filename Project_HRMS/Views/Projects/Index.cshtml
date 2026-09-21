@@ -118,9 +118,18 @@
                             <h6 class="fw-medium">@project.ProjectName
                             </h6>
                         </td>
-                        <td>
-                            @project.ManagerName
-                        </td>
+                       <td>
+                           @if (project.User != null && !string.IsNullOrEmpty(project.User.ProfilePicture))
+                           {
+                               <img src="@project.User.ProfilePicture"
+                               width="30"
+                               height="30" style="border-radius:50%; object-fit:cover;" />
+                           }
+                           else
+                           {
+                               <span>No Photo</span>
+                           }
+                           </td>
                         <td>
                             @project.EndDate.ToString("yyyy-MM-dd")
                         </td>

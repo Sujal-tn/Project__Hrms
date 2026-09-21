@@ -29,6 +29,8 @@ namespace Project_Hrms.Models
         public string Status { get; set; }
 
         public string ManagerName { get; set; }
+
+        public int? UserId { get; set; }
     }
 }
 
