@@ -552,27 +552,6 @@ namespace Project_Hrms.Migrations
 
                 b.ToTable("Events");
             });
-                    b.ToTable("Events");
-
-                    b.Property<string>("Date")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EventTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Events");
-                });
 
             modelBuilder.Entity("Project_Hrms.Models.Experince", b =>
             {
@@ -1101,27 +1080,6 @@ namespace Project_Hrms.Migrations
 
                 b.Property<DateTime>("ResignDate")
                     .HasColumnType("datetime2");
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                    b.Property<DateTime>("ResignDate")
-                        .HasColumnType("datetime2");
 
                 b.Property<string>("TerminationType")
                     .IsRequired()
@@ -1136,25 +1094,7 @@ namespace Project_Hrms.Migrations
 
                 b.ToTable("Termination");
             });
-                    b.HasKey("TaskId");
 
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("Project_Hrms.Models.Termination", b =>
-                {
-                    b.Property<int>("TerminationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TerminationId"));
-
-                    b.Property<DateTime>("NoticeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Reason")
             modelBuilder.Entity("Project_Hrms.Models.Ticket", b =>
             {
                 b.Property<int>("TicketId")
@@ -1185,17 +1125,6 @@ namespace Project_Hrms.Migrations
 
                 b.Property<int>("RaisedByUserId")
                     .HasColumnType("int");
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("ResignDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TerminationType")
-                    b.Property<int>("RaisedByUserId")
-                        .HasColumnType("int");
 
                 b.Property<DateTime?>("ResolvedDate")
                     .HasColumnType("datetime2");
@@ -1213,9 +1142,6 @@ namespace Project_Hrms.Migrations
 
                 b.Property<string>("TicketNo")
                     .HasColumnType("nvarchar(max)");
-                    b.HasKey("TerminationId");
-                    b.Property<string>("TicketNo")
-                        .HasColumnType("nvarchar(max)");
 
                 b.HasKey("TicketId");
 
@@ -1225,9 +1151,7 @@ namespace Project_Hrms.Migrations
 
                 b.ToTable("Ticket");
             });
-                    b.ToTable("Termination");
-                    b.ToTable("Ticket");
-                });
+
 
             modelBuilder.Entity("Project_Hrms.Models.Timesheet", b =>
             {

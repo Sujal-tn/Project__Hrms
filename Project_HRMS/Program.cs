@@ -1,24 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Data;
+
 using Project_Hrms.Interface;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Interface.LoginInterface;
-using Project_Hrms.Services.EmployeeService;
-using Project_Hrms.Services.LoginService;
-using Project_Hrms.Interface;
-using Project_Hrms.Services;
-using Project_Hrms.Services.MasterDocuments;
-using Project_Hrms.Interface.TrainingInterface;
 using Project_Hrms.Interface.MasterDocuments;
 using Project_Hrms.Interface.MasterDocuments.Documents;
 using Project_Hrms.Interface.PayrollInterface;
 using Project_Hrms.Interface.TrainingInterface;
+
 using Project_Hrms.Models;
-using Project_Hrms.Service;
-
-
-using Project_Hrms.Services.Training;
-
 
 using Project_Hrms.Service;
 
@@ -31,7 +22,6 @@ using Project_Hrms.Services.PayrollService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -59,19 +49,19 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
 builder.Services.AddScoped<ITimesheetService, TimesheetService>();
+
 builder.Services.AddScoped<ITrainingType, TrainingTypeServices>();
-builder.Services.AddScoped<IPromotion, PromotionService>();
-builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<ITrainingList, AddTrainingListServices>();
+builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
+
+builder.Services.AddScoped<IPromotion, PromotionService>();
+
 builder.Services.AddScoped<IAdminDocumentsServices, AdminDocumentsAddServices>();
 builder.Services.AddScoped<IEmployeeDocumentsServices, EmployeeDocumentsAddServices>();
 builder.Services.AddScoped<IAdminFileUpload, AdminFileUploadServices>();
 builder.Services.AddScoped<IUploadedDocument, UploadedDocumentListServices>();
 builder.Services.AddScoped<IEmployeeFileUpload, EmployeeFileUploadServices>();
 builder.Services.AddScoped<IEmailService, EmailServices>();
-
-
-
 
 builder.Services.AddScoped<ITask, TaskService>();
 builder.Services.AddScoped<IEvent, EventService>();
@@ -81,12 +71,10 @@ builder.Services.AddScoped<IDailyReportService, DailyReportService>();
 builder.Services.AddScoped<IPaySlipsReportService, PaySlipsReportService>();
 builder.Services.AddScoped<ILeaveReportService, LeaveReportService>();
 builder.Services.AddScoped<IProjectReportService, ProjectReportService>();
-builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
 builder.Services.AddScoped<ITaskReportService, TaskReportService>();
 builder.Services.AddScoped<ITermination, TerminationService>();
 builder.Services.AddScoped<ITicket, TicketService>();
-
 
 var app = builder.Build();
 
@@ -97,7 +85,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();                  
+app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
