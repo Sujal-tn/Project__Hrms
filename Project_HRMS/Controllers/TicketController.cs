@@ -45,11 +45,7 @@ namespace Project_Hrms.Controllers
 
             if (roleName == "Manager")
             {
-                var managerTickets = allTickets
-                    .Where(t => t.Status == "Open" || t.Status == "Reopened" || t.Status == "Assigned")
-                    .ToList();
-
-                return View(managerTickets);
+                return View(allTickets);
             }
             else
             {
