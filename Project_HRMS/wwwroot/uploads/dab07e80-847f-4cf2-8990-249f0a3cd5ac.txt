@@ -1,0 +1,218 @@
+
+create database newmass;
+use newmass;
+
+create table emp(
+ eid int primary key identity,
+ ename varchar(100),
+ esalary decimal(9,2),
+ pfamt decimal(9,2),
+ netsal decimal(9,2),
+ mid int foreign key(mid) references manager(mid)
+);
+
+drop table emp;
+
+create table manager(
+ mid int primary key identity,
+ ename varchar(100),
+)
+
+insert into manager values('munna');
+
+
+select * from manager;
+select * from emp;
+
+Create proc sp_SaveEmp
+@Ename varchar(10),
+@Esalary decimal(9,2),
+@mid int
+as
+begin
+	
+	declare @Epf decimal(9,2);
+	declare @Enet decimal(9,2);
+
+	set @Epf=@Esalary * 0.1;
+	set @Enet = @Esalary - @Epf ;
+
+	insert into emp values(@Ename , @Esalary , @Epf , @Enet,@mid);
+
+
+end
+
+
+create proc sp_Fetchall
+as 
+begin
+	select e.eid,e.ename,e.esalary,e.pfamt,e.netsal,m.ename 
+	from emp e inner join manager m on e.eid=m.mid;
+end
+
+
+create proc sp_Delete
+@id int
+as
+begin
+	declare @eid int
+	select @eid=eid from emp;
+	delete from emp where eid=@id;
+end
+
+create proc sp_SearchEmp
+@name varchar(100)
+as
+begin
+	select ename from emp where ename like @name;
+end
+
+alter proc sp_FindByid
+@id int
+as
+begin
+	select e.eid,e.ename,e.esalary,e.pfamt,e.netsal,m.ename 
+	from emp e inner join manager m on e.mid=m.mid where e.eid=@id;
+end
+
+exec sp_FindByid 3;
+=========================================================
+
+
+create table empTask(
+ eid int primary key identity,
+ ename varchar(100),
+ esalary decimal(9,2));
+
+ select * from empTask;
+
+alter proc sp_Insert
+@name varchar(100),
+@salary decimal(9,2)
+as
+begin
+
+	declare @Ename varchar(100);
+	select @Ename=ename from empTask where ename=@name;
+	if(@Ename=@name)
+	begin
+		 Select ' Duplicate record' as Message;
+	return;	
+	end
+	
+	else
+	begin
+		insert into empTask (ename,esalary) values(@name,@salary)
+		Select 'Emp add succesfully' as Message ;
+	end
+end
+
+
+create proc sp_Fetch
+as
+begin
+	select * from empTask;
+end
+
+
+alter proc sp_Update
+@id int,
+@name varchar(100),
+@salary decimal(9,2)
+as
+begin
+	declare @Eid int;
+	select @Eid=eid from empTask;
+	if(@Eid < @id)
+	begin
+		select 'ID not exists' as show
+	return;
+	end
+
+	else
+	begin
+		update empTask set ename = @name, esalary=@salary 
+		where eid=@id;
+		select 'The data was updated' as show
+	end
+end
+
+exec sp_Update 25,'sejal',30000;
+
+alter proc sp_Search
+@name varchar(100)
+as
+begin
+	select * from empTask where ename like '%'+ @name +'%';
+	select 'Records are found' as message
+end
+
+alter proc sp_Delete
+@id int
+as
+begin
+	delete from empTask where eid=@id
+	select 'Delete the  selected record' as message
+end
+
+
+=======================================================
+
+
+create database authencation;
+use authencation;
+
+
+create table auth(id int primary key identity,username varchar(100),email varchar(100),password varchar(100), role varchar(100) );
+select * from auth;
+truncate 
+
+alter proc sp_signUp --Register
+@usname varchar(100),
+@email varchar(100),
+@pass varchar(100),
+@role varchar(100)
+as
+begin
+	declare @Eusname varchar(100);
+	declare @Eemail varchar(100);
+
+	select @Eusname=username ,@Eemail=email from auth where email=@email OR username=@usname;
+
+	if(@Eusname=@usname OR @Eemail=@email)
+	begin
+		select 'Username OR email already exist' as msg
+	end
+
+	else
+	begin
+	    insert into auth values(@usname,@email,@pass,@role);
+	end
+end
+
+exec sp_signUp 'kunal','kunal123@gmail.com','samp123','user';
+
+
+create proc signIn
+@email varchar(100),
+@pass varchar(100),
+@role varchar(100)
+as
+begin
+	declare @Eemail varchar(100);
+	declare @Epass varchar(100);
+	declare @Erole varchar(100);
+
+	select @Eemail=email,@Epass=password,@Erole=role from auth;
+	if(@role='user' OR @role='admin')
+	begin
+		if(@Eemail=@email AND @Epass=@pass AND @Erole=@role)
+		begin
+			select'Login succesfully' as msg
+		end
+		else
+	end
+
+end
+
+exec signIn 'kunal123@gmail.com','samp123','admin';

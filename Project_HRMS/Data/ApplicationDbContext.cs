@@ -23,6 +23,7 @@ namespace Project_Hrms.Data
         public DbSet<Promotion> Promotion { get; set; }
         public DbSet<Resignation> Resignation { get; set; }
         public DbSet<Termination> Termination { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Timesheet> Timesheets { get; set; }
         public DbSet<Payslips> Payslips { get; set; }
@@ -45,7 +46,6 @@ namespace Project_Hrms.Data
         public DbSet<AdminAddDocumentsName> AdminAddDocumentsNames { get; set; }
 
         public DbSet<EmployeeAddDocumentsName> EmployeeAddDocumentsNames { get; set; }
-        public DbSet<AdminDocuments> AdminAddDocuments { get; set; }
 
         public DbSet<FileUploads> Files { get; set; }
 
@@ -59,6 +59,8 @@ namespace Project_Hrms.Data
 
         public DbSet<MasterEvents> MasterEvents { get; set; }
 
+
+
         public DbSet<BankInformation> BankInformations { get; set; }
 
         public DbSet<FamilyInformation> FamilyInformations { get; set; }
@@ -67,7 +69,10 @@ namespace Project_Hrms.Data
 
         public DbSet<Experince> Experinces { get; set; }
 
+<<<<<<< HEAD
         public DbSet<Organization> Organizations { get; set; }
+=======
+>>>>>>> origin/main
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
