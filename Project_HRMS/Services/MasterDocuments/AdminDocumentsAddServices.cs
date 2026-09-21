@@ -16,6 +16,14 @@ namespace Project_Hrms.Services.MasterDocuments
         public async Task AddAdminDocuments(AdminAddDocumentsName t)
         {
             await db.AdminAddDocumentsNames.AddAsync(t);
+
+            var uploadDoc = new UploadDocuments
+            {
+                DocumentName = t.ADocumentName,
+                DocumentType = "Admin"
+            };
+            
+            await db.MasterDocument.AddAsync(uploadDoc);
             await db.SaveChangesAsync();
         }
 

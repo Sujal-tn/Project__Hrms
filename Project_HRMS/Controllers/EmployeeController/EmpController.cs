@@ -11,9 +11,18 @@ namespace Project_Hrms.Controllers.EmployeeController
     {
        
         IEmpService es;
-        public EmpController(IEmpService es )
+        IBankInformationService bs;
+        IFamilyService fs;
+        IEducationService  edu;
+
+        IExperienceService ex;
+        public EmpController(IEmpService es, IBankInformationService bs, IFamilyService fs, IEducationService edu, IExperienceService ex)
         {
-       this.es = es;
+            this.es = es;
+            this.bs = bs;
+            this.fs = fs;
+            this.edu = edu;
+            this.ex = ex;
         }
         public IActionResult Index()
         {
@@ -95,6 +104,66 @@ namespace Project_Hrms.Controllers.EmployeeController
             es.UpdateEmp(u);
             TempData["updmsg"] = "Added Successfully";
             return RedirectToAction("Index");
+        }
+
+
+        public IActionResult EmpGrid()
+        {
+            var users = es.FetchEmp();
+            var TotalUsers = users.Count();
+            var ActiveUsers = users.Count(u => u.Status == "Active");
+            var InActiveUsers = users.Count(u => u.Status != "Active");
+            var NewJoiner = users.Count(u => DateTime.Parse(u.DateOfJoining).Month == DateTime.Now.Month &&
+                  DateTime.Parse(u.DateOfJoining).Year == DateTime.Now.Year
+            );
+            ViewBag.TUser = TotalUsers;
+            ViewBag.Auser = ActiveUsers;
+            ViewBag.InUser = InActiveUsers;
+            ViewBag.NewJ = NewJoiner;
+           
+            var cards = es.GetEmployeeCardData();
+            return View(cards);
+        }
+
+
+        public IActionResult EmpDetails()
+        {
+            var id = HttpContext.Session.GetString("UserId");
+            
+            if(id==null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            int uid = int.Parse(id);
+           var emps = es.findEmpById(uid);
+
+            return View(emps);
+        }
+
+        public IActionResult AddBankInformation(int userId)
+        {
+            var bank = bs.GetBankInfo(userId);
+            return View(bank);
+        }
+
+        [HttpPost]
+        public IActionResult AddBankInformation(BankInformation bank)
+        {
+            bs.AddBankInfo(bank);
+            return RedirectToAction("EmpDetail");
+        }
+
+        [HttpPost]
+        public IActionResult EditBankInformation(BankInformation bank)
+        {
+            bs.UpdateBankInfo(bank);
+            return RedirectToAction("EmpDetail");
+        }
+
+        public IActionResult DeleteBankInformation(int id)
+        {
+            bs.DeleteBankInfo(id);
+            return RedirectToAction("EmpDetail");
         }
 
     }

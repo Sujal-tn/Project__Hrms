@@ -1,8 +1,9 @@
-﻿using Project_Hrms.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Project_Hrms.Data;
+using Project_Hrms.Interface.MasterDocuments;
 using Project_Hrms.Interface.MasterDocuments.Documents;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
-using Microsoft.EntityFrameworkCore;
 
 namespace Project_Hrms.Services.Documents
 {
@@ -10,11 +11,14 @@ namespace Project_Hrms.Services.Documents
     {
             private readonly ApplicationDbContext db;
             private readonly IWebHostEnvironment env;
+            private readonly IEmailService emailService;
 
-            public AdminFileUploadServices( ApplicationDbContext db,IWebHostEnvironment env)
+        public AdminFileUploadServices( ApplicationDbContext db,IWebHostEnvironment env,IEmailService emailService)
             {
                 this.db = db;
                 this.env = env;
+                this.emailService = emailService;
+
             }
         
             public async Task<List<User>> FetchAllUsers()
@@ -23,34 +27,72 @@ namespace Project_Hrms.Services.Documents
 
                 return data;
             }
-            public async Task<List<AdminAddDocumentsName>> FetchAllDocumentNames()
+            public async Task<List<UploadDocuments>> FetchAllDocumentNames()
             {
-                var data = await db.AdminAddDocumentsNames.ToListAsync();
-
-                return data;
+                 var data = await db.MasterDocument
+                        .Where(x => x.DocumentType == "Admin")
+                        .ToListAsync();
+                         return data;
             }
 
-            public async Task SaveFiles(AdminFileUploadViewModel model)
+        public async Task SaveFiles(AdminFileUploadViewModel model)
+        {
+            string uploadfolder = Path.Combine(env.WebRootPath, "uploads");
+
+            if (!Directory.Exists(uploadfolder))
             {
-                string uploadFolder = Path.Combine( env.WebRootPath, "uploads" );
+                Directory.CreateDirectory(uploadfolder);
+            }
 
-                if (!Directory.Exists(uploadFolder))
-                {
-                    Directory.CreateDirectory(uploadFolder);
-                }
+            List<string> filePaths = new List<string>();
 
-                foreach (var document in model.Documents)
+            foreach (var documents in model.Documents)
+            {
+                if (documents.File != null)
                 {
-                    if (document.File != null)
+                    string orgfilename = documents.File.FileName;
+
+                    string filename = Guid.NewGuid().ToString()
+                                      + Path.GetExtension(orgfilename);
+
+                    string filepath = Path.Combine(uploadfolder, filename);
+
+                    using (FileStream stream = new FileStream(filepath, FileMode.Create))
                     {
-                        string filePath = Path.Combine( uploadFolder, document.File.FileName);
-                        using var stream = new FileStream(filePath, FileMode.Create);
-                         await document.File.CopyToAsync(stream);
+                        await documents.File.CopyToAsync(stream);
                     }
+
+                    var fileData = new FileUploads
+                    {
+                        FileName = filename,
+                        FilePath = "/uploads/" + filename,
+                        UserId = model.UserId,
+                        DocumentId = documents.DocumentId
+                    };
+
+                    db.Files.Add(fileData);
+
+                    filePaths.Add(filepath);
                 }
             }
 
+            await db.SaveChangesAsync();
 
+
+            var user = await db.Users
+                .FirstOrDefaultAsync(x => x.UserId == model.UserId);
+
+            if (user != null && !string.IsNullOrEmpty(user.Email))
+            {
+                await emailService.SendEmailAsync(
+                    user.Email,
+                    "Documents Uploaded",
+                    "Your documents have been uploaded successfully.",
+                    filePaths);
+            }
+        }
+
+    
     }
 
     

@@ -182,5 +182,34 @@ namespace Project_Hrms.Controllers
 
             return RedirectToAction("LeaveRequests");
         }
+
+        /* ---- Manager Leave Approval ---- */
+        // GET: Leave/ViewLeaveRequests (Manager)
+        public async Task<IActionResult> ViewLeaveRequests()
+        {
+            int managerId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            var leaveRequests = await leaveService.GetLeaveRequestsForManagerAsync(managerId);
+            return View(leaveRequests);
+        }
+
+        // POST: Leave/UpdateLeaveRequest (Manager - Approve/Reject)
+        [HttpPost]
+        public async Task<IActionResult> UpdateLeaveRequest(int LeaveRequestId, string action)
+        {
+            string approvedBy = HttpContext.Session.GetString("UserName") ?? "Manager";
+
+            try
+            {
+                await leaveService.UpdateLeaveRequestStatusAsync(LeaveRequestId, action, approvedBy);
+                TempData["success"] = $"Leave request has been {action.ToLower()}ed successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+
+            return RedirectToAction("ViewLeaveRequests");
+        }
     }
 }

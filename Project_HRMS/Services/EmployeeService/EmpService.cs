@@ -3,8 +3,8 @@ using Project_Hrms.Data;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Models;
 using Project_Hrms.Models.EmployeeModel;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Project_Hrms.Services.EmployeeService
 {
@@ -111,11 +111,15 @@ namespace Project_Hrms.Services.EmployeeService
         {
             var e = db.Users
                 .Include(x => x.Role)
-        .Include(x => x.Department)
-        .Include(x => x.Designation)
-        .Include(x => x.Manager)
-        .FirstOrDefault(x => x.UserId == id); 
-            return e;
+                .Include(x => x.Department)
+                .Include(x => x.Designation)
+                .Include(x => x.Manager)
+                .Include(x => x.BankInformation)
+                .Include(x => x.FamilyInformation)
+                .Include(x => x.EductionDetails)
+                .Include(x => x.Experince)
+                .FirstOrDefault(x => x.UserId == id); 
+                 return e;
 
 
         }
@@ -135,6 +139,45 @@ namespace Project_Hrms.Services.EmployeeService
 
             db.Users.Update(r);
             db.SaveChanges();
+        }
+
+        public List<UserView> GetEmployeeCardData()
+        {
+            var emps = db.Users.ToList();
+            var res = new List<UserView>();
+            foreach (var e in emps)
+            {
+                var projects = db.Projects
+           .Where(x => x.UserId == e.UserId)
+           .ToList();
+
+                int totalProjects = projects.Count;
+
+                int done = projects.Count(x => x.Status == "InActive");
+
+                int progress = projects.Count(x => x.Status == "Active");
+
+                int productivit = totalProjects > 0
+                    ? done * 100 / totalProjects
+                    : 0;
+
+
+
+                var percent = new UserView()
+                {
+                    UserId = e.UserId,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                   ProfilePicturePath= e.ProfilePicture,
+                    Projects = totalProjects,
+                    Done = done,
+                    Progress = progress,
+                    Productivity = productivit
+                };
+                res.Add(percent);
+            }
+
+            return res;
         }
     }
 }

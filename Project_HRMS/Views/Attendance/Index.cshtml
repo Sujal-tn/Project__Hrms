@@ -1,6 +1,7 @@
 ﻿@model List<Project_Hrms.Models.Attendance>
 @{
     var today = (Project_Hrms.Models.Attendance?)ViewBag.TodayAttendance;
+    var employee = (Project_Hrms.Models.EmployeeModel.User?)ViewBag.Employee;
 }
 
 <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
@@ -14,23 +15,53 @@
             </ol>
         </nav>
     </div>
+    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+        <div class="dropdown mb-2 me-2">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="ti ti-file-export me-1"></i>Export
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Export as PDF</a></li>
+                <li><a class="dropdown-item" href="#">Export as Excel</a></li>
+            </ul>
+        </div>
+        <div class="mb-2">
+            <a href="#" class="btn btn-primary d-flex align-items-center">
+                <i class="ti ti-report me-2"></i>Report
+            </a>
+        </div>
+    </div>
 </div>
 
 <div class="row mb-3">
     <div class="col-md-3">
         <div class="card">
             <div class="card-body text-center">
-                @if (today?.CheckIn != null)
+                <p class="mb-1">Good Morning, @(employee != null ? $"{employee.FirstName} {employee.LastName}" : "Employee")</p>
+                <p class="text-muted mb-2">@DateTime.Now.ToString("hh:mm tt, dd MMM yyyy")</p>
+
+                @if (!string.IsNullOrEmpty(employee?.ProfilePicture))
                 {
-                    <p class="mb-1">Punch In at: @today.CheckIn.Value.ToString("hh:mm tt")</p>
+                    <img src="@employee.ProfilePicture" class="rounded-circle mb-2" width="70" height="70" alt="profile" />
                 }
                 else
                 {
-                    <p class="mb-1">Punch In at: Not Checked In</p>
+                    <span class="avatar avatar-xl rounded-circle bg-primary-transparent mb-2 d-inline-flex align-items-center justify-content-center">
+                        <i class="ti ti-user fs-24"></i>
+                    </span>
                 }
 
+                <div class="mb-2">
+                    <span class="badge bg-primary-transparent">Production : @((today?.ProductionHours ?? 0))h</span>
+                </div>
+
+                <p class="mb-2">
+                    <i class="ti ti-broadcast"></i>
+                    Punch In at: @(today?.CheckIn?.ToString("hh:mm tt") ?? "Not Checked In")
+                </p>
+
                 <form method="post" asp-action="MarkAttendance">
-                    <button type="submit" class="btn btn-primary mt-2">@ViewBag.AttendanceStatus</button>
+                    <button type="submit" class="btn btn-primary">@ViewBag.AttendanceStatus</button>
                 </form>
             </div>
         </div>
@@ -38,28 +69,63 @@
 
     <div class="col-md-3">
         <div class="card">
-            <div class="card-body text-center">
+            <div class="card-body">
+                <span class="avatar avatar-md bg-warning-transparent rounded mb-2">
+                    <i class="ti ti-clock-hour-4 fs-18"></i>
+                </span>
                 <h4>@ViewBag.TotalToday</h4>
-                <p class="mb-0">Total Hours Today</p>
+                <p class="mb-1">Total Hours Today</p>
+                <span class="text-success"><i class="ti ti-arrow-up"></i> Today</span>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card">
-            <div class="card-body text-center">
+            <div class="card-body">
+                <span class="avatar avatar-md bg-dark-transparent rounded mb-2">
+                    <i class="ti ti-clock-hour-9 fs-18"></i>
+                </span>
                 <h4>@ViewBag.TotalWeek</h4>
-                <p class="mb-0">Total Hours Week</p>
+                <p class="mb-1">Total Hours Week</p>
+                <span class="text-success"><i class="ti ti-arrow-up"></i> Last Week</span>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card">
-            <div class="card-body text-center">
+            <div class="card-body">
+                <span class="avatar avatar-md bg-pink-transparent rounded mb-2">
+                    <i class="ti ti-calendar-stats fs-18"></i>
+                </span>
                 <h4>@ViewBag.OvertimeMonth</h4>
-                <p class="mb-0">Overtime This Month</p>
+                <p class="mb-1">Overtime This Month</p>
+                <span class="text-danger"><i class="ti ti-arrow-down"></i> Last Month</span>
             </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var working = today?.WorkingHours ?? 0;
+    var productive = today?.ProductionHours ?? 0;
+    var breakHrs = today?.BreakHours ?? 0;
+    var overtime = today?.OvertimeHours ?? 0;
+    var scale = Math.Max(working + breakHrs + overtime, 1);
+}
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-4 mb-3">
+            <span><i class="ti ti-point-filled text-secondary"></i> Total Working hours <strong>@(working)h</strong></span>
+            <span><i class="ti ti-point-filled text-success"></i> Productive Hours <strong>@(productive)h</strong></span>
+            <span><i class="ti ti-point-filled text-warning"></i> Break hours <strong>@(breakHrs)h</strong></span>
+            <span><i class="ti ti-point-filled text-primary"></i> Overtime <strong>@(overtime)h</strong></span>
+        </div>
+        <div class="progress" style="height: 10px;">
+            <div class="progress-bar bg-success" style="width:@((productive / scale) * 100)%"></div>
+            <div class="progress-bar bg-warning" style="width:@((breakHrs / scale) * 100)%"></div>
+            <div class="progress-bar bg-primary" style="width:@((overtime / scale) * 100)%"></div>
         </div>
     </div>
 </div>
@@ -69,33 +135,32 @@
         <h5 class="mb-0">Employee Attendance</h5>
     </div>
     <div class="card-body">
-        <form method="get" asp-action="FilterAttendance" class="row g-2 mb-3">
-            <div class="col-md-3">
-                <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
-            </div>
-            <div class="col-md-3">
-                <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
-            </div>
-            <div class="col-md-3">
-                <select name="status" class="form-control">
-                    <option value="All">Select Status</option>
-                    <option value="Present">Present</option>
-                    <option value="Half Day">Half Day</option>
-                    <option value="Absent">Absent</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select name="sortBy" class="form-control">
-                    <option value="recent">Recently Added</option>
-                    <option value="asc">Oldest First</option>
-                    <option value="last7Days">Last 7 Days</option>
-                    <option value="lastMonth">Last Month</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button type="submit" class="btn btn-primary w-100">Go</button>
-            </div>
-        </form>
+    <form method="get" asp-action="FilterAttendance" id="filterForm" class="row g-2 mb-3 align-items-center">
+        <div class="col-md-2">
+            <label class="me-1">Start:</label>
+            <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
+        </div>
+        <div class="col-md-2">
+            <label class="me-1">End:</label>
+            <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
+        </div>
+        <div class="col-md-3">
+            <select name="status" class="form-control">
+                <option value="All">Select Status</option>
+                <option value="Present">Present</option>
+                <option value="Half Day">Half Day</option>
+                <option value="Absent">Absent</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="sortBy" class="form-control">
+                <option value="recent">Recently Added</option>
+                <option value="asc">Oldest First</option>
+                <option value="last7Days">Last 7 Days</option>
+                <option value="lastMonth">Last Month</option>
+            </select>
+        </div>
+</form>
 
         <table class="table" id="attendanceTable">
             <thead class="thead-light">
@@ -111,7 +176,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model != null && Model.Count > 0)
+                @if (Model != null)
                 {
                     @foreach (var a in Model)
                     {
@@ -140,12 +205,6 @@
                         </tr>
                     }
                 }
-                else
-                {
-                    <tr>
-                        <td colspan="8" class="text-center">No attendance records found for the selected filters.</td>
-                    </tr>
-                }
             </tbody>
         </table>
     </div>
@@ -159,7 +218,14 @@
         $(document).ready(function () {
             $('#attendanceTable').DataTable({
                 pageLength: 10,
-                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]]
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                language: {
+                    emptyTable: "No attendance records found for the selected filters."
+                }
+            });
+
+            $("#filterForm input, #filterForm select").on("change", function () {
+                $("#filterForm").submit();
             });
         });
     </script>

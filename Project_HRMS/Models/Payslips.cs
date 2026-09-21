@@ -21,9 +21,20 @@ namespace Project_Hrms.Models
         public int Year { get; set; }
 
         [Required]
-        public string PayslipPath { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
 
-        [Required]
+        public string OrganizationName { get; set; }
+
+        public string OrganizationAddress { get; set; }
+
+        public string OrganizationEmail { get; set; }
+
+        public string OrganizationPhone { get; set; }
+
+        public string? PayslipPath { get; set; }
+
         public DateTime GeneratedOn { get; set; }
 
         public decimal TotalSalary { get; set; }

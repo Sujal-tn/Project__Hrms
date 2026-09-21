@@ -7,7 +7,7 @@ namespace Project_Hrms.Interface.MasterDocuments.Documents
     {
         Task<List<User>> FetchAllUsers();
 
-        Task<List<AdminAddDocumentsName>> FetchAllDocumentNames();
+        Task<List<UploadDocuments>> FetchAllDocumentNames();
 
         Task SaveFiles(AdminFileUploadViewModel model);
     }
