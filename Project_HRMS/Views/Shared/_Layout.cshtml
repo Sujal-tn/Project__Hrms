@@ -1,4 +1,4 @@
-﻿```cshtml
+﻿
 @using Microsoft.AspNetCore.Http
 
 @{
@@ -567,7 +567,62 @@
                         Reports
                     </a>
 
-                    <a href="#" class="sidebar-link">
+
+                    <a href="#" class="sidebar-link"></a>
+                    <div class="submenu">
+
+                        <a href="#">
+                            Employee Report
+                        </a>
+
+                        <a href="#">
+                            Attendance Report
+                        </a>
+
+                        <a href="#">
+                            Payroll Report
+                        <a asp-controller="EmployeeReport"
+                           asp-action="Index">
+                            Employee Report
+                        </a>
+
+                        <a asp-controller="AttendanceReport"
+                           asp-action="Index">
+                            Attendance Report
+                        </a>
+
+                        <a asp-controller="LeaveReport"
+                           asp-action="Index">
+                            Leave Report
+                        </a>
+
+                         <a asp-controller="PaySlipsReport"
+                           asp-action="Index">
+                            PaySlips Report
+                        </a>
+
+                        <a asp-controller="ProjectReport"
+                           asp-action="Index">
+                            Project Report
+                        </a>
+
+                        <a asp-controller="TaskReport"
+                           asp-action="Index">
+                            Task Report
+                        </a>
+
+                        <a asp-controller="DailyReport"
+                           asp-action="Index">
+                            Daily Report
+                        </a>
+
+                    </div>
+                </details>
+
+
+                <details>
+                    <summary class="sidebar-link">
+
                         <span>▱</span>
                         Training
                     </a>

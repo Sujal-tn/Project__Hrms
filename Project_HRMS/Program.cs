@@ -22,13 +22,6 @@ using Project_Hrms.Services.Documents;
 
 using Project_Hrms.Service;
 
-using Project_Hrms.Services;
-using Project_Hrms.Services.Documents;
-using Project_Hrms.Services.EmployeeService;
-using Project_Hrms.Services.LoginService;
-using Project_Hrms.Services.MasterDocuments;
-using Project_Hrms.Services.PayrollService;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

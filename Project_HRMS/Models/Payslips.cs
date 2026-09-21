@@ -9,6 +9,11 @@ namespace Project_Hrms.Models
         [Key]
         public int PayslipId { get; set; }
 
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
+        public virtual User User { get; set; }
+
         [Required]
         public string Month { get; set; }
 
@@ -32,26 +37,13 @@ namespace Project_Hrms.Models
 
         public DateTime GeneratedOn { get; set; }
 
-        [Column(TypeName = "decimal(9,2)")]
-        public decimal TotalHoursInMonth { get; set; }
+        public decimal TotalSalary { get; set; }
 
-        [Column(TypeName = "decimal(9,2)")]
-        public decimal WorkedHours { get; set; }
+        public decimal Deductions { get; set; }
 
-        [Column(TypeName = "decimal(9,2)")]
-        public decimal HourlyRate { get; set; }
+        public decimal Earnings { get; set; }
 
-        public List<Earning> Earnings { get; set; } = new();
-
-        public List<Deduction> Deductions { get; set; } = new();
-
-        [Column(TypeName = "decimal(9,2)")]
-        public decimal TotalEarnings { get; set; }
-
-        [Column(TypeName = "decimal(9,2)")]
-        public decimal TotalDeductions { get; set; }
-
-        [Column(TypeName = "decimal(9,2)")]
-        public decimal NetSalary { get; set; }
+        [NotMapped]
+        public decimal NetPay { get; set; }
     }
 }

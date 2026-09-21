@@ -1,315 +1,117 @@
-﻿@model List<Project_Hrms.Models.Tasks>
+﻿
+@model List<Project_Hrms.Models.Tasks>
 
 @{
     ViewData["Title"] = "Task Report";
 
-    var totalTasks = Model?.Count ?? 0;
-    var completedTasks = Model?.Count(x => x.Status == "Completed") ?? 0;
-    var pendingTasks = Model?.Count(x => x.Status == "Pending") ?? 0;
-    var otherTasks = totalTasks - completedTasks - pendingTasks;
+    var totalTasks = Convert.ToInt32(ViewBag.TotalTasks ?? 0);
+    var completedTasks = Convert.ToInt32(ViewBag.CompletedTasks ?? 0);
+    var pendingTasks = Convert.ToInt32(ViewBag.PendingTasks ?? 0);
+    var onHoldTasks = Convert.ToInt32(ViewBag.OnHold ?? 0);
+    var inProgressTasks = Convert.ToInt32(ViewBag.InProgress ?? 0);
+    var overdueTasks = Convert.ToInt32(ViewBag.Overdue ?? 0);
+    var otherTasks = Convert.ToInt32(ViewBag.OtherTasks ?? 0);
 
-    var statusChart = Model?
-        .GroupBy(x => x.Status)
-        .Select(x => new
-        {
-            Status = x.Key,
-            Count = x.Count()
-        })
-        .ToList();
+    var completedPercentage = totalTasks > 0
+        ? Math.Round((double)completedTasks / totalTasks * 100, 1)
+        : 0;
+
+    var pendingPercentage = totalTasks > 0
+        ? Math.Round((double)pendingTasks / totalTasks * 100, 1)
+        : 0;
+
+    var inProgressPercentage = totalTasks > 0
+        ? Math.Round((double)inProgressTasks / totalTasks * 100, 1)
+        : 0;
+
+    var onHoldPercentage = totalTasks > 0
+        ? Math.Round((double)onHoldTasks / totalTasks * 100, 1)
+        : 0;
+
+    var overduePercentage = totalTasks > 0
+        ? Math.Round((double)overdueTasks / totalTasks * 100, 1)
+        : 0;
 }
 
 <div class="page-wrapper">
+
     <div class="content">
 
-        <!-- Page Header -->
-        <div class="d-flex align-items-center justify-content-between mb-4">
+        <!-- Breadcrumb -->
+        <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
 
-            <div>
-                <h4 class="mb-1">Task Report</h4>
+            <div class="my-auto mb-2">
 
-                <div class="d-flex align-items-center text-muted">
-                    <span>Reports</span>
-                    <i class="ti ti-chevron-right mx-2"></i>
-                    <span>Task Report</span>
-                </div>
-            </div>
+                <h2 class="mb-1">
+                    Task Report
+                </h2>
 
-            <!-- Export -->
-            <div class="dropdown">
+                <nav>
+                    <ol class="breadcrumb mb-0">
 
-                <button class="btn btn-primary dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown">
+                        <li class="breadcrumb-item">
+                            <a href="@Url.Action("Index", "Home")">
+                                <i class="ti ti-smart-home"></i>
+                            </a>
+                        </li>
 
-                    <i class="ti ti-download me-1"></i>
-                    Export
+                        <li class="breadcrumb-item">
+                            HR
+                        </li>
 
-                </button>
+                        <li class="breadcrumb-item active"
+                            aria-current="page">
+                            Task Report
+                        </li>
 
-                <ul class="dropdown-menu dropdown-menu-end">
-
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="ti ti-file-type-xls me-2"></i>
-                            Excel
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="ti ti-file-type-pdf me-2"></i>
-                            PDF
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-
-        <!-- Summary Cards -->
-        <div class="row">
-
-            <!-- Total Tasks -->
-            <div class="col-xl-3 col-sm-6">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <div class="d-flex align-items-center justify-content-between">
-
-                            <div>
-
-                                <p class="mb-1 text-muted">
-                                    Total Tasks
-                                </p>
-
-                                <h3 class="mb-0">
-                                    @totalTasks
-                                </h3>
-
-                            </div>
-
-                            <div class="avatar avatar-lg bg-primary">
-
-                                <i class="ti ti-list-check fs-24"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                    </ol>
+                </nav>
 
             </div>
 
 
-            <!-- Completed -->
-            <div class="col-xl-3 col-sm-6">
+            <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
 
-                <div class="card">
+                <!-- Export -->
+                <div class="mb-2">
 
-                    <div class="card-body">
-
-                        <div class="d-flex align-items-center justify-content-between">
-
-                            <div>
-
-                                <p class="mb-1 text-muted">
-                                    Completed Tasks
-                                </p>
-
-                                <h3 class="mb-0">
-                                    @completedTasks
-                                </h3>
-
-                            </div>
-
-                            <div class="avatar avatar-lg bg-success">
-
-                                <i class="ti ti-circle-check fs-24"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Pending -->
-            <div class="col-xl-3 col-sm-6">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <div class="d-flex align-items-center justify-content-between">
-
-                            <div>
-
-                                <p class="mb-1 text-muted">
-                                    Pending Tasks
-                                </p>
-
-                                <h3 class="mb-0">
-                                    @pendingTasks
-                                </h3>
-
-                            </div>
-
-                            <div class="avatar avatar-lg bg-warning">
-
-                                <i class="ti ti-clock fs-24"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Other -->
-            <div class="col-xl-3 col-sm-6">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <div class="d-flex align-items-center justify-content-between">
-
-                            <div>
-
-                                <p class="mb-1 text-muted">
-                                    Other Status
-                                </p>
-
-                                <h3 class="mb-0">
-                                    @otherTasks
-                                </h3>
-
-                            </div>
-
-                            <div class="avatar avatar-lg bg-info">
-
-                                <i class="ti ti-progress fs-24"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Task Status Chart -->
-        <div class="row mt-3">
-
-            <div class="col-xl-12">
-
-                <div class="card">
-
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-1">
-                            Task Status
-                        </h5>
-
-                        <p class="text-muted mb-0">
-                            Overview of tasks by status
-                        </p>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <div style="height: 300px;">
-
-                            <canvas id="taskStatusChart"></canvas>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Task Table -->
-        <div class="card mt-3">
-
-            <div class="card-header">
-
-                <div class="d-flex align-items-center justify-content-between">
-
-                    <div>
-
-                        <h5 class="card-title mb-1">
-                            Task List
-                        </h5>
-
-                        <p class="text-muted mb-0">
-                            View all task details
-                        </p>
-
-                    </div>
-
-
-                    <!-- Status Filter -->
                     <div class="dropdown">
 
-                        <button class="btn btn-light dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown">
+                        <a href="javascript:void(0);"
+                           class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                           data-bs-toggle="dropdown">
 
-                            <i class="ti ti-filter me-1"></i>
-                            Status
+                            <i class="ti ti-file-export me-1"></i>
+                            Export
 
-                        </button>
+                        </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end p-3">
 
                             <li>
-                                <a class="dropdown-item task-status-filter"
-                                   href="#"
-                                   data-status="">
-                                    All
+
+                                <a asp-action="TaskExportToPDF"
+                                   asp-controller="ProjectTaskReport"
+                                   class="dropdown-item rounded-1">
+
+                                    <i class="ti ti-file-type-pdf me-1"></i>
+                                    Export as PDF
+
                                 </a>
+
                             </li>
 
                             <li>
-                                <a class="dropdown-item task-status-filter"
-                                   href="#"
-                                   data-status="Completed">
-                                    Completed
-                                </a>
-                            </li>
 
-                            <li>
-                                <a class="dropdown-item task-status-filter"
-                                   href="#"
-                                   data-status="Pending">
-                                    Pending
+                                <a asp-action="TaskExportToExcel"
+                                   asp-controller="ProjectTaskReport"
+                                   class="dropdown-item rounded-1">
+
+                                    <i class="ti ti-file-type-xls me-1"></i>
+                                    Export as Excel
+
                                 </a>
+
                             </li>
 
                         </ul>
@@ -318,33 +120,563 @@
 
                 </div>
 
+
+                <!-- Collapse Header -->
+                <div class="head-icons ms-2">
+
+                    <a href="javascript:void(0);"
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="top"
+                       title="Collapse"
+                       id="collapse-header">
+
+                        <i class="ti ti-chevrons-up"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /Breadcrumb -->
+
+
+        <!-- Summary + Chart -->
+        <div class="row">
+
+
+            <!-- Summary Cards -->
+            <div class="col-lg-6 col-md-6 d-flex">
+
+                <div class="row flex-fill">
+
+
+                    <!-- Total Tasks -->
+                    <div class="col-lg-6 col-md-6 d-flex">
+
+                        <div class="card flex-fill">
+
+                            <div class="card-body">
+
+                                <div class="row align-items-center">
+
+                                    <div class="col-8">
+
+                                        <div>
+
+                                            <span class="fs-14 fw-normal text-truncate mb-1">
+                                                Total Tasks
+                                            </span>
+
+                                            <h5>
+                                                @totalTasks
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-4 text-end">
+
+                                        <p class="data-attributes mb-0">
+
+                                            <span class="peity-chart"
+                                                  data-peity='{
+                                                    "fill": ["#F26522", "rgba(67, 87, 133, .09)"],
+                                                    "innerRadius": 16,
+                                                    "radius": 32
+                                                  }'>
+                                                1/1
+                                            </span>
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Completed -->
+                    <div class="col-lg-6 col-md-6 d-flex">
+
+                        <div class="card flex-fill">
+
+                            <div class="card-body">
+
+                                <div class="row align-items-center">
+
+                                    <div class="col-8">
+
+                                        <div>
+
+                                            <span class="fs-14 fw-normal text-truncate mb-1">
+                                                Completed Tasks
+                                            </span>
+
+                                            <h5>
+                                                @completedTasks
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-4 text-end">
+
+                                        <p class="data-attributes mb-0">
+
+                                            <span class="peity-chart"
+                                                  data-peity='{
+                                                    "fill": ["#03C95A", "rgba(67, 87, 133, .09)"],
+                                                    "innerRadius": 16,
+                                                    "radius": 32
+                                                  }'>
+                                                @completedPercentage/100
+                                            </span>
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Pending -->
+                    <div class="col-lg-6 col-md-6 d-flex">
+
+                        <div class="card flex-fill">
+
+                            <div class="card-body">
+
+                                <div class="row align-items-center">
+
+                                    <div class="col-8">
+
+                                        <div>
+
+                                            <span class="fs-14 fw-normal text-truncate mb-1">
+                                                Pending Tasks
+                                            </span>
+
+                                            <h5>
+                                                @pendingTasks
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-4 text-end">
+
+                                        <p class="data-attributes mb-0">
+
+                                            <span class="peity-chart"
+                                                  data-peity='{
+                                                    "fill": ["#F26522", "rgba(67, 87, 133, .09)"],
+                                                    "innerRadius": 16,
+                                                    "radius": 32
+                                                  }'>
+                                                @pendingPercentage/100
+                                            </span>
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Overdue -->
+                    <div class="col-lg-6 col-md-6 d-flex">
+
+                        <div class="card flex-fill">
+
+                            <div class="card-body">
+
+                                <div class="row align-items-center">
+
+                                    <div class="col-8">
+
+                                        <div>
+
+                                            <span class="fs-14 fw-normal text-truncate mb-1">
+                                                Overdue Tasks
+                                            </span>
+
+                                            <h5>
+                                                @overdueTasks
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-4 text-end">
+
+                                        <p class="data-attributes mb-0">
+
+                                            <span class="peity-chart"
+                                                  data-peity='{
+                                                    "fill": ["#03C95A", "rgba(67, 87, 133, .09)"],
+                                                    "innerRadius": 16,
+                                                    "radius": 32
+                                                  }'>
+                                                @overduePercentage/100
+                                            </span>
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /Summary Cards -->
+
+
+            <!-- Task Chart -->
+            <div class="col-lg-6 col-md-6 d-flex">
+
+                <div class="card flex-fill">
+
+                    <div class="card-header border-0">
+
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+
+                            <div class="d-flex align-items-center">
+
+                                <span class="me-2">
+                                    <i class="ti ti-chart-pie text-danger"></i>
+                                </span>
+
+                                <h5 class="mb-0">
+                                    Tasks
+                                </h5>
+
+                            </div>
+
+                            <div class="dropdown">
+
+                                <a href="javascript:void(0);"
+                                   class="btn btn-sm fs-12 btn-white d-inline-flex align-items-center"
+                                   data-bs-toggle="dropdown">
+
+                                    Task Data
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body pt-0">
+
+                        <div class="row align-items-center">
+
+
+                            <!-- Doughnut -->
+                            <div class="col-md-6 d-flex align-items-center justify-content-center">
+
+                                <div class="position-relative payment-total">
+
+                                    <canvas id="pieChart"
+                                            width="200"
+                                            height="200">
+                                    </canvas>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Legend -->
+                            <div class="col-md-6">
+
+                                <div class="row gy-4">
+
+
+                                    <!-- Completed -->
+                                    <div class="col-md-6">
+
+                                        <div class="d-flex task-report-icons">
+
+                                            <span class="me-2">
+                                                <i class="ti ti-arrow-badge-right-filled text-success"></i>
+                                            </span>
+
+                                            <h6 class="fs-16 mb-0">
+
+                                                Completed
+
+                                                <span class="fs-14 fw-normal d-block">
+                                                    @completedPercentage%
+                                                </span>
+
+                                            </h6>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Pending -->
+                                    <div class="col-md-6">
+
+                                        <div class="d-flex task-report-icons">
+
+                                            <span class="me-2">
+                                                <i class="ti ti-arrow-badge-right-filled text-skyblue"></i>
+                                            </span>
+
+                                            <h6 class="fs-16 mb-0">
+
+                                                Pending
+
+                                                <span class="fs-14 fw-normal d-block">
+                                                    @pendingPercentage%
+                                                </span>
+
+                                            </h6>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- In Progress -->
+                                    <div class="col-md-6">
+
+                                        <div class="d-flex task-report-icons">
+
+                                            <span class="me-2">
+                                                <i class="ti ti-arrow-badge-right-filled text-warning"></i>
+                                            </span>
+
+                                            <h6 class="fs-16 mb-0">
+
+                                                In Progress
+
+                                                <span class="fs-14 fw-normal d-block">
+                                                    @inProgressPercentage%
+                                                </span>
+
+                                            </h6>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- On Hold -->
+                                    <div class="col-md-6">
+
+                                        <div class="d-flex task-report-icons">
+
+                                            <span class="me-2">
+                                                <i class="ti ti-arrow-badge-right-filled text-purple"></i>
+                                            </span>
+
+                                            <h6 class="fs-16 mb-0">
+
+                                                On Hold
+
+                                                <span class="fs-14 fw-normal d-block">
+                                                    @onHoldPercentage%
+                                                </span>
+
+                                            </h6>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /Task Chart -->
+
+        </div>
+
+
+        <!-- Task List -->
+        <div class="card">
+
+            <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+
+                <h5 class="mb-0">
+                    Tasks List
+                </h5>
+
+
+                <!-- FILTER UI - LOGIC REMOVED FOR NOW -->
+                <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+
+                    <div class="d-flex gap-3">
+
+
+                        <!-- Priority -->
+                        <select class="form-select"
+                                id="priorityDropdown">
+
+                            <option value="">
+                                Select Priority
+                            </option>
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+
+                        <!-- Status -->
+                        <select class="form-select"
+                                id="statusDropdown">
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="Inprogress">
+                                Inprogress
+                            </option>
+
+                            <option value="Onhold">
+                                Onhold
+                            </option>
+
+                        </select>
+
+
+                        <!-- Sort -->
+                        <select class="form-select"
+                                id="sortDropdown">
+
+                            <option value="">
+                                Sort By
+                            </option>
+
+                            <option value="Recently Added">
+                                Recently Added
+                            </option>
+
+                            <option value="Ascending">
+                                Ascending
+                            </option>
+
+                            <option value="Descending">
+                                Descending
+                            </option>
+
+                            <option value="Last Month">
+                                Last Month
+                            </option>
+
+                            <option value="Last 7 Days">
+                                Last 7 Days
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
             </div>
 
 
-            <div class="card-body">
+            <div class="card-body p-0">
 
-                <div class="table-responsive">
+                <div class="custom-datatable-filter table-responsive">
 
-                    <table class="table table-hover"
-                           id="taskTable">
+                    <table class="table"
+                           id="TaskTable">
 
-                        <thead>
+                        <thead class="thead-light">
 
                             <tr>
 
-                                <th>Task ID</th>
+                                <th>
+                                    Task ID
+                                </th>
 
-                                <th>Task Name</th>
+                                <th>
+                                    Task Name
+                                </th>
 
-                                <th>Project</th>
+                                <th>
+                                    Project Name
+                                </th>
 
-                                <th>Assigned To</th>
+                                <th>
+                                    Assigned To
+                                </th>
 
-                                <th>Deadline</th>
+                                <th>
+                                    Due Date
+                                </th>
 
-                                <th>Priority</th>
+                                <th>
+                                    Priority
+                                </th>
 
-                                <th>Status</th>
+                                <th>
+                                    Status
+                                </th>
 
                             </tr>
 
@@ -355,57 +687,64 @@
 
                             @if (Model != null && Model.Any())
                             {
-                                foreach (var item in Model)
+                                foreach (var t in Model)
                                 {
                                     <tr>
 
                                         <!-- Task ID -->
                                         <td>
-                                            @item.TaskId
+                                            @t.TaskId
                                         </td>
 
 
                                         <!-- Task Name -->
                                         <td>
-                                            <strong>
-                                                @item.Title
-                                            </strong>
+
+                                            <span class="fw-medium">
+                                                @t.Title
+                                            </span>
+
                                         </td>
 
 
                                         <!-- Project -->
                                         <td>
-                                            @item.Projects?.ProjectName
+                                            @t.Projects?.ProjectName
                                         </td>
 
 
                                         <!-- Assigned To -->
                                         <td>
 
-                                            @if (item.Taskmember != null &&
-                                                item.Taskmember.Any())
+                                            @if (t.Taskmember != null &&
+                                           t.Taskmember.Any())
                                             {
-                                                var members = item.Taskmember
+                                                var members = t.Taskmember
                                                     .Where(x => x.User != null)
                                                     .Select(x =>
-                                                        (x.User.FirstName ?? "") +
-                                                        " " +
-                                                        (x.User.LastName ?? ""))
+                                                        ((x.User.FirstName ?? "") + " " +
+                                                         (x.User.LastName ?? "")).Trim())
                                                     .Where(x => !string.IsNullOrWhiteSpace(x))
                                                     .ToList();
 
                                                 if (members.Any())
                                                 {
-                                                    @string.Join(", ", members)
+                                                    <span>
+                                                        @string.Join(", ", members)
+                                                    </span>
                                                 }
                                                 else
                                                 {
-                                                    <span>-</span>
+                                                    <span class="text-muted">
+                                                        -
+                                                    </span>
                                                 }
                                             }
                                             else
                                             {
-                                                <span>-</span>
+                                                <span class="text-muted">
+                                                    -
+                                                </span>
                                             }
 
                                         </td>
@@ -413,29 +752,47 @@
 
                                         <!-- Deadline -->
                                         <td>
-                                            @item.Deadline.ToString("dd-MM-yyyy")
+                                            @t.Deadline.ToString("yyyy-MM-dd")
                                         </td>
 
 
                                         <!-- Priority -->
                                         <td>
 
-                                            @if (item.Priority == "High")
+                                            @if (t.Priority == "High")
                                             {
-                                                <span class="task-badge high-priority">
-                                                    @item.Priority
+                                                <span class="badge bg-danger d-inline-flex align-items-center">
+
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    High
+
                                                 </span>
                                             }
-                                            else if (item.Priority == "Medium")
+                                            else if (t.Priority == "Medium")
                                             {
-                                                <span class="task-badge medium-priority">
-                                                    @item.Priority
+                                                <span class="badge bg-warning text-dark d-inline-flex align-items-center">
+
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    Medium
+
+                                                </span>
+                                            }
+                                            else if (t.Priority == "Low")
+                                            {
+                                                <span class="badge bg-success d-inline-flex align-items-center">
+
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    Low
+
                                                 </span>
                                             }
                                             else
                                             {
-                                                <span class="task-badge low-priority">
-                                                    @item.Priority
+                                                <span class="badge bg-secondary d-inline-flex align-items-center">
+
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    @(t.Priority ?? "-")
+
                                                 </span>
                                             }
 
@@ -445,25 +802,49 @@
                                         <!-- Status -->
                                         <td>
 
-                                            @if (item.Status == "Completed")
+                                            @if (t.Status == "Completed")
                                             {
-                                                <span class="task-badge completed-status">
+                                                <span class="badge bg-success d-inline-flex align-items-center">
+
                                                     <i class="ti ti-point-filled me-1"></i>
-                                                    @item.Status
+                                                    Completed
+
                                                 </span>
                                             }
-                                            else if (item.Status == "Pending")
+                                            else if (t.Status == "Onhold")
                                             {
-                                                <span class="task-badge pending-status">
+                                                <span class="badge bg-warning text-dark d-inline-flex align-items-center">
+
                                                     <i class="ti ti-point-filled me-1"></i>
-                                                    @item.Status
+                                                    On Hold
+
+                                                </span>
+                                            }
+                                            else if (t.Status == "Inprogress")
+                                            {
+                                                <span class="badge bg-primary d-inline-flex align-items-center">
+
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    In Progress
+
+                                                </span>
+                                            }
+                                            else if (t.Status == "Pending")
+                                            {
+                                                <span class="badge bg-danger d-inline-flex align-items-center">
+
+                                                    <i class="ti ti-point-filled me-1"></i>
+                                                    Pending
+
                                                 </span>
                                             }
                                             else
                                             {
-                                                <span class="task-badge other-status">
+                                                <span class="badge bg-secondary d-inline-flex align-items-center">
+
                                                     <i class="ti ti-point-filled me-1"></i>
-                                                    @item.Status
+                                                    @(t.Status ?? "-")
+
                                                 </span>
                                             }
 
@@ -477,9 +858,11 @@
                                 <tr>
 
                                     <td colspan="7"
-                                        class="text-center">
+                                        class="text-center py-4">
 
-                                        No tasks found.
+                                        <span class="text-muted">
+                                            No tasks found.
+                                        </span>
 
                                     </td>
 
@@ -497,231 +880,297 @@
         </div>
 
     </div>
+
 </div>
-
-
-<!-- Badge CSS -->
-<style>
-
-    .task-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 12px;
-        font-weight: 500;
-    }
-
-
-    /* Priority */
-
-    .high-priority {
-        background-color: #dc3545;
-        color: #ffffff;
-    }
-
-    .medium-priority {
-        background-color: #ffc107;
-        color: #212529;
-    }
-
-    .low-priority {
-        background-color: #28a745;
-        color: #ffffff;
-    }
-
-
-    /* Status */
-
-    .completed-status {
-        background-color: #28a745;
-        color: #ffffff;
-    }
-
-    .pending-status {
-        background-color: #ffc107;
-        color: #212529;
-    }
-
-    .other-status {
-        background-color: #6c757d;
-        color: #ffffff;
-    }
-
-
-    .task-badge i {
-        font-size: 10px;
-    }
-
-</style>
 
 
 @section Scripts {
 
-    <!-- Task Status Chart -->
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-
-        var statusData = @Html.Raw(
-                    System.Text.Json.JsonSerializer.Serialize(
-                            statusChart
-                    )
-            );
-
-        var chartLabels =
-            statusData.map(x => x.Status);
-
-        var chartValues =
-            statusData.map(x => x.Count);
-
-        var chartElement =
-            document.getElementById("taskStatusChart");
+    <!-- Peity -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peity/3.3.0/jquery.peity.min.js"></script>
 
 
-        if (chartElement) {
+<script>
 
-            new Chart(chartElement, {
+    $(document).ready(function () {
 
-                type: "bar",
+        // Peity charts
+        $(".peity-chart").peity("pie");
 
-                data: {
 
-                    labels: chartLabels,
-
-                    datasets: [
-                        {
-                            label: "Tasks",
-                            data: chartValues,
-                            borderRadius: 6
-                        }
-                    ]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    scales: {
-
-                        y: {
-                            beginAtZero: true,
-
-                            ticks: {
-                                precision: 0
-                            }
-                        },
-
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-
-                    },
-
-                    plugins: {
-
-                        legend: {
-                            display: false
-                        }
-
-                    }
-
-                }
-
-            });
-
+        // Destroy existing DataTable if already initialized
+        if ($.fn.DataTable.isDataTable("#TaskTable")) {
+            $("#TaskTable").DataTable().destroy();
         }
 
-    </script>
+
+        // Initialize DataTable
+        var table = $("#TaskTable").DataTable({
+
+            paging: true,
+
+            searching: true,
+
+            ordering: true,
+
+            info: true,
+
+            pageLength: 10,
+
+            lengthMenu: [
+                [10, 25, 50, 100],
+                [10, 25, 50, 100]
+            ],
+
+            language: {
+
+                search: "Search:",
+
+                lengthMenu: "_MENU_ entries",
+
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+
+                emptyTable: "No tasks found"
+
+            }
+
+        });
 
 
-    <!-- DataTable -->
+        /*
+         * Custom Task Filters
+         */
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
-    <script>
+            // Only apply to TaskTable
+            if (settings.nTable.id !== "TaskTable") {
+                return true;
+            }
 
-        $(document).ready(function () {
 
-            if ($.fn.DataTable.isDataTable("#taskTable")) {
+            // Get selected filters
+            var selectedPriority = $("#priorityDropdown").val();
 
-                $("#taskTable")
-                    .DataTable()
-                    .destroy();
+            var selectedStatus = $("#statusDropdown").val();
+
+            var selectedSort = $("#sortDropdown").val();
+
+
+            /*
+             * Priority Filter
+             * Column 5 = Priority
+             */
+            if (selectedPriority !== "") {
+
+                var tablePriority = $("<div>")
+                    .html(data[5])
+                    .text()
+                    .trim();
+
+                if (tablePriority !== selectedPriority) {
+                    return false;
+                }
 
             }
 
 
-            $("#taskTable").DataTable({
+            /*
+             * Status Filter
+             * Column 6 = Status
+             *
+             * Badge displays:
+             * In Progress
+             * On Hold
+             *
+             * But database values are:
+             * Inprogress
+             * Onhold
+             */
+            if (selectedStatus !== "") {
 
-                paging: true,
+                var tableStatus = $("<div>")
+                    .html(data[6])
+                    .text()
+                    .trim();
 
-                searching: true,
+                if (selectedStatus === "Inprogress") {
 
-                ordering: true,
-
-                info: true,
-
-                pageLength: 10,
-
-                lengthMenu: [
-                    [10, 25, 50, 100],
-                    [10, 25, 50, 100]
-                ],
-
-                language: {
-
-                    search: "Search:",
-
-                    lengthMenu: "_MENU_ entries",
-
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries"
+                    if (tableStatus !== "In Progress") {
+                        return false;
+                    }
 
                 }
+                else if (selectedStatus === "Onhold") {
 
-            });
-
-
-            // Status Filter
-
-            $(".task-status-filter").on("click", function (e) {
-
-                e.preventDefault();
-
-                var status =
-                    $(this).data("status");
-
-                var table =
-                    $("#taskTable").DataTable();
-
-
-                if (status === "") {
-
-                    table
-                        .column(6)
-                        .search("")
-                        .draw();
+                    if (tableStatus !== "On Hold") {
+                        return false;
+                    }
 
                 }
                 else {
 
-                    table
-                        .column(6)
-                        .search(
-                            "^" + status + "$",
-                            true,
-                            false
-                        )
-                        .draw();
+                    if (tableStatus !== selectedStatus) {
+                        return false;
+                    }
 
                 }
 
-            });
+            }
+
+
+            /*
+             * Date Filter
+             * Column 4 = Due Date
+             */
+            if (
+                selectedSort === "Last Month" ||
+                selectedSort === "Last 7 Days"
+            ) {
+
+                var dueDateText = $("<div>")
+                    .html(data[4])
+                    .text()
+                    .trim();
+
+                var dueDate = new Date(dueDateText);
+
+                if (isNaN(dueDate.getTime())) {
+                    return false;
+                }
+
+                var today = new Date();
+
+                today.setHours(0, 0, 0, 0);
+
+                var startDate = new Date(today);
+
+
+                if (selectedSort === "Last 7 Days") {
+
+                    startDate.setDate(
+                        today.getDate() - 7
+                    );
+
+                }
+
+                if (selectedSort === "Last Month") {
+
+                    startDate.setMonth(
+                        today.getMonth() - 1
+                    );
+
+                }
+
+
+                return dueDate >= startDate &&
+                       dueDate <= today;
+
+            }
+
+
+            return true;
 
         });
 
-    </script>
+
+        /*
+         * Priority Change
+         */
+        $("#priorityDropdown").on("change", function () {
+
+            table.draw();
+
+        });
+
+
+        /*
+         * Status Change
+         */
+        $("#statusDropdown").on("change", function () {
+
+            table.draw();
+
+        });
+
+
+        /*
+         * Sort Change
+         */
+        $("#sortDropdown").on("change", function () {
+
+            var selectedSort = $(this).val();
+
+
+            /*
+             * Recently Added
+             * Task ID descending
+             */
+            if (selectedSort === "Recently Added") {
+
+                table
+                    .order([0, "desc"])
+                    .draw();
+
+            }
+
+
+            /*
+             * Ascending
+             * Task ID ascending
+             */
+            else if (selectedSort === "Ascending") {
+
+                table
+                    .order([0, "asc"])
+                    .draw();
+
+            }
+
+
+            /*
+             * Descending
+             * Task ID descending
+             */
+            else if (selectedSort === "Descending") {
+
+                table
+                    .order([0, "desc"])
+                    .draw();
+
+            }
+
+
+            /*
+             * Last Month / Last 7 Days
+             */
+            else if (
+                selectedSort === "Last Month" ||
+                selectedSort === "Last 7 Days"
+            ) {
+
+                table.draw();
+
+            }
+
+
+            /*
+             * Default
+             */
+            else {
+
+                table
+                    .order([])
+                    .draw();
+
+            }
+
+        });
+
+    });
+
+</script>
 
 }
