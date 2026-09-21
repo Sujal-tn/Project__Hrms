@@ -1,26 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Hrms.Data;
-using Project_Hrms.Interface;
 using Project_Hrms.Interface.EmployeeInterface;
 using Project_Hrms.Interface.LoginInterface;
 using Project_Hrms.Services.EmployeeService;
 using Project_Hrms.Services.LoginService;
 using Project_Hrms.Interface;
+using Project_Hrms.Models;
 using Project_Hrms.Services;
 using Project_Hrms.Services.MasterDocuments;
 using Project_Hrms.Interface.TrainingInterface;
 using Project_Hrms.Interface.MasterDocuments;
 using Project_Hrms.Interface.MasterDocuments.Documents;
-using Project_Hrms.Interface.PayrollInterface;
-using Project_Hrms.Interface.TrainingInterface;
-using Project_Hrms.Models;
-using Project_Hrms.Service;
+using Project_Hrms.Services.Documents;
 
 
 using Project_Hrms.Services.Documents;
 
 
 using Project_Hrms.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,12 +40,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<ILeaveService, LeaveService>();
-builder.Services.AddScoped<IEarningTypeService, EarningTypeService>();
-builder.Services.AddScoped<IEarningService, EarningService>();
-builder.Services.AddScoped<IDeductionTypeService, DeductionTypeService>();
-builder.Services.AddScoped<IDeductionService, DeductionService>();
-builder.Services.AddScoped<IEmployeeSalaryService, EmployeeSalaryService>();
-builder.Services.AddScoped<IPayslipService, PayslipService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAttendanceReport, AttendanceReportService>();
 builder.Services.AddScoped<IProject, ProjectService>();
@@ -59,9 +51,6 @@ builder.Services.AddScoped<ITrainingList, AddTrainingListServices>();
 builder.Services.AddScoped<IAdminDocumentsServices, AdminDocumentsAddServices>();
 builder.Services.AddScoped<IEmployeeDocumentsServices, EmployeeDocumentsAddServices>();
 builder.Services.AddScoped<IAdminFileUpload, AdminFileUploadServices>();
-builder.Services.AddScoped<IUploadedDocument, UploadedDocumentListServices>();
-builder.Services.AddScoped<IEmployeeFileUpload, EmployeeFileUploadServices>();
-builder.Services.AddScoped<IEmailService, EmailServices>();
 
 
 
@@ -109,7 +98,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Auth}/{action=Login}/{id?}")
+    pattern: "{controller=TaskReport}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();

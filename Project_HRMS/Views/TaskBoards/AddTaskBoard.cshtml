@@ -1,0 +1,87 @@
+﻿@model Project_Hrms.Models.TaskBoards
+
+@{
+    ViewData["Title"] = "Add Task Board";
+}
+
+<div class="page-wrapper">
+    <div class="content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Task Board</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Task Board Form -->
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="AddTaskBoard" method="post">
+
+                    <div class="row">
+
+                        <!-- Project -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Project</label>
+
+                            <select asp-for="ProjectId" class="form-select">
+                                <option value="">Select Project</option>
+
+                                @foreach (var project in ViewBag.Projects)
+                                {
+                                    <option value="@project.ProjectId">@project.ProjectName</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Task -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Task</label>
+
+                            <select asp-for="TaskId" class="form-select">
+                                <option value="">Select Task</option>
+
+                                @foreach (var task in ViewBag.Tasks)
+                                {
+                                    <option value="@task.TaskId">@task.Title</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Percentage -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Percentage</label>
+
+                            <input asp-for="Percentage" type="number" class="form-control" min="0" max="100" placeholder="Enter percentage" />
+                        </div>
+
+                        <!-- Due Date -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Due Date</label>
+
+                            <input asp-for="DueDate" type="date" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="text-end mt-3">
+
+                        <a asp-action="Index" class="btn btn-secondary"> Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-primary"> Add Task Board </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

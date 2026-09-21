@@ -20,7 +20,7 @@ namespace Project_Hrms.Services
 
         public async Task<List<Projects>> GetAllProjects()
         {
-            var data = await db.Projects.ToListAsync();
+            var data = await db.Projects.Include(x => x.User).ToListAsync();
             return data;
         }
 
