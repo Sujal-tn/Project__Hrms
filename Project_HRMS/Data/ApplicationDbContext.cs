@@ -69,10 +69,9 @@ namespace Project_Hrms.Data
 
         public DbSet<Experince> Experinces { get; set; }
 
-<<<<<<< HEAD
+        public DbSet<UploadDocuments> MasterDocument { get; set; }
         public DbSet<Organization> Organizations { get; set; }
-=======
->>>>>>> origin/main
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

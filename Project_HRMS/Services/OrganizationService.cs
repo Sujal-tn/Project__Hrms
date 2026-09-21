@@ -1,6 +1,6 @@
 ﻿using Project_Hrms.Data;
 using Project_Hrms.Interface;
-using Project_Hrms.Migrations;
+
 using Project_Hrms.Models;
 
 namespace Project_Hrms.Services

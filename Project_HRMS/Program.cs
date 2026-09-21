@@ -17,7 +17,7 @@ using Project_Hrms.Models;
 using Project_Hrms.Service;
 
 
-using Project_Hrms.Services.Training;
+using Project_Hrms.Services.Documents;
 
 
 using Project_Hrms.Service;
@@ -85,11 +85,11 @@ builder.Services.AddScoped<IAddTrainers, AddTrainerServicescs>();
 builder.Services.AddScoped<IResignation, ResignationService>();
 builder.Services.AddScoped<ITaskReportService, TaskReportService>();
 builder.Services.AddScoped<ITermination, TerminationService>();
-<<<<<<< HEAD
+
 builder.Services.AddScoped<IEmpService, EmpService>();
-=======
+
 builder.Services.AddScoped<ITicket, TicketService>();
->>>>>>> origin/main
+
 
 builder.Services.AddScoped<IBankInformationService, BankService>();
 builder.Services.AddScoped<IFamilyService, FamilyService>();
