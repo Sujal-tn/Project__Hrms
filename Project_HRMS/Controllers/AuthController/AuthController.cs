@@ -45,13 +45,13 @@ namespace Project_Hrms.Controllers.AuthController
                 else if (us.Role.RoleName == "Manager")
                 {
 
-                    return RedirectToAction("Index", "ManagerD");
+                    return RedirectToAction("EmpDetails", "Emp");
 
                 }
                 else if (us.Role.RoleName == "Employee")
                 {
 
-                    return RedirectToAction("Index", "EmpD");
+                    return RedirectToAction("EmpDetails", "Emp");
 
                 }
             }

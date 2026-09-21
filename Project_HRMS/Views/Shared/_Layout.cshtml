@@ -331,8 +331,9 @@
                         </summary>
 
                         <div class="submenu">
-                            <a href="#">Training List</a>
-                            <a href="#">Add Training</a>
+                            <a asp-controller="AddTrainingList" asp-action="Index">Training List</a>
+                            <a asp-controller="AddTrainer" asp-action="Index">Trainer</a>
+                            <a asp-controller="TrainingType" asp-action="Index">Training Type</a>
                         </div>
                     </details>
 
@@ -452,13 +453,26 @@
                     <details>
                         <summary class="sidebar-link">
                             <span>▱</span>
+                           Master Documents
+                            <span class="menu-arrow">⌃</span>
+                        </summary>
+
+                        <div class="submenu">
+                            <a asp-controller="AdminAddDocuments" asp-action="Index">AdminAddDocumnets</a>
+                            <a asp-controller="EmployeeAddDocuments" asp-action="Index">EmployeeAddDocument</a>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary class="sidebar-link">
+                            <span>▱</span>
                             Documents
                             <span class="menu-arrow">⌃</span>
                         </summary>
 
                         <div class="submenu">
-                            <a href="#">All Documents</a>
-                            <a href="#">Upload Document</a>
+                            <a asp-controller="AdminFileUpload" asp-action="Index">AdminFilesUploads</a>
+                            <a asp-controller="AdminUploadFileList" asp-action="Index">DocumentList</a>
                         </div>
                     </details>
 
@@ -586,9 +600,24 @@
                             <a asp-controller="Emp" asp-action="EmpDetails">
                                 My Profile
                             </a>
+                        </div>
+                    </details>
 
-                            <a href="#">Employee Details</a>
-                            <a href="#">My Team</a>
+
+                    <details>
+                        <summary class="sidebar-link">
+                            <i class="ti ti-users"></i>
+                            <span>Documents</span>
+                            <span class="menu-arrow">⌃</span>
+                        </summary>
+
+                        <div class="submenu">
+                            <a asp-controller="EmployeeUploadFileList" asp-action="Index">
+                                My Documents
+                            </a>
+                            <a asp-controller="EmployeeFileUpload" asp-action="Index">
+                               Upload Documents
+                            </a>
                         </div>
                     </details>
 
@@ -718,7 +747,7 @@
                 @RenderBody()
             </main>
 
-            <footer class="border-top footer text-muted admin-footer">
+            @* <footer class="border-top footer text-muted admin-footer">
                 <div class="container">
                     &copy; 2026 - Project_Hrms -
                     <a asp-area=""
@@ -727,7 +756,7 @@
                         Privacy
                     </a>
                 </div>
-            </footer>
+            </footer> *@
 
         </div>
 

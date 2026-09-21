@@ -37,6 +37,21 @@ namespace Project_Hrms.Controllers.Documents
                 return NotFound();
             }
 
+            //var provider = new FileExtensionContentTypeProvider();
+
+            //if (!provider.TryGetContentType(file.FileName, out string? contentType))
+            //{
+            //    contentType = "application/octet-stream";
+            //}
+
+            //Response.Headers.Append(
+            //    "Content-Disposition",
+            //    "inline; filename=\"" + file.FileName + "\"");
+
+            //return PhysicalFile(
+            //    filePath,
+            //    contentType);
+
             string content = await System.IO.File.ReadAllTextAsync(filePath);
 
             return Content(content, "text/plain");
