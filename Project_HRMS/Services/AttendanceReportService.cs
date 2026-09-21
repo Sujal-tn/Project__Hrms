@@ -15,7 +15,9 @@ namespace Project_Hrms.Services
         }
         public async Task<List<Attendance>> FeatchAttendanceReport()
         {
-            var data = await db.Attendance.ToListAsync();
+            var data = await db.Attendance
+                .Include(x => x.User)
+                .ToListAsync();
             return data;
         }
     }

@@ -61,115 +61,122 @@
         </div>
 
 
-        <!-- Summary Cards -->
+        <!-- Summary Cards + Project Status Chart -->
         <div class="row">
 
-            <!-- Total Projects -->
-            <div class="col-xl-3 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
+            <!-- LEFT SIDE - 4 CARDS -->
+            <div class="col-xl-6 col-lg-6 d-flex">
 
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="mb-1 text-muted">Total Projects</p>
+                <div class="row flex-fill">
 
-                                <h3 class="mb-0">
-                                    @totalProjects
-                                </h3>
-                            </div>
+                    <!-- Total Projects -->
+                    <div class="col-xl-6 col-md-6 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
 
-                            <div class="avatar avatar-lg bg-primary">
-                                <i class="ti ti-briefcase fs-24"></i>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-muted">Total Projects</p>
+
+                                        <h3 class="mb-0">
+                                            @totalProjects
+                                        </h3>
+                                    </div>
+
+                                    <div class="avatar avatar-lg bg-primary">
+                                        <i class="ti ti-briefcase fs-24"></i>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-
                     </div>
+
+
+                    <!-- Active Projects -->
+                    <div class="col-xl-6 col-md-6 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-muted">Active Projects</p>
+
+                                        <h3 class="mb-0">
+                                            @activeProjects
+                                        </h3>
+                                    </div>
+
+                                    <div class="avatar avatar-lg bg-success">
+                                        <i class="ti ti-player-play fs-24"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Completed Projects -->
+                    <div class="col-xl-6 col-md-6 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-muted">Completed Projects</p>
+
+                                        <h3 class="mb-0">
+                                            @completedProjects
+                                        </h3>
+                                    </div>
+
+                                    <div class="avatar avatar-lg bg-info">
+                                        <i class="ti ti-circle-check fs-24"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Other Projects -->
+                    <div class="col-xl-6 col-md-6 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-muted">Other Status</p>
+
+                                        <h3 class="mb-0">
+                                            @otherProjects
+                                        </h3>
+                                    </div>
+
+                                    <div class="avatar avatar-lg bg-warning">
+                                        <i class="ti ti-clock fs-24"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
 
 
-            <!-- Active Projects -->
-            <div class="col-xl-3 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
+            <!-- RIGHT SIDE - PROJECT STATUS CHART -->
+            <div class="col-xl-6 col-lg-6 d-flex">
 
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="mb-1 text-muted">Active Projects</p>
-
-                                <h3 class="mb-0">
-                                    @activeProjects
-                                </h3>
-                            </div>
-
-                            <div class="avatar avatar-lg bg-success">
-                                <i class="ti ti-player-play fs-24"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Completed Projects -->
-            <div class="col-xl-3 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="mb-1 text-muted">Completed Projects</p>
-
-                                <h3 class="mb-0">
-                                    @completedProjects
-                                </h3>
-                            </div>
-
-                            <div class="avatar avatar-lg bg-info">
-                                <i class="ti ti-circle-check fs-24"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Other Projects -->
-            <div class="col-xl-3 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="mb-1 text-muted">Other Status</p>
-
-                                <h3 class="mb-0">
-                                    @otherProjects
-                                </h3>
-                            </div>
-
-                            <div class="avatar avatar-lg bg-warning">
-                                <i class="ti ti-clock fs-24"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <!-- Project Status Chart -->
-        <div class="row mt-3">
-
-            <div class="col-xl-12">
-                <div class="card">
+                <div class="card flex-fill">
 
                     <div class="card-header">
                         <div class="d-flex align-items-center justify-content-between">
+
                             <div>
                                 <h5 class="card-title mb-1">
                                     Project Status
@@ -179,6 +186,7 @@
                                     Overview of projects by status
                                 </p>
                             </div>
+
                         </div>
                     </div>
 
@@ -191,210 +199,93 @@
                     </div>
 
                 </div>
+
             </div>
 
         </div>
 
 
-        <!-- Project Table -->
-        <div class="card mt-3">
+<div class="card">
+    <div class="card-body">
 
-            <div class="card-header">
-                <div class="d-flex align-items-center justify-content-between">
+        <div class="row mb-3">
 
-                    <div>
-                        <h5 class="card-title mb-1">
-                            Project List
-                        </h5>
+            <!-- Priority Filter -->
+            <div class="col-md-4">
+                <label for="priorityFilter">
+                    Select Priority:
+                </label>
 
-                        <p class="text-muted mb-0">
-                            View all project details
-                        </p>
-                    </div>
+                <select id="priorityFilter"
+                        class="form-control">
 
-                    <!-- Status Filter -->
-                    <div class="dropdown">
+                    <option value="">
+                        --Select Priority--
+                    </option>
 
-                        <button class="btn btn-light dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown">
+                    <option value="Low">
+                        Low
+                    </option>
 
-                            <i class="ti ti-filter me-1"></i>
-                            Status
-                        </button>
+                    <option value="Medium">
+                        Medium
+                    </option>
 
-                        <ul class="dropdown-menu dropdown-menu-end">
+                    <option value="High">
+                        High
+                    </option>
 
-                            <li>
-                                <a class="dropdown-item project-status-filter"
-                                   href="#"
-                                   data-status="">
-                                    All
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item project-status-filter"
-                                   href="#"
-                                   data-status="Active">
-                                    Active
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item project-status-filter"
-                                   href="#"
-                                   data-status="Completed">
-                                    Completed
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item project-status-filter"
-                                   href="#"
-                                   data-status="Pending">
-                                    Pending
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
+                </select>
             </div>
 
 
-            <div class="card-body">
+            <!-- Status Filter -->
+            <div class="col-md-4">
+                <label for="statusFilter">
+                    Select Status:
+                </label>
 
-                <div class="table-responsive">
+                <select id="statusFilter"
+                        class="form-control">
 
-                    <table class="table table-hover"
-                           id="projectTable">
+                    <option value="">
+                        --Select Status--
+                    </option>
 
-                        <thead>
-                            <tr>
-                                <th>Project ID</th>
-                                <th>Project Name</th>
-                                <th>Leader</th>
-                                <th>Members</th>
-                                <th>Deadline</th>
-                                <th>Priority</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
+                    <option value="Active">
+                        Active
+                    </option>
 
-                        <tbody>
+                    <option value="Inactive">
+                        Inactive
+                    </option>
 
-                            @if (Model != null && Model.Any())
-                            {
-                                foreach (var item in Model)
-                                {
-                                    <tr>
-
-                                        <!-- Project ID -->
-                                        <td>
-                                            @item.ProjectId
-                                        </td>
+                </select>
+            </div>
 
 
-                                        <!-- Project Name -->
-                                        <td>
-                                            <strong>
-                                                @item.ProjectName
-                                            </strong>
-                                        </td>
+            <!-- Sort Filter -->
+            <div class="col-md-4">
+                <label for="sortOrder">
+                    Sort By:
+                </label>
 
+                <select id="sortOrder"
+                        class="form-control">
 
-                                        <!-- Leader -->
-                                        <td>
-                                            @item.ManagerName
-                                        </td>
+                    <option value="">
+                        --Select--
+                    </option>
 
+                    <option value="asc">
+                        Ascending
+                    </option>
 
-                                        <!-- Members -->
-                                        <td>
-                                            -
-                                        </td>
+                    <option value="desc">
+                        Descending
+                    </option>
 
-
-                                        <!-- Deadline -->
-                                        <td>
-                                            @item.EndDate.ToString("dd-MM-yyyy")
-                                        </td>
-
-
-                                        <!-- Priority -->
-                                        <td>
-
-                                            @if (item.Priority == "High")
-                                            {
-                                                <span class="project-badge high-priority">
-                                                    @item.Priority
-                                                </span>
-                                            }
-                                            else if (item.Priority == "Medium")
-                                            {
-                                                <span class="project-badge medium-priority">
-                                                    @item.Priority
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <span class="project-badge low-priority">
-                                                    @item.Priority
-                                                </span>
-                                            }
-
-                                        </td>
-
-
-                                        <!-- Status -->
-                                        <td>
-
-                                            @if (item.Status == "Active")
-                                            {
-                                                <span class="project-badge active-status">
-                                                    <i class="ti ti-point-filled me-1"></i>
-                                                    @item.Status
-                                                </span>
-                                            }
-                                            else if (item.Status == "Completed")
-                                            {
-                                                <span class="project-badge completed-status">
-                                                    <i class="ti ti-point-filled me-1"></i>
-                                                    @item.Status
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <span class="project-badge other-status">
-                                                    <i class="ti ti-point-filled me-1"></i>
-                                                    @item.Status
-                                                </span>
-                                            }
-
-                                        </td>
-
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="7"
-                                        class="text-center">
-                                        No projects found.
-                                    </td>
-                                </tr>
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
+                </select>
             </div>
 
         </div>
@@ -402,6 +293,136 @@
     </div>
 </div>
 
+<!-- Project Table -->
+<div class="card mt-3">
+
+    <div class="card-header">
+        <div>
+            <h5 class="card-title mb-1">
+                Project List
+            </h5>
+
+            <p class="text-muted mb-0">
+                View all project details
+            </p>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover"
+                   id="projectTable">
+
+                <thead>
+                    <tr>
+                        <th>Project ID</th>
+                        <th>Project Name</th>
+                        <th>Leader</th>
+                        <th>Members</th>
+                        <th>Deadline</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.ProjectId
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        @item.ProjectName
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @item.ManagerName
+                                </td>
+
+                                <td>
+                                    -
+                                </td>
+
+                                <td>
+                                    @item.EndDate.ToString("dd-MM-yyyy")
+                                </td>
+
+                                <td>
+                                    @if (item.Priority == "High")
+                                    {
+                                        <span class="project-badge high-priority">
+                                            @item.Priority
+                                        </span>
+                                    }
+                                    else if (item.Priority == "Medium")
+                                    {
+                                        <span class="project-badge medium-priority">
+                                            @item.Priority
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="project-badge low-priority">
+                                            @item.Priority
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.Status == "Active")
+                                    {
+                                        <span class="project-badge active-status">
+                                            <i class="ti ti-point-filled me-1"></i>
+                                            @item.Status
+                                        </span>
+                                    }
+                                    else if (item.Status == "Completed")
+                                    {
+                                        <span class="project-badge completed-status">
+                                            <i class="ti ti-point-filled me-1"></i>
+                                            @item.Status
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="project-badge other-status">
+                                            <i class="ti ti-point-filled me-1"></i>
+                                            @item.Status
+                                        </span>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                No projects found.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 <!-- Custom Badge CSS -->
 <style>
@@ -479,7 +500,7 @@
 
             new Chart(chartElement, {
 
-                type: "bar",
+                type: "pie",
 
                 data: {
 
@@ -539,78 +560,112 @@
 
     <script>
 
-        $(document).ready(function () {
+$(document).ready(function () {
 
-            if ($.fn.DataTable.isDataTable("#projectTable")) {
-                $("#projectTable").DataTable().destroy();
+    var table = $("#projectTable").DataTable({
+
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true,
+
+        pageLength: 10,
+
+        lengthMenu: [
+            [10, 25, 50, 100],
+            [10, 25, 50, 100]
+        ],
+
+        language: {
+            search: "Search:",
+            lengthMenu: "_MENU_ entries",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries"
+        }
+
+    });
+
+
+    // Priority + Status Filter
+    $.fn.dataTable.ext.search.push(function (settings, data) {
+
+        if (settings.nTable.id !== "projectTable") {
+            return true;
+        }
+
+        var priority = $("#priorityFilter").val();
+        var status = $("#statusFilter").val();
+
+
+        // Priority column = 5
+        if (priority !== "") {
+
+            var tablePriority = $("<div>")
+                .html(data[5])
+                .text()
+                .trim();
+
+            if (tablePriority !== priority) {
+                return false;
             }
-
-            $("#projectTable").DataTable({
-
-                paging: true,
-
-                searching: true,
-
-                ordering: true,
-
-                info: true,
-
-                pageLength: 10,
-
-                lengthMenu: [
-                    [10, 25, 50, 100],
-                    [10, 25, 50, 100]
-                ],
-
-                language: {
-
-                    search: "Search:",
-
-                    lengthMenu: "_MENU_ entries",
-
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries"
-
-                }
-
-            });
+        }
 
 
-            // Status Filter
+        // Status column = 6
+        if (status !== "") {
 
-            $(".project-status-filter").on("click", function (e) {
+            var tableStatus = $("<div>")
+                .html(data[6])
+                .text()
+                .trim();
 
-                e.preventDefault();
+            if (tableStatus !== status) {
+                return false;
+            }
+        }
 
-                var status =
-                    $(this).data("status");
 
-                var table =
-                    $("#projectTable").DataTable();
+        return true;
 
-                if (status === "") {
+    });
 
-                    table
-                        .column(6)
-                        .search("")
-                        .draw();
 
-                }
-                else {
+    // Priority Filter
+    $("#priorityFilter").on("change", function () {
+        table.draw();
+    });
 
-                    table
-                        .column(6)
-                        .search(
-                            "^" + status + "$",
-                            true,
-                            false
-                        )
-                        .draw();
 
-                }
+    // Status Filter
+    $("#statusFilter").on("change", function () {
+        table.draw();
+    });
 
-            });
 
-        });
+    // Sort
+    $("#sortOrder").on("change", function () {
+
+        var sort = $(this).val();
+
+
+        if (sort === "asc") {
+
+            table
+                .order([0, "asc"])
+                .draw();
+
+        }
+
+        else if (sort === "desc") {
+
+            table
+                .order([0, "desc"])
+                .draw();
+
+        }
+
+    });
+
+});
 
     </script>
 

@@ -15,7 +15,9 @@ namespace Project_Hrms.Services
         }
         public async Task<List<LeaveRequest>> FeatchLeaveRequest()
         {
-            var data = await db.LeaveRequest.ToListAsync();
+            var data = await db.LeaveRequest
+                .Include(x => x.User ).Include(e => e.MasterLeaveType)
+                .ToListAsync();
             return data;
         }
     }
